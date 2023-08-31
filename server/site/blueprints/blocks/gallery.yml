@@ -1,0 +1,33 @@
+name: field.blocks.gallery.name
+icon: dashboard
+preview: gallery
+fields:
+  images:
+    label: field.blocks.gallery.images.label
+    type: files
+    query: page.images.template('blocks/image')
+    multiple: true
+    layout: cards
+    size: tiny
+    empty: field.blocks.gallery.images.empty
+    uploads:
+      template: blocks/image
+    image:
+      ratio: 1/1
+  caption:
+    label: field.blocks.image.caption
+    type: writer
+    icon: text
+    inline: true
+  type:
+    label: "Type"
+    type: select
+    width: 1/2
+    options:
+      small: "Small"
+      medium: "Medium"
+      large: "Large"
+  vertical:
+    label: "Vertical"
+    type: toggle
+    width: 1/2

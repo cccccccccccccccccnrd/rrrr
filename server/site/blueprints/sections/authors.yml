@@ -1,0 +1,14 @@
+type: pages
+headline: Authors
+parent: kirby.page("authors")
+text: "{{ page.title }}"
+info: "{{ page.published }}"
+layout: list
+empty: No authors yet
+sortBy: title
+image:
+  query: page.cover
+  cover: true
+  ratio: 1
+templates:
+  - author

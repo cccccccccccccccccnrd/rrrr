@@ -1,0 +1,17 @@
+columns:
+  - width: 2/2
+    sections:
+      articles: sections/articles
+  
+  - width: 1/2
+    sections:
+      authors: sections/authors
+  - width: 1/2
+    sections:
+      pages:
+        type: pages
+        create: default
+        templates:
+          - about
+          - home
+          - default

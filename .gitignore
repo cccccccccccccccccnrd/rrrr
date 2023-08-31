@@ -1,0 +1,12 @@
+.DS_Store
+.env
+
+node_modules
+
+server/content/*/*
+utils/pdf/exports/*
+
+vendor
+kirby
+config.php
+fonts

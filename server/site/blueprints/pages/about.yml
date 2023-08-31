@@ -1,0 +1,25 @@
+title: About
+
+icon: ☎️
+
+status:
+  draft: true
+  listed: true
+
+options:
+  changeSlug: false
+  delete: false
+
+columns:
+  - width: 1/2
+    fields:
+      about:
+        type: textarea
+  - width: 1/2
+    fields:
+      edition:
+        type: textarea
+  - width: 1/2
+    fields:
+      extended:
+        type: textarea
