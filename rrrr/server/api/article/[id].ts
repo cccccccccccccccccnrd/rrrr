@@ -10,11 +10,14 @@ export default defineEventHandler(async event => {
     ...article.content,
     text: article.content.text.map(b => {
       if (b.type === 'gallery') {
+        console.log(b.content.images)
         return {
           ...b,
           content: {
             ...b.content,
-            images: b.content.images.map(i => files.find(f => f.id === i.id))
+            images: b.content.images.map(i =>
+              files.find(f => f.filename === i.filename)
+            )
           }
         }
       } else {

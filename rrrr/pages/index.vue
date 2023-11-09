@@ -85,5 +85,6 @@ details > summary {
   border-radius: 100px;
   cursor: pointer;
   backdrop-filter: blur(10px);
+  user-select: none;
 }
 </style>

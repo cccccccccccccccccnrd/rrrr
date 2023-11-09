@@ -4,11 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pdf": "node index.js"
+    "pdf": "node index.js",
+    "pup": "node pup.js",
+    "report": "node rep.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^19.7.2"
+    "node-fetch": "2.7.0",
+    "pagedjs": "^0.4.3",
+    "pagedjs-cli": "^0.4.3",
+    "puppeteer": "^19.7.2",
+    "puppeteer-report": "^3.1.0"
   }
 }

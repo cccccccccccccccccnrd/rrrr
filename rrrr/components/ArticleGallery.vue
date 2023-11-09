@@ -55,7 +55,9 @@ export default {
       }
     }
   },
-  mounted () {},
+  mounted () {
+    console.log(this.images)
+  },
   methods: {
     getFigNo (image) {
       return image.filename.split('-')[0]

@@ -1,0 +1,81 @@
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 20mm 10mm;
+    /* marks: crop cross; */
+
+    @top-right {
+      content: 'rrrreflect';
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    @top-left {
+      content: string(author) ', ' string(title);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    @bottom-center {
+      content: counter(page) ' of ' counter(pages);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+  }
+
+  /* @page:nth(1) {
+    margin: 0;
+
+    @top-right {
+      content: '';
+    }
+
+    @top-left {
+      content: '';
+    }
+
+    @bottom-center {
+      content: '';
+    }
+  } */
+}
+
+.grid {
+  /* page-break-after: always; */
+}
+
+.meta.author {
+  string-set: author content(text);
+}
+
+.meta.title {
+  string-set: title content(text);
+}
+
+.block.image {
+  height: fit-content;
+  page-break-inside: avoid;
+}
+
+figure img {
+  max-height: 600px;
+}
+
+footer {
+  page-break-before: always;
+}
+
+/* #block-19 {
+  page-break-inside: avoid;
+}
+
+#block-23 {
+  page-break-before: always;
+}
+
+#block-29 {
+  page-break-before: always;
+} */

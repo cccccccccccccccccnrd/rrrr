@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt"],
   runtimeConfig: {
     baseURL: process.env.BASE_URL,
@@ -27,10 +27,10 @@ export default defineNuxtConfig({
           name: 'apple-mobile-web-app-status-bar-style',
           content: 'black-translucent'
         },
-        { property: 'og:title', content: 'Emotional Futures' },
+        { property: 'og:title', content: 'rrrreflect' },
         {
           property: 'og:description',
-          content: 'Emotional Futures is a web-based game which delves into the gamification and commodification of human emotions produced by IRL, a gaming collective under the distributed artistic direction of Marcel Darienzo, Carina Erdmann, Steph Holl-Trieu, Andrew Pasquier, Xiaoji Song, Moritz Tontsch, and Ingeborg Wie Henriksen.'
+          content: 'rrrreflect is a digital open-access journal that publishes outstanding works of student design research at KISD under the Creative Commons licence CC-BY. With this design-scientific journal, we open up an experimental field for textual and non-textual forms of knowledge such as image, video and sound. In doing so, we enter into a dialogue with the current discourse on the scientificity of design research and at the same time refer to the sensual dimensions of perception as epistemically constituting.'
         },
         { property: 'og:type', content: 'website' },
         {
@@ -44,4 +44,7 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/png', href: 'imgs/app/app-192.png' }]
     }
   },
+  devServer: {
+    port: 4444
+  }
 })

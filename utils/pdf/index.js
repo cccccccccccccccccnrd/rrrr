@@ -1,40 +1,23 @@
-const puppeteer = require('puppeteer')
+const { exec } = require('child_process')
+const fetch = require('node-fetch')
+const fs = require('fs')
 
-let browser
-
-async function screenshot (slug) {
-  const url = `http://localhost:5050/pdfs/${ slug }`
-  console.log(url)
-
-  try {
-    const page = await browser.newPage()
-
-    page.setDefaultTimeout(20 * 1000)
-
-    /* await page.setViewport({
-      width: 1240, // 2480,
-      height: 1754, // 3508,
-      deviceScaleFactor: 2
-    }) */
-
-    await page.goto(url, { 'waitUntil': 'networkidle2' })
-    await page.pdf({ 
-      /* printBackground: true, */
-      preferCSSPageSize: true,
-      path: `exports/${ slug }.pdf` })
-    await page.close()
-  } catch(error) {
-    console.log(error)
-  }
+async function save (slug) {
+  const response = await fetch(`http://localhost:4444/pdfs/${slug}`)
+  const body = await response.text()
+  fs.writeFileSync(`./htmls/${slug}.html`, content, "utf8")
 }
 
 async function init () {
   const slug = process.argv[2]
 
-  browser = await puppeteer.launch({ headless: true })
-
-  await screenshot(slug)
-  await browser.close()
+  /* await save(slug) */
+  exec(
+    `pagedjs-cli ./htmls/${slug}.html -o ./exports/${slug}.pdf --style style.css`,
+    (error, stdout, stderr) => {
+      console.log(slug)
+    }
+  )
 }
 
 init()

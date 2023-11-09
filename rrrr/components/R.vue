@@ -35,7 +35,9 @@ function scale (number: any, [inMin, inMax]: any, [outMin, outMax]: any) {
 
 <style scoped>
   .rrrr {
+    font-family: 'Inter', 'limousine', sans-serif;
     font-size: 3em;
     line-height: 1;
+    white-space: nowrap;
   }
 </style>

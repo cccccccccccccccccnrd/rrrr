@@ -95,7 +95,7 @@ export default {
         const literature = this.parseLiterature(this.article.literature)
         const div = document.createElement('DIV')
         div.innerHTML = block.content.text
-        return [...div.querySelectorAll('sup')].map(e => e.innerText.match(/\d+/)[0]).map(n => `<span class="sans-serif-uppercase">${n}.</span> ${literature[n - 1]}`)
+        return new Set([...div.querySelectorAll('sup')].map(e => e.innerText.match(/\d+/)[0]).map(n => `<span class="sans-serif-uppercase">${n}.</span> ${literature[n - 1]}`))
       } else {
         return []
       }
@@ -165,11 +165,23 @@ export default {
   }
 
   .side-literature {
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
     max-width: 66%;
     margin: 0.666em 0;
     font-size: 0.9em;
+    word-break: break-word;
+    text-overflow: ellipsis;
     opacity: 0.6;
     animation: blend-in 1s;
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+  }
+
+  .side-literature:hover {
+    position: absolute;
+    -webkit-line-clamp: 100;
   }
 
   .side-literature:hover {

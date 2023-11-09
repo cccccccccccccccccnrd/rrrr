@@ -1,14 +1,13 @@
 type: pages
 headline: Articles
 parent: kirby.page("articles")
-text: "{{ page.title }}"
-info: "{{ page.published }}"
-layout: cards
-empty: No articles yet
+layout: table
+columns:
+  published: true
 sortBy: date desc
+empty: No articles yet
 image:
   query: page.cover
   cover: true
-  ratio: 1
 templates:
   - article

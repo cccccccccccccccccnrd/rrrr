@@ -5,6 +5,7 @@ node_modules
 
 server/content/*/*
 utils/pdf/exports/*
+utils/pdf/htmls/*
 
 vendor
 kirby
