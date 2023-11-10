@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         {
           property: 'og:image',
-          content: ''
+          content: 'https://rrrreflect.org/share.jpg'
         },
         { property: 'og:image:width', content: '1000' },
         { property: 'og:image:height', content: '562' },
