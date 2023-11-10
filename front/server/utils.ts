@@ -7,8 +7,6 @@ export async function request (path: string) {
       Authorization: `${useRuntimeConfig().auth}`
     }
   })
-  console.log(response)
   const json: any = await response.json()
-  console.log(json.data)
   return json.data
 }
