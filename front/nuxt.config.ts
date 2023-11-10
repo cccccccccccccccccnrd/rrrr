@@ -45,6 +45,6 @@ export default defineNuxtConfig({
     }
   },
   devServer: {
-    port: 4444
+    port: 4000
   }
 })

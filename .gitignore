@@ -3,7 +3,7 @@
 
 node_modules
 
-server/content/*/*
+back/content/*/*
 utils/pdf/exports/*
 utils/pdf/htmls/*
 
