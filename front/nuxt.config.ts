@@ -35,11 +35,11 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         {
           property: 'og:image',
-          content: 'https://emotionalfutures.com/imgs/app/share.png'
+          content: ''
         },
         { property: 'og:image:width', content: '1000' },
         { property: 'og:image:height', content: '562' },
-        { property: 'og:site_name', content: 'Emotional Futures' },
+        { property: 'og:site_name', content: 'rrrreflect Journal of Integrated Design Research' },
       ],
       link: [{ rel: 'icon', type: 'image/png', href: 'imgs/app/app-192.png' }]
     }
