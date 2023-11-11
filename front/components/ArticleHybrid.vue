@@ -134,6 +134,7 @@ export default {
 
   :deep(.footnotes p) {
     margin: 0.333em 0;
+    word-break: break-word;
   }
 
   .block {
