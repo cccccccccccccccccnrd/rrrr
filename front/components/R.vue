@@ -1,6 +1,12 @@
 <template>
   <p class="rrrr">
-    <span v-for="(r, index) in no" :style="`opacity: ${ scale(index, [0, no - 4], [0, 10]) / 10 }; filter: blur(${ scale(index, [0, no - 4], [8, 0]) * (no * 0.1) }px);`">r</span>eflect Journal of <br />
+    <span
+      v-for="(r, index) in no"
+      :style="`opacity: ${
+        scale(index, [0, no - 4], [0, 10]) / 10
+      }; filter: blur(${scale(index, [0, no - 4], [8, 0]) * (no * 0.1)}px);`"
+      >r</span
+    >eflect Journal of <br />
     Integrated Design Research
   </p>
 </template>
@@ -12,13 +18,13 @@ const no = ref(Math.floor(Math.random() * max.value) + min.value)
 
 const { pressed } = useMousePressed()
 
-onKeyStroke('ArrowLeft', (e) => {
+onKeyStroke('ArrowLeft', e => {
   e.preventDefault()
   if (no.value < 5) return
   no.value = no.value - 1
 })
 
-onKeyStroke('ArrowRight', (e) => {
+onKeyStroke('ArrowRight', e => {
   e.preventDefault()
   no.value = no.value + 1
 })
@@ -28,16 +34,22 @@ onKeyStroke('ArrowRight', (e) => {
   if (pressed.value) return no.value = Math.floor(Math.random() * max.value) + min.value
 }) */
 
-function scale (number: any, [inMin, inMax]: any, [outMin, outMax]: any) {
-  return (number - inMin) / (inMax - inMin) * (outMax - outMin) + outMin
+function scale(number: any, [inMin, inMax]: any, [outMin, outMax]: any) {
+  return ((number - inMin) / (inMax - inMin)) * (outMax - outMin) + outMin
 }
 </script>
 
 <style scoped>
+.rrrr {
+  font-family: 'i', 'limousine', sans-serif;
+  font-size: 3em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 800px) {
   .rrrr {
-    font-family: 'Inter', 'limousine', sans-serif;
-    font-size: 3em;
-    line-height: 1;
-    white-space: nowrap;
-  }
+  font-size: 6.666vw;
+}
+}
 </style>

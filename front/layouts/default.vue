@@ -6,27 +6,23 @@
       </div>
       <div>{{ c.current.title }} <span style="font-size: 16px; line-height: 0; display: none;">↑</span></div>
       <div @click="overlay ? (overlay = false) : (overlay = true)" class="cursor-pointer">
-        rrrreflect <span></span>
+        rrrreflect{{ overlay ? ' ●' : ' ○' }} <span></span>
       </div>
     </header>
     <div
-      class="overlay"
+      class="overlay flex column font-serif text-white overflow-y-scroll"
       :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
     >
-      <div class="overlay-rrrr">
-        <div class="logo">
-          <!-- <RR /> -->
-        </div>
-        <div class="about" ref="about">
+      <div class="w-full flex justify-end">
+        <div class="w-full md:w-[50%] max-h-screen bg-black p-3 justify-self-end overflow-y-scroll hover:bg-white hover:text-black">
           <p class="sans-serif-uppercase">About rrrreflect</p>
-          <p style="margin: 0 0 0.666em 0">{{ c.pages.about.about }}</p>
+          <p class="mb-4">{{ c.pages.about.about }}</p>
           <p>{{ c.pages.about.extended }}</p>
-          <br />
-          <p class="sans-serif-uppercase">publisher</p>
-          <p style="margin: 0 0 0.666em 0">{{ c.pages.about.edition }}</p>
+          <p class="sans-serif-uppercase mt-4">Publisher</p>
+          <p class="mb-4">{{ c.pages.about.edition }}</p>
           <div class="committee">
             <p class="sans-serif-uppercase">Advisory Committee</p>
-            <div class="names">
+            <div class="flex">
               <div>
                 <p>– Prof. Dr. Lasse Scherffig (Coordination)</p>
                 <p>– Prof. Dr. Carolin Höfler</p>
@@ -58,16 +54,23 @@ const about = ref()
 
 <style>
 @font-face {
-  font-family: 'Arizona';
-  src: url('~/assets/fonts/ABCArizonaSerif-Light-Trial.woff2') format('woff2');
+  font-family: 'a';
+  src: url('~/assets/fonts/a.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('~/assets/fonts/Inter.ttf') format('truetype');
+  font-family: 'i';
+  src: url('~/assets/fonts/i.ttf') format('truetype');
   font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'm';
+  src: url('~/assets/fonts/m.woff2') format('woff2');
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -116,7 +119,7 @@ body {
 }
 
 body {
-  font-family: 'Inter', 'limousine', sans-serif;
+  font-family: 'i', 'limousine', sans-serif;
   font-size: 16px;
   font-size: 1.15em;
   line-height: 1;
@@ -128,14 +131,15 @@ body.article {
   background: #f6f6f6;
   background-image: linear-gradient(315deg, #f6f6f6 0%, #e9e9e9 74%);
   color: black;
-  font-family: 'Arizona', serif;
+  font-family: 'a', serif;
   border-left: 5px solid black;
 }
 
 sup {
-  font-family: 'Inter', 'limousine', sans-serif;
+  font-family: 'i', sans-serif;
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: 0.7em;
+  top: -0.4em;
 }
 
 h1 {
@@ -169,13 +173,13 @@ ol {
 }
 
 ol ::marker {
-  font-family: 'Inter', sans-serif;
+  font-family: 'i', sans-serif;
   font-weight: 400;
   text-transform: uppercase;
 }
 
 .sans-serif-uppercase {
-  font-family: 'Inter', 'limousine', sans-serif;
+  font-family: 'i', sans-serif;
   text-transform: uppercase;
 }
 
@@ -185,7 +189,7 @@ header {
   align-items: center;
   width: 100%;
   padding: 1em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'm', monospace;
   font-size: 12px;
   gap: 1em;
   color: #f6f6f6;
@@ -196,52 +200,7 @@ header {
   user-select: none;
 }
 
-.overlay {
-  font-family: 'Arizona', serif;
-  font-size: 1em;
-  color: white;
-  overflow: hidden;
-}
-
-.overlay > div {
-  display: flex;
-}
-
-.overlay-rrrr {
-  columns: 2;
-  gap: 0.666em;
-}
-
-.overlay-rrrr > div {
-  width: 50%;
-}
-
-.overlay-rrrr .logo {
-  /* max-height: 500px; */
-  overflow: hidden;
-  background: transparent;
-}
-
-.overlay-rrrr .about {
-  background: black;
-  padding: 1em;
-}
-
-.overlay-rrrr .about:hover {
-  color: black;
-  background: #f6f6f6;
-}
-
 .overlay-rrrr .committee {
   font-size: 0.8em;
-}
-
-.overlay-rrrr .names {
-  display: flex;
-  gap: 0.666rem;
-}
-
-.overlay-rrrr .names p:first-of-type {
-  margin: 0 0 0.15em 0;
 }
 </style>

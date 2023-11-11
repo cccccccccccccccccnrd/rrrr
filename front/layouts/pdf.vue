@@ -28,7 +28,7 @@ nav {
   display: flex;
   justify-content: space-between;
   padding: 1em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'm', monospace;
   font-size: 12px;
   gap: 1em;
   color: white;
@@ -57,7 +57,7 @@ button,
 input,
 select {
   width: 100%;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'm', monospace;
   font-size: 2em;
   cursor: pointer;
   color: white;

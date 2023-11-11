@@ -121,7 +121,7 @@ export default {
     flex-flow: column nowrap;
   }
 
-  ::v-deep article img:not(.gallery-img) {
+  :deep(article img:not(.gallery-img)) {
     --width: 60vw;
     width: var(--width);
     max-width: 100vw;
@@ -132,7 +132,7 @@ export default {
     margin: 0.666em 0;
   }
 
-  ::v-deep .footnotes p {
+  :deep(.footnotes p) {
     margin: 0.333em 0;
   }
 
@@ -160,7 +160,7 @@ export default {
     padding: 0.666em 0.666em 0 0.666em;
   }
 
-  ::v-deep .block p:not(:first-of-type) {
+  :deep(.block p:not(:first-of-type)) {
     margin: 0.666em 0 0 0;
   }
 
@@ -179,10 +179,10 @@ export default {
     transition: all 1s ease-in-out;
   }
 
-  .side-literature:hover {
+  /* .side-literature:hover {
     position: absolute;
     -webkit-line-clamp: 100;
-  }
+  } */
 
   .side-literature:hover {
     opacity: 1;

@@ -88,8 +88,8 @@
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">Download</p>
-        <a href="#">
-          {{ `${article.title.toLowerCase().replaceAll(' ', '-')}.pdf` }}
+        <a :href="`/${article.download}`">
+          {{ `${article.download}` }}
         </a>
       </div>
     </div>
@@ -217,11 +217,12 @@ const url = computed(() => {
 
 .tag {
   width: fit-content;
-  padding: 0.15em 0.4em;
-  border: 1px solid black;
+  padding: 0.3em 0.4em;
   border-radius: 3px;
-  margin: 0.15em 0.15em 0 0;
-  background: black;
+  margin: 0.2em 0.2em 0 0;
+  background: rgba(0, 0, 0, 1);
   color: white;
+  font-family: 'i';
+  font-size: 0.8em;
 }
 </style>

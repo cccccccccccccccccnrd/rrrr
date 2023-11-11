@@ -10,15 +10,15 @@
         <summary class="pppp">Articles</summary>
         <NuxtLink
           v-for="a in c.pages.articles"
-          class="mt-2 leading-none cursor-pointer block"
+          class="mt-4 leading-none cursor-pointer block"
           @mouseenter="handleMouseEnter($event)"
           @mouseover="current = a.content.cover[0].url"
           @mouseleave="current = ''"
           :to="a.id"
         >
           <div>
-            <p>{{ a.title }}</p>
-            <p class="sans-serif-uppercase text-base leading-none">
+            <p class="leading-none">{{ a.title }}</p>
+            <p class="mt-1 sans-serif-uppercase text-base leading-none">
               {{ a.content.author[0].text }}
             </p>
           </div>
@@ -75,7 +75,10 @@ details > summary {
 }
 
 .pppp {
-  display: inline;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
   padding: 0.5em 0.75em;
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;

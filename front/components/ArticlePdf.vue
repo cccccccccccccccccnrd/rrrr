@@ -182,7 +182,7 @@ figure {
   margin: 0 0 calc(0.666em * 2) 0;
 }
 
-::v-deep .block.text p {
+:deep(.block.text p) {
   margin: 0 0 calc(0.666em * 1) 0;
 }
 
@@ -200,7 +200,7 @@ footer {
   columns: 2;
 }
 
-::v-deep article img:not(.gallery-img) {
+:deep(article img:not(.gallery-img)) {
   /* display: block;
     width: 100%;
     --width: 60vw;
@@ -222,17 +222,17 @@ footer {
   margin: calc(0.666em * 2) 0;
 }
 
-::v-deep .footnote-item {
+:deep(.footnote-item) {
   margin: calc(0.666em * 1) 0;
 }
 
-::v-deep .footnotes p {
+:deep(.footnotes p) {
   display: inline;
   margin: calc(0.666em / 2) 0;
   word-break: break-word;
 }
 
-::v-deep .footnotes-list {
+:deep(.footnotes-list) {
   list-style-position: inside;
 }
 
