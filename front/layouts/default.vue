@@ -10,11 +10,11 @@
       </div>
     </header>
     <div
-      class="overlay flex column font-serif text-white overflow-y-scroll"
+      class="overlay flex column font-serif text-white"
       :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
     >
       <div class="w-full flex justify-end">
-        <div class="w-full md:w-[50%] max-h-screen bg-black p-3 justify-self-end overflow-y-scroll hover:bg-white hover:text-black">
+        <div class="w-full md:w-[50%] max-h-screen bg-black p-3 justify-self-end hover:bg-white hover:text-black">
           <p class="sans-serif-uppercase">About rrrreflect</p>
           <p class="mb-4">{{ c.pages.about.about }}</p>
           <p>{{ c.pages.about.extended }}</p>
