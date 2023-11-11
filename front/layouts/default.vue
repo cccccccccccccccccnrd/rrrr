@@ -10,7 +10,7 @@
       </div>
     </header>
     <div
-      class="overlay flex column font-serif text-white"
+      class="overlay flex column font-serif text-white overflow-hidden"
       :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
     >
       <div class="w-full flex justify-end">
