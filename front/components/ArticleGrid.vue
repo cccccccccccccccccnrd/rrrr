@@ -93,7 +93,7 @@
         </a>
       </div>
     </div>
-    <div class="column">
+    <div class="column main">
       <div class="cell entry">
         <p class="sans-serif-uppercase">
           {{ article.author.length > 0 ? article.author[0].text : 'No author' }}
@@ -195,10 +195,6 @@ const url = computed(() => {
     border-bottom: var(--border); */
 }
 
-.column:last-of-type {
-  border-right: 0;
-}
-
 .column:nth-child(2) {
   width: 100%;
   max-width: calc(600px + calc(0.666em * 2));
@@ -224,5 +220,18 @@ const url = computed(() => {
   color: white;
   font-family: 'i';
   font-size: 0.8em;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    flex-flow: column nowrap;
+  }
+
+  .column {
+    display: none;
+  }
+  .column.main {
+    display: block;
+  }
 }
 </style>

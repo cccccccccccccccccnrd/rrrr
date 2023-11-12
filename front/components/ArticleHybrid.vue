@@ -1,5 +1,5 @@
 <template>
-  <div class="article hybrid">
+  <div class="article hybrid overflow-hidden">
     <ArticleGrid :article="article" />
     <article>
       <div
@@ -123,15 +123,8 @@ article {
   margin-left: calc(50% - calc(var(--width) / 2));
 }
 
-@media (max-width: 768px) {
-  :deep(article img:not(.gallery-img)) {
-    width: 100vw;
-    margin: 0;
-  }
-
-  :deep(article figcaption) {
-    padding: 0 0.666em;
-  }
+:deep(article figcaption) {
+  padding: 0 calc(2 * 0.666rem);
 }
 
 .article-footer {
@@ -167,6 +160,10 @@ article {
   padding: 0.666em;
 }
 
+.block.image > div {
+  padding: 0.666em 0;
+}
+
 .block.heading > div {
   padding: 0.666em 0.666em 0 0.666em;
 }
@@ -198,5 +195,21 @@ article {
 .side-literature:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  :deep(article img:not(.gallery-img)) {
+    width: 100vw;
+    margin: 0;
+  }
+
+  :deep(article figcaption) {
+    padding: 0 calc(1 * 0.666rem);
+  }
+
+  .side.left,
+  .side.right {
+    display: none;
+  }
 }
 </style>

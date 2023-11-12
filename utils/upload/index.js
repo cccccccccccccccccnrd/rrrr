@@ -82,10 +82,8 @@ async function upload (file) {
   const response = await post('pages/articles/children', body)
 
   if (response.status === 'ok') {
-    console.log(response)
     return response.data
   } else {
-    console.log(response)
     console.log(response.message)
   }
 }
@@ -98,7 +96,6 @@ async function image (id, filename) {
   )
   fd.append('template', 'blocks/image')
   const response = await post(`pages/${id}/files`, fd)
-  console.log(response)
   return response.data.id
 }
 
@@ -140,7 +137,6 @@ async function visuals (article) {
     body,
     'patch'
   )
-  console.log(response)
 }
 
 function init () {
