@@ -46,18 +46,25 @@
               src="@/assets/kisd-th-logo.svg"
             />
           </div>
-          <div class="committee">
+          <div class="mb-4 text-sm">
             <p class="sans-serif-uppercase">Advisory Committee</p>
-            <div class="flex">
-              <div>
+            <div class="columns-2">
                 <p>– Prof. Dr. Lasse Scherffig (Coordination)</p>
                 <p>– Prof. Dr. Carolin Höfler</p>
+                <p>– Prof. Michael Gais</p>
                 <p>– Simon Meienberg, Doctoral Candidate</p>
-              </div>
-              <div>
                 <p>– David Sieverding, Research Assistant</p>
                 <p>– Martin Sistig, Research Assistant</p>
-              </div>
+            </div>
+          </div>
+          <div class="text-sm">
+            <p class="sans-serif-uppercase">rrrreflect Development Team</p>
+            <div class="columns-2">
+              <p>– Carolin Höfler</p>
+              <p>– Yvonne Lober</p>
+              <p>– Simon Meienberg</p>
+              <p>– Conrad Weise</p>
+              <p>– Students of KISD Research AG</p>
             </div>
           </div>
         </div>
