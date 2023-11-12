@@ -86,9 +86,9 @@ export default {
             .map(e => e.innerText.match(/\d+/)[0])
             .map(
               n =>
-                `<span class="sans-serif-uppercase">${n}.</span> ${
+                `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${n}">${
                   literature[n - 1]
-                }`
+                }</a>`
             )
         )
       } else {
