@@ -1,55 +1,5 @@
 <template>
-  <div
-    class="fixed top-0 left-0 z-[100] max-h-screen flex flex-col overflow-hidden"
-  >
-    <header>
-      <div>
-        <NuxtLink v-if="c.current.title" to="/" class="group"
-          ><span class="text-base leading-none">⟵</span>
-          <span class="opacity-0 group-hover:opacity-100"
-            >overview</span
-          ></NuxtLink
-        >
-      </div>
-      <div v-if="!isMobile">{{ c.current.title }}</div>
-      <div
-        @click="overlay ? (overlay = false) : (overlay = true)"
-        class="break-keep cursor-pointer"
-      >
-        rrrreflect{{ overlay ? ' ●' : ' ○' }}<span></span>
-      </div>
-    </header>
-    <div
-      class="overlay flex column font-serif text-white overflow-hidden grow"
-      :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
-    >
-      <div class="w-full flex justify-end">
-        <div
-          class="w-full md:w-[50%] bg-black p-3 justify-self-end hover:bg-white hover:text-black overflow-y-auto"
-        >
-          <p class="sans-serif-uppercase">About rrrreflect</p>
-          <p class="mb-4">{{ c.pages.about.about }}</p>
-          <p>{{ c.pages.about.extended }}</p>
-          <p class="sans-serif-uppercase mt-4">Publisher</p>
-          <p class="mb-4">{{ c.pages.about.edition }}</p>
-          <div class="committee">
-            <p class="sans-serif-uppercase">Advisory Committee</p>
-            <div class="flex">
-              <div>
-                <p>– Prof. Dr. Lasse Scherffig (Coordination)</p>
-                <p>– Prof. Dr. Carolin Höfler</p>
-                <p>– Simon Meienberg, Doctoral Candidate</p>
-              </div>
-              <div>
-                <p>– David Sieverding, Research Assistant</p>
-                <p>– Martin Sistig, Research Assistant</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <RHeader/>
   <slot />
 </template>
 
@@ -57,9 +7,6 @@
 const { data: content } = await useFetch('/api/content')
 const c = useContent()
 c.value.pages = content.value.pages
-const overlay = ref(false)
-
-const { isMobile } = useDevice()
 </script>
 
 <style>
@@ -198,27 +145,5 @@ ol ::marker {
 .sans-serif-uppercase {
   font-family: 'i', sans-serif;
   text-transform: uppercase;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 3em;
-  padding: 1em;
-  font-family: 'm', monospace;
-  font-size: 12px;
-  gap: 1em;
-  color: #f6f6f6;
-  background: black;
-  text-transform: uppercase;
-  font-weight: bold;
-  z-index: 100;
-  user-select: none;
-}
-
-.overlay-rrrr .committee {
-  font-size: 0.8em;
 }
 </style>
