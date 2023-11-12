@@ -16,7 +16,6 @@ if (process.argv.length === 2) {
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const url = 'http://0.0.0.0:8000/api/'
 const folder = process.argv[2]
 
 const md = new MarkdownIt()
@@ -30,7 +29,7 @@ md.renderer.rules.footnote_anchor = () => {
 }
 
 async function post (route, body, patch) {
-  const response = await fetch(`${url}${route}`, {
+  const response = await fetch(`${process.env.BASE_URL}/${route}`, {
     method: patch ? 'patch' : 'post',
     headers: {
       Authorization: process.env.AUTH
@@ -59,7 +58,7 @@ function parse (article) {
     meta: {
       ...meta.attributes,
       literature,
-      doi: '10.11588/ic.2021.3.81537',
+      doi: '00.00000/aa.2023.0.00000',
       license: 'Creative Commons license (CC BY 4.0)',
       suggestion: `${meta.attributes.author.split(' ')[1]}, ${meta.attributes.author.split(' ')[0]}. 2023. ${meta.attributes.title}. Cologne: rrrreflect.`
     },
@@ -86,6 +85,7 @@ async function upload (file) {
     console.log(response)
     return response.data
   } else {
+    console.log(response)
     console.log(response.message)
   }
 }

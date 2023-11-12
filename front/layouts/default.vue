@@ -1,20 +1,32 @@
 <template>
-  <div class="fixed top-0 left-0 z-[100]">
+  <div
+    class="fixed top-0 left-0 z-[100] max-h-screen flex flex-col overflow-hidden"
+  >
     <header>
       <div>
-        <NuxtLink v-if="c.current.title" to="/" class="group"><span style="font-size: 16px; line-height: 0">⟵</span> <span class="opacity-0 group-hover:opacity-100">overview</span></NuxtLink>
+        <NuxtLink v-if="c.current.title" to="/" class="group"
+          ><span class="text-base leading-none">⟵</span>
+          <span class="opacity-0 group-hover:opacity-100"
+            >overview</span
+          ></NuxtLink
+        >
       </div>
-      <div>{{ c.current.title }} <span style="font-size: 16px; line-height: 0; display: none;">↑</span></div>
-      <div @click="overlay ? (overlay = false) : (overlay = true)" class="cursor-pointer">
-        rrrreflect{{ overlay ? ' ●' : ' ○' }} <span></span>
+      <div v-if="!isMobile">{{ c.current.title }}</div>
+      <div
+        @click="overlay ? (overlay = false) : (overlay = true)"
+        class="break-keep cursor-pointer"
+      >
+        rrrreflect{{ overlay ? ' ●' : ' ○' }}<span></span>
       </div>
     </header>
     <div
-      class="overlay flex column font-serif text-white overflow-hidden"
+      class="overlay flex column font-serif text-white overflow-hidden grow"
       :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
     >
       <div class="w-full flex justify-end">
-        <div class="w-full md:w-[50%] max-h-screen bg-black p-3 justify-self-end hover:bg-white hover:text-black">
+        <div
+          class="w-full md:w-[50%] bg-black p-3 justify-self-end hover:bg-white hover:text-black overflow-y-auto"
+        >
           <p class="sans-serif-uppercase">About rrrreflect</p>
           <p class="mb-4">{{ c.pages.about.about }}</p>
           <p>{{ c.pages.about.extended }}</p>
@@ -45,11 +57,9 @@
 const { data: content } = await useFetch('/api/content')
 const c = useContent()
 c.value.pages = content.value.pages
-console.log(c.value)
 const overlay = ref(false)
-const about = ref()
 
-/* onClickOutside(about, (event) => overlay.value = false) */
+const { isMobile } = useDevice()
 </script>
 
 <style>
@@ -135,6 +145,12 @@ body.article {
   border-left: 5px solid black;
 }
 
+@media (max-width: 768px) {
+  body.article {
+    border: 0;
+  }
+}
+
 sup {
   font-family: 'i', sans-serif;
   text-transform: uppercase;
@@ -170,6 +186,7 @@ figcaption {
 
 ol {
   list-style-type: decimal;
+  list-style-position: inside;
 }
 
 ol ::marker {
@@ -188,6 +205,7 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 3em;
   padding: 1em;
   font-family: 'm', monospace;
   font-size: 12px;

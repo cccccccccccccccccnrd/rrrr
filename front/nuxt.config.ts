@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt"],
+  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@nuxtjs/device'],
   runtimeConfig: {
     baseURL: process.env.BASE_URL,
     auth: process.env.AUTH
@@ -30,7 +30,8 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'rrrreflect' },
         {
           property: 'og:description',
-          content: 'rrrreflect is a digital open-access journal that publishes outstanding works of student design research at KISD under the Creative Commons licence CC-BY. With this design-scientific journal, we open up an experimental field for textual and non-textual forms of knowledge such as image, video and sound. In doing so, we enter into a dialogue with the current discourse on the scientificity of design research and at the same time refer to the sensual dimensions of perception as epistemically constituting.'
+          content:
+            'rrrreflect is a digital open-access journal that publishes outstanding works of student design research at KISD under the Creative Commons licence CC-BY. With this design-scientific journal, we open up an experimental field for textual and non-textual forms of knowledge such as image, video and sound. In doing so, we enter into a dialogue with the current discourse on the scientificity of design research and at the same time refer to the sensual dimensions of perception as epistemically constituting.'
         },
         { property: 'og:type', content: 'website' },
         {
@@ -39,7 +40,10 @@ export default defineNuxtConfig({
         },
         { property: 'og:image:width', content: '1000' },
         { property: 'og:image:height', content: '562' },
-        { property: 'og:site_name', content: 'rrrreflect Journal of Integrated Design Research' },
+        {
+          property: 'og:site_name',
+          content: 'rrrreflect Journal of Integrated Design Research'
+        }
       ],
       link: [{ rel: 'icon', type: 'image/png', href: 'imgs/app/app-192.png' }]
     }
