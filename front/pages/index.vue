@@ -78,7 +78,7 @@ details > summary {
   align-items: center;
   width: fit-content;
   padding: 0.5em 0.75em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'm', monospace;
   font-size: 12px;
   text-transform: uppercase;
   background: rgba(255, 255, 255, 0);
