@@ -59,8 +59,8 @@ c.value.pages = content.value.pages
 }
 
 ::selection {
-  color: black;
-  background: #f6f6f6;
+  color: #f6f6f6;
+  background: black;
 }
 
 * {

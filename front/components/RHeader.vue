@@ -56,7 +56,7 @@
           </div>
           <div class="text-sm flex justify-between">
             <p><a href="https://kisd.de/en/imprint/" target="_blank">Imprint</a></p>
-            <p>ty ~ <a href="https://getkirby.com/" target="_blank">Kirby</a> and <a href="https://abcdinamo.com/" target="_blank">DINAMO</a></p>
+            <p>ty ~ <a href="https://getkirby.com/" target="_blank">Kirby</a>, <a href="https://abcdinamo.com/" target="_blank">DINAMO</a></p>
           </div>
         </div>
       </div>

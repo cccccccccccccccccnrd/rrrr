@@ -61,6 +61,11 @@ function handleMouseEnter (event) {
 </script>
 
 <style scoped>
+::selection {
+  color: black;
+  background: #f6f6f6;
+}
+
 details[open] .pppp {
   border: 1px solid rgba(255, 255, 255, 0.4);
 }

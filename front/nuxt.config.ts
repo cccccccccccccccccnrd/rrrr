@@ -31,7 +31,7 @@ export default defineNuxtConfig({
         {
           property: 'og:description',
           content:
-            'rrrreflect is a digital open-access journal that publishes outstanding works of student design research at KISD under the Creative Commons licence CC-BY. With this design-scientific journal, we open up an experimental field for textual and non-textual forms of knowledge such as image, video and sound. In doing so, we enter into a dialogue with the current discourse on the scientificity of design research and at the same time refer to the sensual dimensions of perception as epistemically constituting.'
+            '"rrrreflect Journal of Integrated Design Research" is a publication of KISDedition, the publishing department of Köln International School of Design (KISD). rrrreflect is a digital open-access journal that publishes outstanding works of student and faculty design research at KISD under the Creative Commons license CC-BY. It is published online and archived as a publication series by Cologne Open Science. With this design research journal, we open up an experimental field for textual and non-textual forms of knowledge, including image, video and sound. In doing so, we enter into a dialogue with the current discourse on the scientificity of design research and at the same time refer to the sensual dimensions of perception as epistemically constituting.'
         },
         { property: 'og:type', content: 'website' },
         {
