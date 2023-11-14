@@ -29,7 +29,7 @@
         >
           <p class="sans-serif-uppercase">About rrrreflect</p>
           <div class="mb-4" v-html="c.pages.about.about"></div>
-          <div v-html="c.pages.about.extended"></div>
+          <div v-html="c.pages.about.extended" class="extended"></div>
           <p class="sans-serif-uppercase mt-4">Publisher</p>
           <div class="mb-4 flex gap-4">
             <div v-html="c.pages.about.edition"></div>
@@ -92,9 +92,14 @@ header {
   border-bottom: 1px dotted;
 }
 
+:deep(.extended p) {
+  margin-bottom: 1rem;
+}
+
 :deep(ul) {
   columns: 2;
   list-style-position: inside;
   list-style-type: '– ';
 }
+
 </style>
