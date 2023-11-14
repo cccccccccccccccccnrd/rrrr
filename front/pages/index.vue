@@ -17,7 +17,7 @@
           :to="a.id"
         >
           <div>
-            <p class="leading-none">{{ a.title }}</p>
+            <p class="leading-none font-serif text-2xl">{{ a.title }}</p>
             <p class="mt-1 sans-serif-uppercase text-base leading-none">
               {{ a.content.author[0].text }}
             </p>
@@ -62,8 +62,6 @@ function handleMouseEnter (event) {
 
 <style scoped>
 details {
-  font-family: 'Arizona', serif;
-  font-size: 1.5em;
 }
 
 details[open] .pppp {
