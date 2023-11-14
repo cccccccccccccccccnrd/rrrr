@@ -68,7 +68,7 @@ details[open] .pppp {
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-details > summary {
+details > summary, details summary::-webkit-details-marker {
   list-style: none;
 }
 
