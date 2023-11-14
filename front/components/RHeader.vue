@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 left-0 z-[100] max-h-screen flex flex-col overflow-hidden"
+    class="fixed top-0 left-0 z-[100] max-h-[calc(100dvh)] flex flex-col overflow-hidden"
   >
     <header>
       <div>
