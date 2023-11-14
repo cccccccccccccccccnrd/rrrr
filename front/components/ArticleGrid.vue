@@ -112,7 +112,7 @@
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">License</p>
-        {{ article.license }}
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">{{ article.license }}</a>
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">Citation Suggestion</p>

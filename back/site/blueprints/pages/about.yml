@@ -14,12 +14,16 @@ columns:
   - width: 1/2
     fields:
       about:
-        type: textarea
+        type: writer
+      extended:
+        type: writer
   - width: 1/2
     fields:
       edition:
-        type: textarea
-  - width: 1/2
-    fields:
-      extended:
-        type: textarea
+        type: writer
+      advisory:
+        label: "Advisory Committee"
+        type: list
+      development:
+        label: "Development Team"
+        type: list

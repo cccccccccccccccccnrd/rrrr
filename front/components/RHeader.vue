@@ -28,13 +28,13 @@
           class="group w-full md:w-[50%] bg-black p-3 justify-self-end hover:bg-white hover:text-black overflow-y-auto"
         >
           <p class="sans-serif-uppercase">About rrrreflect</p>
-          <p class="mb-4">{{ c.pages.about.about }}</p>
-          <p>{{ c.pages.about.extended }}</p>
+          <div class="mb-4" v-html="c.pages.about.about"></div>
+          <div v-html="c.pages.about.extended"></div>
           <p class="sans-serif-uppercase mt-4">Publisher</p>
           <div class="mb-4 flex gap-4">
-            <p>{{ c.pages.about.edition }}</p>
+            <div v-html="c.pages.about.edition"></div>
             <img
-              class="max-w-[120px] h-full invert cursor-pointer group-hover:invert-0"
+              class="max-w-[120px] h-full invert cursor-pointer group-hover:invert-0 opacity-80"
               @click="
                 navigateTo('https://kisd.de', {
                   open: {
@@ -48,24 +48,15 @@
           </div>
           <div class="mb-4 text-sm">
             <p class="sans-serif-uppercase">Advisory Committee</p>
-            <div class="columns-2">
-                <p>– Prof. Dr. Lasse Scherffig (Coordination)</p>
-                <p>– Prof. Dr. Carolin Höfler</p>
-                <p>– Prof. Michael Gais</p>
-                <p>– Simon Meienberg, Doctoral Candidate</p>
-                <p>– David Sieverding, Research Assistant</p>
-                <p>– Martin Sistig, Research Assistant</p>
-            </div>
+            <div v-html="c.pages.about.advisory"></div>
           </div>
-          <div class="text-sm">
+          <div class="mb-4 text-sm">
             <p class="sans-serif-uppercase">rrrreflect Development Team</p>
-            <div class="columns-2">
-              <p>– Carolin Höfler</p>
-              <p>– Yvonne Lober</p>
-              <p>– Simon Meienberg</p>
-              <p>– Conrad Weise</p>
-              <p>– Students of KISD Research AG</p>
-            </div>
+            <div v-html="c.pages.about.development"></div>
+          </div>
+          <div class="text-sm flex justify-between">
+            <p><a href="https://kisd.de/en/imprint/" target="_blank">Imprint</a></p>
+            <p>ty ~ <a href="https://getkirby.com/" target="_blank">Kirby</a> and <a href="https://abcdinamo.com/" target="_blank">DINAMO</a></p>
           </div>
         </div>
       </div>
@@ -78,7 +69,7 @@ const overlay = ref(false)
 const { isMobile } = useDevice()
 </script>
 
-<style>
+<style scoped>
 header {
   display: flex;
   justify-content: space-between;
@@ -96,7 +87,14 @@ header {
   user-select: none;
 }
 
-.overlay-rrrr .committee {
-  font-size: 0.8em;
+:deep(p a) {
+  line-height: 0.5;
+  border-bottom: 1px dotted;
+}
+
+:deep(ul) {
+  columns: 2;
+  list-style-position: inside;
+  list-style-type: '– ';
 }
 </style>

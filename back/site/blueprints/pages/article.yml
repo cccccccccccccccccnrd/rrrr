@@ -46,6 +46,8 @@ columns:
             type: text
           download:
             type: text
+          correction:
+            type: text
           published:
             type: date
             default: now

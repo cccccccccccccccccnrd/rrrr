@@ -45,7 +45,7 @@ export default defineNuxtConfig({
           content: 'rrrreflect Journal of Integrated Design Research'
         }
       ],
-      link: [{ rel: 'icon', type: 'image/png', href: 'imgs/app/app-192.png' }]
+      link: [{ rel: 'icon', type: 'image/png', href: 'favicon.png' }]
     }
   },
   devServer: {
