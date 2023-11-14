@@ -92,7 +92,6 @@ header {
   color: #f6f6f6;
   background: black;
   text-transform: uppercase;
-  font-weight: bold;
   z-index: 100;
   user-select: none;
 }
