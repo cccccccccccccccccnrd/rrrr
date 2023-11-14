@@ -1,5 +1,5 @@
 <template>
-  <p class="rrrr">
+  <p class="rrrr" ref="pppp">
     <span
       v-for="(r, index) in no"
       :style="`opacity: ${
@@ -16,7 +16,17 @@ const min = ref(6)
 const max = ref(12)
 const no = ref(Math.floor(Math.random() * max.value) + min.value)
 
-const { pressed } = useMousePressed()
+const pppp = ref(null)
+const { isSwiping, direction } = useSwipe(pppp)
+
+watch(direction, () => {
+  if (direction.value === 'right') {
+    no.value = no.value + 1
+  } else if (direction.value === 'left') {
+    if (no.value === 4) return
+    no.value = no.value - 1
+  }
+})
 
 onKeyStroke('ArrowLeft', e => {
   e.preventDefault()
@@ -45,6 +55,7 @@ function scale(number: any, [inMin, inMax]: any, [outMin, outMax]: any) {
   font-size: 3em;
   line-height: 1;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 @media only screen and (max-width: 800px) {

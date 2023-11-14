@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col justify-between mt-9 m-5">
-    <R />
-    <div class="mt-5 max-w-[600px]">
+  <div class="flex flex-col justify-between mt-9">
+    <R class="ml-5"/>
+    <div class="mt-5 max-w-[600px] m-5">
       <!-- <details>
         <summary class="pppp">About</summary>
         <p class="mt-2 leading-none">{{ about.extended }}</p>
@@ -61,9 +61,6 @@ function handleMouseEnter (event) {
 </script>
 
 <style scoped>
-details {
-}
-
 details[open] .pppp {
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
