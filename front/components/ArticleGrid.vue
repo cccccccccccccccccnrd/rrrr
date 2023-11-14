@@ -122,6 +122,10 @@
         <p class="sans-serif-uppercase">Author</p>
         {{ article.author.length > 0 ? article.author[0].text : 'No author' }}
       </div>
+      <div class="cell">
+        <p class="sans-serif-uppercase">Text correction</p>
+        {{ article.correction }}
+      </div>
     </div>
   </div>
 </template>

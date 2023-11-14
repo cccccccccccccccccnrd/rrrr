@@ -164,6 +164,10 @@ article {
   padding: 0.666em 0;
 }
 
+.block.gallery > div {
+  padding: 0.666em 0;
+}
+
 .block.heading > div {
   padding: 0.666em 0.666em 0 0.666em;
 }

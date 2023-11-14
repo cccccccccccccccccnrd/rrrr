@@ -7,17 +7,12 @@
       :modules="modules"
       class="swiper"
     >
-      <swiper-slide
-        v-for="(image, i) in images"
-        :key="`image-${i}`"
-      >
+      <swiper-slide v-for="(image, i) in images" :key="`image-${i}`">
         <figure>
-          <img
-            class="gallery-img"
-            :src="image.url"
-          >
+          <img class="gallery-img" :src="image.url" />
           <figcaption>
-            <span class="sans-serif-uppercase">FIG {{ getFigNo(image) }}</span> {{ image.content.caption }}
+            <span class="sans-serif-uppercase">FIG {{ getFigNo(image) }}</span>
+            {{ image.content.caption }}
           </figcaption>
         </figure>
       </swiper-slide>
@@ -65,7 +60,8 @@ export default {
 </script>
 
 <style scoped>
-.swiper {}
+.swiper {
+}
 
 img {
   max-width: initial;
@@ -90,5 +86,12 @@ figure {
 
 figcaption {
   padding: 0 1em 0 0;
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    width: 100%;
+    margin: 0;
+  }
 }
 </style>
