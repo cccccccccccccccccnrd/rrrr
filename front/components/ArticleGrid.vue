@@ -108,7 +108,7 @@
     <div class="column">
       <div class="cell">
         <p class="sans-serif-uppercase">DOI</p>
-        {{ article.doi }}
+        <a :href="`https://doi.org/${article.doi}`" target="_blank">{{ article.doi }}</a>
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">License</p>
