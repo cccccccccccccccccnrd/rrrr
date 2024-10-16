@@ -6,8 +6,8 @@ import fetch from 'node-fetch'
 import MarkdownIt from 'markdown-it'
 import mdfigcaption from 'markdown-it-image-figures'
 import mdfootnote from 'markdown-it-footnote'
-import fm from 'front-matter'
 import FormData from 'form-data'
+import mammoth from 'mammoth'
 
 if (process.argv.length === 2) {
   console.error('please provide folder name')
@@ -28,7 +28,7 @@ md.renderer.rules.footnote_anchor = () => {
   return ''
 }
 
-async function post (route, body, patch) {
+async function post(route, body, patch) {
   const response = await fetch(`${process.env.BASE_URL}/${route}`, {
     method: patch ? 'patch' : 'post',
     headers: {
@@ -40,36 +40,60 @@ async function post (route, body, patch) {
   return json
 }
 
-function read (path) {
+function read(path) {
   return fs.readFileSync(path, 'utf-8')
 }
 
-function parse (article) {
-  const meta = fm(article)
-  const content = article
-    .split('\n')
-    .splice(meta.bodyBegin - 1)
-    .join('\n')
-  const [html, literature] = md
-    .render(content)
-    .split('<hr class="footnotes-sep">')
+function meta(m, article) {
+  const regex = new RegExp(`<h2>${m.charAt(0).toUpperCase() + m.slice(1)}: (.*?)<\/h2>`, 'g')
+  const match = [...article.matchAll(regex)]
+  if (match.length > 0) {
+    return match[0][1]
+  } else {
+    return ''
+  }
+}
+
+function parse(article) {
+  const visuals = [...article.matchAll(/(<p>!\[).*?("\)<\/p>)/g)]
+  const literature = article.match(/(<ol>).*(<\/ol>)/g)[0]
+  let html = article
+
+  visuals.map((v) => (html = html.replace(v[0], md.render(v[0].replace(/<p>|<\/p>/g, '')))))
+  html = html.replace(literature, '')
+  html = html.replace(/<h2>(.*)<\/h2>/g, '')
+
+  const title = meta('title', article)
+  const author = meta('author', article)
+  const abstract = meta('abstract', article)
+  const context = meta('context', article)
+  const tags = meta('tags', article)
+  const suggestion = `${author.split(' ')[1]}, ${
+    author.split(' ')[0]
+  }. ${new Date().getFullYear()}. ${title}. Cologne: rrrreflect.`
 
   return {
     meta: {
-      ...meta.attributes,
-      literature,
-      doi: '00.00000/aa.2023.0.00000',
+      title,
+      author,
+      abstract,
+      context,
+      tags,
+      suggestion,
+      doi: '',
       license: 'Creative Commons license (CC BY 4.0)',
-      suggestion: `${meta.attributes.author.split(' ')[1]}, ${meta.attributes.author.split(' ')[0]}. 2023. ${meta.attributes.title}. Cologne: rrrreflect.`
+      literature
     },
     html
   }
 }
 
-async function upload (file) {
-  const article = read(path.join(__dirname, `articles/${folder}/${file}`))
-  const { meta, html } = parse(article)
-  console.log(meta, html)
+async function upload(file) {
+  const p = path.join(__dirname, `articles/${folder}/${file}`)
+  const article = await mammoth.convertToHtml({ path: p })
+  /* await fs.writeFileSync(`${p}.html`, article.value) */
+  const { meta, html } = parse(article.value)
+  // console.log(meta, html)
   const body = {
     title: meta.title,
     template: 'article',
@@ -88,30 +112,22 @@ async function upload (file) {
   }
 }
 
-async function image (id, filename) {
+async function image(id, filename) {
   const fd = new FormData()
-  fd.append(
-    'file',
-    fs.createReadStream(path.join(__dirname, `articles/${folder}/${filename}`))
-  )
+  fd.append('file', fs.createReadStream(path.join(__dirname, `articles/${folder}/${filename}`)))
   fd.append('template', 'blocks/image')
   const response = await post(`pages/${id}/files`, fd)
   return response.data.id
 }
 
-async function visuals (article) {
+async function visuals(article) {
   const images = article.content.text
-    .filter(b => b.type === 'image' && b.content.location === 'web')
-    .map(b => b.content.src)
-  await Promise.all(
-    images.map(
-      async filename => await image(article.id.replace('/', '+'), filename)
-    )
-  )
+    .filter((b) => b.type === 'image' && b.content.location === 'web')
+    .map((b) => b.content.src)
+  await Promise.all(images.map(async (filename) => await image(article.id.replace('/', '+'), filename)))
 
   const body = {
-    text: article.content.text.map(b => {
-      console.log(b)
+    text: article.content.text.map((b) => {
       if (b.type === 'image' && b.content.location === 'web') {
         return {
           ...b,
@@ -132,19 +148,14 @@ async function visuals (article) {
     })
   }
 
-  const response = await post(
-    `pages/${article.id.replace('/', '+')}`,
-    body,
-    'patch'
-  )
+  const response = await post(`pages/${article.id.replace('/', '+')}`, body, 'patch')
 }
 
-function init () {
+async function init() {
   const files = fs
     .readdirSync(path.join(__dirname, `articles/${folder}`))
-    .filter(f => f.endsWith('.md') && !f.includes('backup'))
-  console.log(files)
-  files.map(async file => {
+    .filter((f) => f.endsWith('.docx') && !f.includes('backup') && !f.includes('$'))
+  files.map(async (file) => {
     const article = await upload(file)
     await visuals(article)
   })
