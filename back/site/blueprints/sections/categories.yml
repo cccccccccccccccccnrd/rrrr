@@ -1,0 +1,10 @@
+type: pages
+label: Categories
+layout: cardlets
+parent: kirby.page("categories")
+info: "{{ page.published }}"
+template: category
+empty: No cateogies yet
+image:
+  query: page.image
+  cover: true

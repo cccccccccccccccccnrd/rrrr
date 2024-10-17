@@ -26,6 +26,12 @@ columns:
       meta:
         type: fields
         fields:
+          category:
+            label: Category
+            type: select
+            options:
+              type: query
+              query: site.find("categories").children()
           abstract:
             type: textarea
           literature:

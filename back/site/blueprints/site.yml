@@ -2,10 +2,11 @@ columns:
   - width: 2/2
     sections:
       articles: sections/articles
-  
+
   - width: 1/2
     sections:
       authors: sections/authors
+      categories: sections/categories
   - width: 1/2
     sections:
       pages:
