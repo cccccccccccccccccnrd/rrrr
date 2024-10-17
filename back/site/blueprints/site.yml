@@ -5,8 +5,8 @@ columns:
 
   - width: 1/2
     sections:
-      authors: sections/authors
       categories: sections/categories
+      authors: sections/authors
   - width: 1/2
     sections:
       pages:
