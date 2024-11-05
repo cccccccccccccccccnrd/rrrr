@@ -2,7 +2,7 @@ type: pages
 headline: Articles
 parent: kirby.page("articles")
 layout: cards
-info: "{{ page.author }} {{ page.category }}"
+info: "{{ page.author }}<br>in {{ site.find(page.category).title }}"
 sortBy: date desc
 empty: No articles yet
 image:
