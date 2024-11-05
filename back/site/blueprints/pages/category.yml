@@ -8,19 +8,20 @@ status:
 columns:
   - width: 2/3
     fields:
-      title:
-        type: textarea
-        label: Title
       description:
-        type: textarea
+        type: writer
         label: Description
+        toolbar:
+          inline: false
 
   - width: 1/3
-    sections:
-      files:
-        type: fields
-        fields:
-          image:
-            type: files
-            label: Image
-            max: 1
+    fields:
+      color:
+        type: color
+        label: Color
+        options:
+          - "#f8b195"
+          - "#f67280"
+          - "#c06c84"
+          - "#6c5b7b"
+          - "#355c7d"

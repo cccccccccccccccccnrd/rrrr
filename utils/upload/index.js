@@ -59,7 +59,10 @@ function parse(article) {
   const literature = article.match(/(<ol>).*(<\/ol>)/g)[0]
   let html = article
 
-  visuals.map((v) => (html = html.replace(v[0], md.render(v[0].replace(/<p>|<\/p>/g, '')))))
+  visuals.map((v) => {
+    console.log('WTF', v[0], v[0].replace(/<p>|<\/p>/g, ''), md.render(v[0].replace(/<p>|<\/p>/g, '')))
+    html = html.replace(v[0], md.render(v[0].replace(/<p>|<\/p>/g, '')))
+  })
   html = html.replace(literature, '')
   html = html.replace(/<h2>(.*)<\/h2>/g, '')
 
@@ -91,9 +94,8 @@ function parse(article) {
 async function upload(file) {
   const p = path.join(__dirname, `articles/${folder}/${file}`)
   const article = await mammoth.convertToHtml({ path: p })
-  /* await fs.writeFileSync(`${p}.html`, article.value) */
   const { meta, html } = parse(article.value)
-  // console.log(meta, html)
+
   const body = {
     title: meta.title,
     template: 'article',

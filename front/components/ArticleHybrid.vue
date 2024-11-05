@@ -1,20 +1,11 @@
 <template>
-  <div class="article hybrid overflow-hidden">
+  <div class="article hybrid overflow-hidden text-black bg-white">
     <ArticleGrid :article="article" />
     <article>
-      <div
-        v-for="(block, bi) in article.text"
-        :key="`block-${bi}`"
-        :class="block.type"
-        class="block"
-      >
+      <div v-for="(block, bi) in article.text" :key="`block-${bi}`" :class="block.type" class="block">
         <div class="left side" />
         <div class="mid">
-          <ArticleGallery
-            v-if="block.type === 'gallery'"
-            :images="block.content.images"
-            :type="block.content.type"
-          />
+          <ArticleGallery v-if="block.type === 'gallery'" :images="block.content.images" :type="block.content.type" />
           <div v-if="block.type === 'text'" v-html="block.content.text" />
           <div v-if="block.type === 'heading'">
             <h2 v-if="block.content.level === 'h2'">
@@ -27,9 +18,7 @@
           <figure v-if="block.type === 'image'">
             <img :src="block.content.image[0].url" />
             <figcaption>
-              <span class="sans-serif-uppercase"
-                >FIG {{ getFigNo(block) }}</span
-              >
+              <span class="sans-serif-uppercase">FIG {{ getFigNo(block) }}</span>
               {{ block.content.caption }}
             </figcaption>
           </figure>
@@ -65,38 +54,36 @@ export default {
   props: {
     article: Object
   },
-  data () {
+  data() {
     return {
       literature: []
     }
   },
   methods: {
-    parseLiterature (string) {
+    parseLiterature(string) {
       const div = document.createElement('DIV')
       div.innerHTML = string
-      return [...div.querySelectorAll('li')].map(e => e.innerText)
+      return [...div.querySelectorAll('li')].map((e) => e.innerText)
     },
-    getLiterature (block) {
+    getLiterature(block) {
       if (process.client) {
         const literature = this.parseLiterature(this.article.literature)
         const div = document.createElement('DIV')
         div.innerHTML = block.content.text
         return new Set(
           [...div.querySelectorAll('sup')]
-            .map(e => e.innerText.match(/\d+/)[0])
+            .map((e) => e.innerText.match(/\d+/)[0])
             .map(
-              n =>
-                `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${n}">${
-                  literature[n - 1]
-                }</a>`
+              (n) =>
+                `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${n}">${literature[n - 1]}</a>`
             )
         )
       } else {
         return []
       }
     },
-    getFigNo (block) {
-      const images = this.article.text.filter(b => b.type === 'image')
+    getFigNo(block) {
+      const images = this.article.text.filter((b) => b.type === 'image')
       const index = images.indexOf(block)
       return index + 1
     }

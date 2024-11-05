@@ -4,8 +4,67 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "539b37f092ddb97843f13e972961cf64",
+    "content-hash": "20bac70a586a45bb5bf0d9252f5719b7",
     "packages": [
+        {
+            "name": "christian-riesen/base32",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ChristianRiesen/base32.git",
+                "reference": "2e82dab3baa008e24a505649b0d583c31d31e894"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ChristianRiesen/base32/zipball/2e82dab3baa008e24a505649b0d583c31d31e894",
+                "reference": "2e82dab3baa008e24a505649b0d583c31d31e894",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8.5.13 || ^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Base32\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Riesen",
+                    "email": "chris.riesen@gmail.com",
+                    "homepage": "http://christianriesen.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Base32 encoder/decoder according to RFC 4648",
+            "homepage": "https://github.com/ChristianRiesen/base32",
+            "keywords": [
+                "base32",
+                "decode",
+                "encode",
+                "rfc4648"
+            ],
+            "support": {
+                "issues": "https://github.com/ChristianRiesen/base32/issues",
+                "source": "https://github.com/ChristianRiesen/base32/tree/1.6.0"
+            },
+            "time": "2021-02-26T10:19:33+00:00"
+        },
         {
             "name": "claviska/simpleimage",
             "version": "4.2.0",
@@ -61,16 +120,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.4.0",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "35e8d0af4486141bc745f23a29cc2091eb624a32"
+                "reference": "c51258e759afdb17f1fd1fe83bc12baaef6309d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/35e8d0af4486141bc745f23a29cc2091eb624a32",
-                "reference": "35e8d0af4486141bc745f23a29cc2091eb624a32",
+                "url": "https://api.github.com/repos/composer/semver/zipball/c51258e759afdb17f1fd1fe83bc12baaef6309d6",
+                "reference": "c51258e759afdb17f1fd1fe83bc12baaef6309d6",
                 "shasum": ""
             },
             "require": {
@@ -122,7 +181,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.4.0"
+                "source": "https://github.com/composer/semver/tree/3.4.2"
             },
             "funding": [
                 {
@@ -138,7 +197,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-31T09:50:34+00:00"
+            "time": "2024-07-12T11:35:52+00:00"
         },
         {
             "name": "filp/whoops",
@@ -213,21 +272,22 @@
         },
         {
             "name": "getkirby/cms",
-            "version": "3.10.1.1",
+            "version": "4.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getkirby/kirby.git",
-                "reference": "1953eb4979f6d05ce7779c547bf761517024cccb"
+                "reference": "eb47158e91e74184ab291ede020664f1d2829f74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getkirby/kirby/zipball/1953eb4979f6d05ce7779c547bf761517024cccb",
-                "reference": "1953eb4979f6d05ce7779c547bf761517024cccb",
+                "url": "https://api.github.com/repos/getkirby/kirby/zipball/eb47158e91e74184ab291ede020664f1d2829f74",
+                "reference": "eb47158e91e74184ab291ede020664f1d2829f74",
                 "shasum": ""
             },
             "require": {
+                "christian-riesen/base32": "1.6.0",
                 "claviska/simpleimage": "4.2.0",
-                "composer/semver": "3.4.0",
+                "composer/semver": "3.4.2",
                 "ext-ctype": "*",
                 "ext-curl": "*",
                 "ext-dom": "*",
@@ -247,7 +307,7 @@
                 "phpmailer/phpmailer": "6.9.1",
                 "symfony/polyfill-intl-idn": "1.30.0",
                 "symfony/polyfill-mbstring": "1.30.0",
-                "symfony/yaml": "6.4.8"
+                "symfony/yaml": "6.4.11"
             },
             "replace": {
                 "symfony/polyfill-php72": "*"
@@ -292,7 +352,7 @@
                     "homepage": "https://getkirby.com"
                 }
             ],
-            "description": "The Kirby 3 core",
+            "description": "The Kirby core",
             "homepage": "https://getkirby.com",
             "keywords": [
                 "cms",
@@ -311,7 +371,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-08-29T08:36:26+00:00"
+            "time": "2024-09-23T09:42:01+00:00"
         },
         {
             "name": "getkirby/composer-installer",
@@ -1061,16 +1121,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v6.4.8",
+            "version": "v6.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "52903de178d542850f6f341ba92995d3d63e60c9"
+                "reference": "be37e7f13195e05ab84ca5269365591edd240335"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/52903de178d542850f6f341ba92995d3d63e60c9",
-                "reference": "52903de178d542850f6f341ba92995d3d63e60c9",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/be37e7f13195e05ab84ca5269365591edd240335",
+                "reference": "be37e7f13195e05ab84ca5269365591edd240335",
                 "shasum": ""
             },
             "require": {
@@ -1113,7 +1173,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v6.4.8"
+                "source": "https://github.com/symfony/yaml/tree/v6.4.11"
             },
             "funding": [
                 {
@@ -1129,7 +1189,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-31T14:49:08+00:00"
+            "time": "2024-08-12T09:55:28+00:00"
         }
     ],
     "packages-dev": [],

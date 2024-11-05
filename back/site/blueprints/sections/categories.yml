@@ -2,9 +2,8 @@ type: pages
 label: Categories
 layout: cardlets
 parent: kirby.page("categories")
-info: "{{ page.published }}"
+info: "{{ page.description }}"
+empty: No categories yet
 template: category
-empty: No cateogies yet
 image:
-  query: page.image
-  cover: true
+  back: "{{ page.color }}"

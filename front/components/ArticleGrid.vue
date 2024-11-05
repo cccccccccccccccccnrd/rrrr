@@ -1,16 +1,16 @@
 <template>
   <div v-if="type === 'pdf'" class="grid" :class="type">
     <R class="mb-5" />
-      <div class="title">
-        <p class="sans-serif-uppercase">
-          {{ article.author.length > 0 ? article.author[0].text : 'No author' }}
-        </p>
-        <h2>{{ article.title }}</h2>
-      </div>
-      <div>
-        <p class="sans-serif-uppercase">Abstract</p>
-        <p>{{ article.abstract }}</p>
-      </div>
+    <div class="title">
+      <p class="sans-serif-uppercase">
+        {{ article.author.length > 0 ? article.author[0].text : 'No author' }}
+      </p>
+      <h2>{{ article.title }}</h2>
+    </div>
+    <div>
+      <p class="sans-serif-uppercase">Abstract</p>
+      <p>{{ article.abstract }}</p>
+    </div>
     <div class="grid-inner">
       <div>
         <p class="sans-serif-uppercase">Published</p>
@@ -26,18 +26,6 @@
         <p class="sans-serif-uppercase">Context</p>
         {{ article.context }}
       </div>
-      <!--  <div>
-        <p class="sans-serif-uppercase">Tags</p>
-        <div>
-          <div
-            v-for="(tag, index) in article.tags"
-            :key="`tag-${index}`"
-            class="tag"
-          >
-            {{ tag.value }}
-          </div>
-        </div>
-      </div> -->
       <div>
         <p class="sans-serif-uppercase">Citation Suggestion</p>
         {{ article.suggestion }}
@@ -77,12 +65,8 @@
       <div class="cell tags">
         <p class="sans-serif-uppercase">Tags</p>
         <div>
-          <div
-            v-for="(tag, index) in article.tags"
-            :key="`tag-${index}`"
-            class="tag"
-          >
-            {{ tag }}
+          <div v-for="(tag, index) in article.tags" :key="`tag-${index}`" class="bg-black text-white p-1">
+            {{ tag }}{{ index < article.tags.length - 1 ? ',' : '' }}
           </div>
         </div>
       </div>

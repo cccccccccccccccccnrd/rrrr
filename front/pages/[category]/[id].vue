@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="w-full flex justify-center">
-      <ArticleHybrid :article="article" class="max-w-[1400px] mt-9" />
+      <ArticleHybrid :article="article" class="max-w-[1400px]" />
     </div>
   </div>
 </template>

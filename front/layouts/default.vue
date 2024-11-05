@@ -1,12 +1,17 @@
 <template>
-  <RHeader/>
-  <slot />
+  <div class="max-w-[1100px]">
+    <RHeader />
+    <div class="">
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script setup>
 const { data: content } = await useFetch('/api/content')
 const c = useContent()
-c.value.pages = content.value.pages
+console.log(content)
+c.value.pages = content.value
 </script>
 
 <style>
@@ -51,11 +56,7 @@ c.value.pages = content.value.pages
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    0deg,
-    rgba(204, 204, 204, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background: linear-gradient(0deg, rgba(204, 204, 204, 1) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
 ::selection {
@@ -85,11 +86,8 @@ body {
 }
 
 body.article {
-  background: #f6f6f6;
-  background-image: linear-gradient(315deg, #f6f6f6 0%, #e9e9e9 74%);
-  color: black;
   font-family: 'a', serif;
-  border-left: 5px solid black;
+  /* border-left: 5px solid black; */
 }
 
 @media (max-width: 768px) {
