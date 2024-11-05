@@ -1,17 +1,18 @@
 <template>
   <div class="flex flex-col justify-between">
     <div class="mx-4 flex flex-col gap-4">
-      <div v-for="category in categories" class="flex flex-col border border-gray-500 rounded-lg">
-        <p class="text-4xl p-4 leading-none">{{ category.title }}</p>
-        <p v-if="categories.length === 1" class="font-[m] text-[12px] p-4 border-y border-gray-500 leading-snug">
-          {{ category.content.description }}
-        </p>
+      <div v-for="category in categories" class="flex flex-col border border-current rounded-lg gap-4">
+        <NuxtLink class="text-4xl p-4 pb-0 leading-none" :to="`/${category.id.replace('categories/', '')}`">{{
+          category.title
+        }}</NuxtLink>
+        <div
+          v-if="categories.length === 1"
+          class="font-[m] text-[12px] p-4 border-y border-current leading-normal flex flex-col gap-2 [&>p]:leading-snug"
+          v-html="category.content.description"
+        ></div>
         <NuxtLink
           v-for="a in category.articles"
-          class="leading-none cursor-pointer px-4 pt-4 last-of-type:pb-4"
-          :class="{
-            'first-of-type:pt-0': categories.length !== 1
-          }"
+          class="leading-none cursor-pointer px-4 last-of-type:pb-4"
           @mouseenter="handleMouseEnter($event)"
           @mouseover="current = a.content.cover[0].url"
           @mouseleave="current = ''"
@@ -20,7 +21,7 @@
           <div>
             <p class="leading-none font-serif text-3xl">{{ a.title }}</p>
             <p class="mt-1 sans-serif text-base leading-none">
-              {{ a.content.author[0].text }}
+              {{ a.content.author.length > 0 ? a.content.author[0].text : 'Undefined' }}
             </p>
           </div>
         </NuxtLink>
@@ -38,7 +39,6 @@
 
 <script setup>
 const route = useRoute()
-console.log(route.params.slug)
 const { x, y } = useMouse()
 const c = useContent()
 c.value.current = {}
@@ -58,10 +58,3 @@ function handleMouseEnter(event) {
   yO.value = event.target.offsetTop
 }
 </script>
-
-<style scoped>
-::selection {
-  color: black;
-  background: #f6f6f6;
-}
-</style>

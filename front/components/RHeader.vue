@@ -1,5 +1,5 @@
 <template>
-  <header class="relative flex flex-col bg-black text-white">
+  <header class="relative flex flex-col">
     <div class="w-full flex justify-between items-center font-[m] text-[12px] uppercase select-none">
       <div class="flex">
         <NuxtLink

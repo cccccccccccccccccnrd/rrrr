@@ -60,7 +60,6 @@ function parse(article) {
   let html = article
 
   visuals.map((v) => {
-    console.log('WTF', v[0], v[0].replace(/<p>|<\/p>/g, ''), md.render(v[0].replace(/<p>|<\/p>/g, '')))
     html = html.replace(v[0], md.render(v[0].replace(/<p>|<\/p>/g, '')))
   })
   html = html.replace(literature, '')

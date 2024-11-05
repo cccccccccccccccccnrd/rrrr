@@ -38,9 +38,7 @@ columns:
             type: list
             marks: false
           author:
-            type: pages
-            query: site.find('authors')
-            multiple: false
+            type: text
           context:
             type: text
           doi:

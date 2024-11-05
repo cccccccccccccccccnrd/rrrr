@@ -8,10 +8,31 @@
 </template>
 
 <script setup>
+const route = useRoute()
 const { data: content } = await useFetch('/api/content')
 const c = useContent()
 console.log(content)
 c.value.pages = content.value
+
+watch(
+  () => route.fullPath,
+  () => {
+    const category = c.value.pages.categories.find(
+      (category) =>
+        category.id.replace('categories/', '') === route.params.slug ||
+        category.id.replace('categories/', '') === route.params.category
+    )
+
+    if (category) {
+      document.body.style.background = category.content.color
+      document.body.style.color = 'black'
+    } else {
+      document.body.style.background = 'black'
+      document.body.style.color = 'white'
+    }
+  },
+  { deep: true, immediate: true }
+)
 </script>
 
 <style>
@@ -60,8 +81,8 @@ c.value.pages = content.value
 }
 
 ::selection {
-  color: #f6f6f6;
-  background: black;
+  color: black;
+  background: #f6f6f6;
 }
 
 * {
@@ -83,6 +104,7 @@ body {
   line-height: 1;
   background: black;
   color: #f6f6f6;
+  overflow-x: hidden;
 }
 
 body.article {
