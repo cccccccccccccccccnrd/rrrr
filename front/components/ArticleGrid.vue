@@ -80,7 +80,7 @@
     <div class="column main">
       <div class="cell entry">
         <p class="sans-serif-uppercase">
-          {{ article.author.length > 0 ? article.author[0].text : 'No author' }}
+          {{ article.author }}
         </p>
         <h1>{{ article.title }}</h1>
       </div>
@@ -104,7 +104,7 @@
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">Author</p>
-        {{ article.author.length > 0 ? article.author[0].text : 'No author' }}
+        {{ article.author }}
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">Text correction</p>

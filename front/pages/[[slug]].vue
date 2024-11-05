@@ -21,7 +21,7 @@
           <div>
             <p class="leading-none font-serif text-3xl">{{ a.title }}</p>
             <p class="mt-1 sans-serif text-base leading-none">
-              {{ a.content.author.length > 0 ? a.content.author[0].text : 'Undefined' }}
+              {{ a.content.author }}
             </p>
           </div>
         </NuxtLink>
