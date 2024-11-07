@@ -14,7 +14,7 @@
           >{{ category.title }}</NuxtLink
         >
       </div>
-      <div v-if="!isMobile" class="mx-2 min-w-0 overflow-hidden whitespace-nowrap text-ellipsis">
+      <div v-if="!isMobile" class="mx-2 overflow-hidden whitespace-nowrap text-ellipsis">
         {{ c.current.title }}
       </div>
       <div
