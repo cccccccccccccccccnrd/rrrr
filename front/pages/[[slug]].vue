@@ -6,7 +6,7 @@
           category.title
         }}</NuxtLink>
         <div
-          v-if="categories.length === 1"
+          v-if="categories.length === 1 && category.content.description"
           class="font-[m] text-[12px] p-4 border-y border-current leading-normal flex flex-col gap-2 [&>p]:leading-snug"
           v-html="category.content.description"
         ></div>
