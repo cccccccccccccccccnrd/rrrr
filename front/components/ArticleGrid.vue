@@ -61,7 +61,12 @@
       <div class="cell">
         <p class="sans-serif-uppercase">Edition</p>
         <NuxtLink :to="`/${category.id.replace('categories/', '')}`">
-          <div :style="`background: ${category.content.color}`" class="p-1 w-fit">{{ category.title }}</div>
+          <div
+            :style="`background: ${category.content.color}`"
+            class="hover:scale-[3] p-1 w-fit transition-all ease-out origin-left"
+          >
+            {{ category.title }}
+          </div>
         </NuxtLink>
       </div>
       <div v-if="article.context" class="cell">

@@ -32,7 +32,7 @@
         :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
       >
         <div class="w-full flex justify-end">
-          <div class="group w-full md:w-[55%] bg-white text-black p-3 justify-self-end overflow-y-auto">
+          <div class="group w-full md:w-[55%] bg-white text-black p-3 justify-self-end overflow-y-auto" ref="over">
             <p class="sans-serif-uppercase">About rrrreflect</p>
             <div class="mb-4" v-html="c.pages.about.about"></div>
             <div v-html="c.pages.about.extended" class="extended"></div>
@@ -74,9 +74,12 @@
   </header>
 </template>
 <script setup>
+const { isMobile } = useDevice()
 const c = useContent()
 const overlay = ref(false)
-const { isMobile } = useDevice()
+const over = ref(null)
+
+onClickOutside(over, (event) => (overlay.value = false))
 </script>
 
 <style scoped>
