@@ -37,6 +37,9 @@ columns:
           literature:
             type: list
             marks: false
+          references:
+            type: list
+            marks: false
           author:
             type: text
           context:
