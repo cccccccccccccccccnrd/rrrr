@@ -1,12 +1,6 @@
 <template>
   <div class="gallery">
-    <swiper
-      :slides-per-view="'auto'"
-      :space-between="0"
-      :grab-cursor="true"
-      :modules="modules"
-      class="swiper"
-    >
+    <swiper :slides-per-view="'auto'" :space-between="0" :grab-cursor="true" :modules="modules" class="swiper">
       <swiper-slide v-for="(image, i) in images" :key="`image-${i}`">
         <figure>
           <img class="gallery-img" :src="image.url" />
@@ -35,14 +29,14 @@ export default {
     images: Array,
     type: String
   },
-  data () {
+  data() {
     return {
       files: [],
       modules: [Pagination]
     }
   },
   computed: {
-    slidesAmount () {
+    slidesAmount() {
       if (this.images.length < 3) {
         return this.images.length
       } else {
@@ -50,10 +44,11 @@ export default {
       }
     }
   },
-  mounted () {},
+  mounted() {},
   methods: {
-    getFigNo (image) {
-      return image.filename.split('-')[0]
+    getFigNo(image) {
+      const match = image.filename.match(/\d+/)
+      return Number(match[0])
     }
   }
 }
@@ -67,12 +62,13 @@ img {
   max-width: initial;
   width: auto;
   height: 40vw;
+  max-height: 500px;
 }
 
 .gallery {
-  --width: 80vw;
+  --width: 1100px;
   width: var(--width);
-  max-width: 100vw;
+  max-width: 1100px;
   margin-left: calc(50% - calc(var(--width) / 2));
 }
 
