@@ -36,7 +36,7 @@
           <div class="left side" />
           <div class="mid">
             <p class="sans-serif-uppercase">References</p>
-            <section v-html="article.literature" class="footnotes"></section>
+            <section v-html="article.references ? article.references : article.literature" class="footnotes"></section>
           </div>
           <div class="right side" />
         </div>
@@ -64,19 +64,21 @@ export default {
     },
     getLiterature(block) {
       if (process.client) {
-        console.log(this.article.literature)
         const literature = this.parseLiterature(this.article.literature)
         const div = document.createElement('DIV')
         div.innerHTML = block.content.text
         return new Set(
           [...div.querySelectorAll('sup')]
             .map((e) => e.innerText.match(/\d+/)[0])
-            .map(
-              (n) =>
-                `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${
-                  this.article.literature.startsWith('<ul>') ? '' : n
-                }">${literature[n - 1]}</a>`
-            )
+            .map((n) => {
+              if (this.article.references) {
+                return `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> ${literature[n - 1]}`
+              } else {
+                return `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${n}">${
+                  literature[n - 1]
+                }</a>`
+              }
+            })
         )
       } else {
         return []
@@ -181,7 +183,6 @@ article {
 
 .side-literature:hover {
   opacity: 1;
-  cursor: pointer;
 }
 
 @media (max-width: 768px) {

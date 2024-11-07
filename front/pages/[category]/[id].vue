@@ -16,6 +16,7 @@ const route = useRoute()
 const { data: article } = await useFetch(`/api/article/${route.params.id}`)
 const c = useContent()
 c.value.current = article
+console.log(article)
 </script>
 
 <style scoped>
