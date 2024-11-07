@@ -11,16 +11,14 @@
 const route = useRoute()
 const { data: content } = await useFetch('/api/content')
 const c = useContent()
-console.log(content)
+
 c.value.pages = content.value
 
 watch(
   () => route.fullPath,
   () => {
     const category = c.value.pages.categories.find(
-      (category) =>
-        category.id.replace('categories/', '') === route.params.slug ||
-        category.id.replace('categories/', '') === route.params.category
+      (category) => category.id.replace('categories/', '') === route.params.slug
     )
 
     if (category) {
@@ -81,8 +79,8 @@ watch(
 }
 
 ::selection {
-  color: black;
-  background: #f6f6f6;
+  background: black;
+  color: #f6f6f6;
 }
 
 * {
@@ -125,12 +123,7 @@ sup {
   top: -0.4em;
 }
 
-h1 {
-  margin: 0;
-  font-size: 2em;
-  font-weight: 300;
-}
-
+h1,
 h2 {
   font-size: 1.5em;
 }

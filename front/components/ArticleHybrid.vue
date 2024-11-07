@@ -8,12 +8,9 @@
           <ArticleGallery v-if="block.type === 'gallery'" :images="block.content.images" :type="block.content.type" />
           <div v-if="block.type === 'text'" v-html="block.content.text" />
           <div v-if="block.type === 'heading'">
-            <h2 v-if="block.content.level === 'h2'">
+            <h2>
               {{ block.content.text }}
             </h2>
-            <h3 v-if="block.content.level === 'h3'">
-              {{ block.content.text }}
-            </h3>
           </div>
           <figure v-if="block.type === 'image'">
             <img :src="block.content.image[0].url" />
@@ -34,12 +31,12 @@
           </div>
         </div>
       </div>
-      <div class="article-footer">
+      <div class="article-footer" id="fn">
         <div class="block">
           <div class="left side" />
           <div class="mid">
             <p class="sans-serif-uppercase">References</p>
-            <div v-html="article.literature" />
+            <section v-html="article.literature" class="footnotes"></section>
           </div>
           <div class="right side" />
         </div>
@@ -67,6 +64,7 @@ export default {
     },
     getLiterature(block) {
       if (process.client) {
+        console.log(this.article.literature)
         const literature = this.parseLiterature(this.article.literature)
         const div = document.createElement('DIV')
         div.innerHTML = block.content.text
@@ -75,7 +73,9 @@ export default {
             .map((e) => e.innerText.match(/\d+/)[0])
             .map(
               (n) =>
-                `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${n}">${literature[n - 1]}</a>`
+                `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${
+                  this.article.literature.startsWith('<ul>') ? '' : n
+                }">${literature[n - 1]}</a>`
             )
         )
       } else {
@@ -104,7 +104,7 @@ article {
 }
 
 :deep(article img:not(.gallery-img)) {
-  --width: 60vw;
+  --width: calc(1100px / 1.333);
   width: var(--width);
   max-width: 100vw;
   margin-left: calc(50% - calc(var(--width) / 2));
@@ -123,7 +123,8 @@ article {
   display: inline;
 }
 
-:deep(.footnotes-list li) {
+:deep(li) {
+  word-break: break-word;
   margin: 0.666em 0;
 }
 
@@ -177,11 +178,6 @@ article {
   overflow: hidden;
   transition: all 1s ease-in-out;
 }
-
-/* .side-literature:hover {
-    position: absolute;
-    -webkit-line-clamp: 100;
-  } */
 
 .side-literature:hover {
   opacity: 1;

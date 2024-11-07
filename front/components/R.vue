@@ -16,11 +16,12 @@ const min = ref(6)
 const max = ref(12)
 const no = ref(Math.floor(Math.random() * max.value) + min.value)
 
-/* const { text } = useTextSelection()
+const { pressed } = useMousePressed()
 
-watch(text, () => {
-  no.value = Math.floor(text.value.length / 2 + 8)
-}) */
+watch(pressed, () => {
+  if (pressed.value === false) return
+  no.value = no.value + 1
+})
 
 const pppp = ref(null)
 const { isSwiping, direction } = useSwipe(pppp)

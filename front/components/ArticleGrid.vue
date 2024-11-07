@@ -23,7 +23,7 @@
         }}
       </div>
       <div>
-        <p class="sans-serif-uppercase">Context</p>
+        <p class="sans-serif-uppercase" v-if="article.context">Context</p>
         {{ article.context }}
       </div>
       <div>
@@ -59,6 +59,12 @@
         }}
       </div>
       <div class="cell">
+        <p class="sans-serif-uppercase">Edition</p>
+        <NuxtLink :to="`/${category.id.replace('categories/', '')}`">
+          <div :style="`background: ${category.content.color}`" class="p-1 w-fit">{{ category.title }}</div>
+        </NuxtLink>
+      </div>
+      <div v-if="article.context" class="cell">
         <p class="sans-serif-uppercase">Context</p>
         {{ article.context }}
       </div>
@@ -70,7 +76,7 @@
           </div>
         </div>
       </div>
-      <div class="cell">
+      <div v-if="article.download" class="cell">
         <p class="sans-serif-uppercase">Download</p>
         <a :href="`/${article.download}`">
           {{ `${article.download}` }}
@@ -82,7 +88,7 @@
         <p class="sans-serif-uppercase">
           {{ article.author }}
         </p>
-        <h1>{{ article.title }}</h1>
+        <p class="text-4xl">{{ article.title }}</p>
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">Abstract</p>
@@ -90,7 +96,7 @@
       </div>
     </div>
     <div class="column">
-      <div class="cell">
+      <div v-if="article.doi" class="cell">
         <p class="sans-serif-uppercase">DOI</p>
         <a :href="`https://doi.org/${article.doi}`" target="_blank">{{ article.doi }}</a>
       </div>
@@ -106,7 +112,7 @@
         <p class="sans-serif-uppercase">Author</p>
         {{ article.author }}
       </div>
-      <div class="cell">
+      <div v-if="article.correction" class="cell">
         <p class="sans-serif-uppercase">Text correction</p>
         {{ article.correction }}
       </div>
@@ -125,11 +131,14 @@ const props = defineProps({
     required: false
   }
 })
-
 const route = useRoute()
+const c = useContent()
+
 const url = computed(() => {
   return `www.rrrreflect.org/articles/${String(route.params.id)}`
 })
+
+const category = c.value.pages.categories.find((category) => category.id === props.article.category)
 </script>
 
 <style scoped>

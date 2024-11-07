@@ -3,7 +3,7 @@
     <div class="w-full flex justify-between items-center font-[m] text-[12px] uppercase select-none">
       <div class="flex">
         <NuxtLink
-          class="p-2 hover:bg-white hover:text-black"
+          class="p-2 hover:bg-white hover:text-black overflow-hidden whitespace-nowrap"
           :class="{
             'bg-white text-black':
               $route.params.slug === category.id.replace('categories/', '') ||
@@ -14,10 +14,12 @@
           >{{ category.title }}</NuxtLink
         >
       </div>
-      <div v-if="!isMobile">{{ c.current.title }}</div>
+      <div v-if="!isMobile" class="mx-2 min-w-0 overflow-hidden whitespace-nowrap text-ellipsis">
+        {{ c.current.title }}
+      </div>
       <div
         @click="overlay ? (overlay = false) : (overlay = true)"
-        class="break-keep cursor-pointer hover:bg-white hover:text-black p-2"
+        class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2"
         :class="{ 'bg-white text-black': overlay }"
       >
         rrrreflect{{ overlay ? ' ●' : ' ○' }}
@@ -38,7 +40,7 @@
             <div class="mb-4 flex gap-4">
               <div v-html="c.pages.about.edition"></div>
               <img
-                class="max-w-[120px] h-full invert cursor-pointer invert-0 opacity-80"
+                class="max-w-[120px] h-full cursor-pointer invert-0 opacity-80"
                 @click="
                   navigateTo('https://kisd.de', {
                     open: {

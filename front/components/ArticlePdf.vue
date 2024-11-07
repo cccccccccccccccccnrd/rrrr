@@ -20,9 +20,6 @@
           <h2 v-if="b.type === 'heading' && b.content.level === 'h2'">
             {{ b.content.text }}
           </h2>
-          <h3 v-if="b.type === 'heading' && b.content.level === 'h3'">
-            {{ b.content.text }}
-          </h3>
           <figure v-if="b.type === 'image'">
             <img :src="b.content.image[0].url" />
             <figcaption>
@@ -30,11 +27,7 @@
               {{ b.content.caption }}
             </figcaption>
           </figure>
-          <ArticleGallery
-            v-if="b.type === 'gallery'"
-            :images="b.content.images"
-            :type="b.content.type"
-          />
+          <ArticleGallery v-if="b.type === 'gallery'" :images="b.content.images" :type="b.content.type" />
         </div>
       </section>
       <footer>
@@ -51,25 +44,23 @@ export default {
   props: {
     article: Object
   },
-  data () {
+  data() {
     return {
       literature: []
     }
   },
-  mounted () {
+  mounted() {
     console.log(this.article)
   },
   directives: {
-    plain: el => {
+    plain: (el) => {
       if (!el) {
         return
       }
 
       const content = el.tagName === 'TEMPLATE' ? el.content : el
       if (content.children.length === 1) {
-        ;[...el.attributes].forEach(attr =>
-          content.firstChild.setAttribute(attr.name, attr.value)
-        )
+        ;[...el.attributes].forEach((attr) => content.firstChild.setAttribute(attr.name, attr.value))
       }
 
       if (el.tagName === 'TEMPLATE') {
@@ -80,7 +71,7 @@ export default {
     }
   },
   computed: {
-    blocks () {
+    blocks() {
       const wow = this.article.text.reduce((acc, curr) => {
         if (acc.length === 0) {
           acc.push([curr])
@@ -90,8 +81,7 @@ export default {
         const last = acc[acc.length - 1]
         if (
           (curr.type === 'text' || curr.type === 'heading') &&
-          (last[last.length - 1].type === 'text' ||
-            last[last.length - 1].type === 'heading')
+          (last[last.length - 1].type === 'text' || last[last.length - 1].type === 'heading')
         ) {
           last.push(curr)
         } else {
@@ -106,30 +96,25 @@ export default {
     }
   },
   methods: {
-    parseLiterature (string) {
+    parseLiterature(string) {
       const div = document.createElement('DIV')
       div.innerHTML = string
-      return [...div.querySelectorAll('li')].map(e => e.innerText)
+      return [...div.querySelectorAll('li')].map((e) => e.innerText)
     },
-    getLiterature (block) {
+    getLiterature(block) {
       if (process.client) {
         const literature = this.parseLiterature(this.article.literature)
         const div = document.createElement('DIV')
         div.innerHTML = block.content.text
         return [...div.querySelectorAll('sup')]
-          .map(e => e.innerText.match(/\d+/)[0])
-          .map(
-            n =>
-              `<span class="sans-serif-uppercase">${n}.</span> ${
-                literature[n - 1]
-              }`
-          )
+          .map((e) => e.innerText.match(/\d+/)[0])
+          .map((n) => `<span class="sans-serif-uppercase">${n}.</span> ${literature[n - 1]}`)
       } else {
         return []
       }
     },
-    getFigNo (block) {
-      const images = this.article.text.filter(b => b.type === 'image')
+    getFigNo(block) {
+      const images = this.article.text.filter((b) => b.type === 'image')
       const index = images.indexOf(block)
       return index + 1
     }
@@ -186,6 +171,7 @@ figure {
   margin: 0 0 calc(0.666em * 1) 0;
 }
 
+.block.heading h1,
 .block.heading h2,
 .block.heading h3 {
   margin: 0 0 calc(0.666em * 0.5) 0;

@@ -70,11 +70,9 @@ function parse(article) {
   const abstract = meta('abstract', article)
   const context = meta('context', article)
   const tags = meta('tags', article)
-  const suggestion = `${author.split(' ')[1]}, ${
-    author.split(' ')[0]
-  }. ${new Date().getFullYear()}. ${title}. Cologne: rrrreflect.`
+  const suggestion = `${author}. ${new Date().getFullYear()}. ${title}. Cologne: rrrreflect.`
 
-  return {
+  const parsed = {
     meta: {
       title,
       author,
@@ -88,6 +86,8 @@ function parse(article) {
     },
     html
   }
+  console.log(parsed)
+  return parsed
 }
 
 async function upload(file) {
