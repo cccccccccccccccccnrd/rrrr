@@ -1,16 +1,22 @@
 <template>
-  <div class="max-w-[1100px]">
+  <div class="max-w-[1100px] grow overflow-y-scroll">
     <RHeader />
     <div class="">
       <slot />
     </div>
   </div>
+  <div class="fixed top-0 right-0 bg-white" :style="`width: ${w}px; height: ${h}px;`"></div>
 </template>
 
 <script setup>
 const route = useRoute()
 const { data: content } = await useFetch('/api/content')
 const c = useContent()
+const { y } = useWindowScroll()
+const h = computed(
+  () => (y.value / (document.body.scrollHeight - window.innerHeight)) * 100 * (window.innerHeight / 100)
+)
+const w = computed(() => window.innerWidth - (1100 * y.value) / y.value)
 
 c.value.pages = content.value
 
@@ -72,10 +78,12 @@ watch(
   width: 5px;
   height: 5px;
   background: black;
+  display: none;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(0deg, rgba(204, 204, 204, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  display: none;
 }
 
 ::selection {
@@ -93,6 +101,7 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none;
 }
 
 body {
