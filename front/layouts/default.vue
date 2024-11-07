@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1100px] grow overflow-y-scroll">
+  <div class="max-w-[1100px] grow">
     <RHeader />
     <div class="">
       <slot />
@@ -112,6 +112,7 @@ body {
   background: black;
   color: #f6f6f6;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 body.article {

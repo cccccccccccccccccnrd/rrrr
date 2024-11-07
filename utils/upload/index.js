@@ -56,6 +56,7 @@ function meta(m, article) {
 
 function parse(article) {
   const visuals = [...article.matchAll(/(<p>!\[).*?("\)<\/p>)/g)]
+  console.log(visuals)
   const literature = article.match(/(<ol>).*(<\/ol>)/g)[0]
   let html = article
 
@@ -86,7 +87,6 @@ function parse(article) {
     },
     html
   }
-  console.log(parsed)
   return parsed
 }
 
