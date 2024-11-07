@@ -5,7 +5,11 @@
       <slot />
     </div>
   </div>
-  <div class="fixed top-0 right-0 bg-white" :style="`width: ${w}px; height: ${h}px;`"></div>
+  <div
+    class="fixed top-0 right-0 bg-white cursor-pointer"
+    :style="`width: ${w}px; height: ${h}px;`"
+    @click="handleClick"
+  ></div>
 </template>
 
 <script setup>
@@ -19,6 +23,10 @@ const h = computed(
 const w = computed(() => window.innerWidth - (1100 * y.value) / y.value)
 
 c.value.pages = content.value
+
+function handleClick() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 
 watch(
   () => route.fullPath,
@@ -102,6 +110,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
 body {
