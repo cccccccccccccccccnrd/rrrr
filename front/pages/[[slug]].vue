@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-between">
-    <div class="mx-4 mb-4 flex flex-col gap-4">
+    <div class="mb-4 flex flex-col gap-4">
       <div v-for="category in categories" class="flex flex-col border border-current rounded-lg gap-4">
         <NuxtLink class="text-4xl p-4 pb-0 leading-none" :to="`/${category.id.replace('categories/', '')}`">{{
           category.title

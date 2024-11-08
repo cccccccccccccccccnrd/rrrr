@@ -66,9 +66,9 @@ img {
 }
 
 .gallery {
-  --width: 1100px;
+  --width: 1200px;
   width: var(--width);
-  max-width: 1100px;
+  max-width: 1200px;
   margin-left: calc(50% - calc(var(--width) / 2));
 }
 

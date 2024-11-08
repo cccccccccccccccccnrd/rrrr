@@ -1,15 +1,13 @@
 <template>
-  <div class="max-w-[1100px] grow">
+  <div class="max-w-[1200px] grow w-screen">
     <RHeader />
-    <div class="">
-      <slot />
-    </div>
+    <slot />
   </div>
-  <div
-    class="fixed top-0 right-0 bg-white cursor-pointer"
+  <!-- <div
+    class="top-0 right-0 bg-white cursor-pointer"
     :style="`width: ${w}px; height: ${h}px;`"
     @click="handleClick"
-  ></div>
+  ></div> -->
 </template>
 
 <script setup>
@@ -114,6 +112,9 @@ body {
 }
 
 body {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
   font-family: 'i', 'limousine', sans-serif;
   font-size: 16px;
   font-size: 1.15em;
@@ -153,7 +154,7 @@ h3 {
 
 p {
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 figcaption {

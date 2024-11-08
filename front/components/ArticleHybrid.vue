@@ -1,5 +1,5 @@
 <template>
-  <div class="article hybrid overflow-hidden text-black bg-white">
+  <div class="article hybrid overflow-hidden text-black bg-white rounded-tl-lg rounded-tr-lg">
     <ArticleGrid :article="article" />
     <article>
       <div v-for="(block, bi) in article.text" :key="`block-${bi}`" :class="block.type" class="block">
