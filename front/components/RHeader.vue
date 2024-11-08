@@ -18,7 +18,8 @@
         {{ c.current.title }}
       </div>
       <div
-        @click="overlay ? (overlay = false) : (overlay = true)"
+        @click="overlay = !overlay"
+        id="over-btn"
         class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2"
         :class="{ 'bg-white text-black': overlay }"
       >
@@ -28,45 +29,44 @@
     <div class="relative">
       <R class="mx-3 my-1 mb-3 cursor-pointer" @click="navigateTo('/')" />
       <div
-        class="overlay absolute top-0 right-0 flex column font-serif text-white overflow-hidden grow"
+        ref="over"
+        class="overlay absolute top-0 right-0 flex font-serif text-white overflow-hidden grow w-full md:w-[55%]"
         :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
       >
-        <div class="w-full flex justify-end">
-          <div class="group w-full md:w-[55%] bg-white text-black p-3 justify-self-end overflow-y-auto" ref="over">
-            <p class="sans-serif-uppercase">About rrrreflect</p>
-            <div class="mb-4" v-html="c.pages.about.about"></div>
-            <div v-html="c.pages.about.extended" class="extended"></div>
-            <p class="sans-serif-uppercase mt-4">Publisher</p>
-            <div class="mb-4 flex gap-4">
-              <div v-html="c.pages.about.edition"></div>
-              <img
-                class="max-w-[120px] h-full cursor-pointer invert-0 opacity-80"
-                @click="
-                  navigateTo('https://kisd.de', {
-                    open: {
-                      target: '_blank'
-                    },
-                    external: true
-                  })
-                "
-                src="@/assets/kisd-th-logo.svg"
-              />
-            </div>
-            <div class="mb-4 text-sm">
-              <p class="sans-serif-uppercase">Advisory Committee</p>
-              <div v-html="c.pages.about.advisory"></div>
-            </div>
-            <div class="mb-4 text-sm">
-              <p class="sans-serif-uppercase">rrrreflect Development Team</p>
-              <div v-html="c.pages.about.development"></div>
-            </div>
-            <div class="text-sm flex justify-between">
-              <p><a href="https://kisd.de/en/imprint/" target="_blank">Imprint</a></p>
-              <p>
-                ty ~ <a href="https://getkirby.com/" target="_blank">Kirby</a>,
-                <a href="https://abcdinamo.com/" target="_blank">DINAMO</a>
-              </p>
-            </div>
+        <div class="group bg-white text-black p-3 justify-self-end overflow-y-auto">
+          <p class="sans-serif-uppercase">About rrrreflect</p>
+          <div class="mb-4" v-html="c.pages.about.about"></div>
+          <div v-html="c.pages.about.extended" class="extended"></div>
+          <p class="sans-serif-uppercase mt-4">Publisher</p>
+          <div class="mb-4 flex gap-4">
+            <div v-html="c.pages.about.edition"></div>
+            <img
+              class="max-w-[120px] h-full cursor-pointer invert-0 opacity-80"
+              @click="
+                navigateTo('https://kisd.de', {
+                  open: {
+                    target: '_blank'
+                  },
+                  external: true
+                })
+              "
+              src="@/assets/kisd-th-logo.svg"
+            />
+          </div>
+          <div class="mb-4 text-sm">
+            <p class="sans-serif-uppercase">Advisory Committee</p>
+            <div v-html="c.pages.about.advisory"></div>
+          </div>
+          <div class="mb-4 text-sm">
+            <p class="sans-serif-uppercase">rrrreflect Development Team</p>
+            <div v-html="c.pages.about.development"></div>
+          </div>
+          <div class="text-sm flex justify-between">
+            <p><a href="https://kisd.de/en/imprint/" target="_blank">Imprint</a></p>
+            <p>
+              ty ~ <a href="https://getkirby.com/" target="_blank">Kirby</a>,
+              <a href="https://abcdinamo.com/" target="_blank">DINAMO</a>
+            </p>
           </div>
         </div>
       </div>
@@ -79,7 +79,12 @@ const c = useContent()
 const overlay = ref(false)
 const over = ref(null)
 
-onClickOutside(over, (event) => (overlay.value = false))
+onClickOutside(over, (event) => {
+  console.log(event)
+  if (event.target.id !== 'over-btn') {
+    overlay.value = false
+  }
+})
 </script>
 
 <style scoped>
