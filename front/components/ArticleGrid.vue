@@ -3,7 +3,7 @@
     <R class="mb-5" />
     <div class="title">
       <p class="sans-serif-uppercase">
-        {{ article.author.length > 0 ? article.author[0].text : 'No author' }}
+        {{ article.author }}
       </p>
       <h2>{{ article.title }}</h2>
     </div>
@@ -114,7 +114,7 @@
         <p>{{ article.suggestion }}</p>
       </div>
       <div class="cell">
-        <p class="sans-serif-uppercase">Author</p>
+        <p class="sans-serif-uppercase">Author{{ article.author.split('').includes(',') ? 's' : '' }}</p>
         <p>{{ article.author }}</p>
       </div>
       <div v-if="article.correction" class="cell">
