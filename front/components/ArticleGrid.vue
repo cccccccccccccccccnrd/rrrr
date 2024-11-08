@@ -111,15 +111,15 @@
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">Citation Suggestion</p>
-        {{ article.suggestion }}
+        <p>{{ article.suggestion }}</p>
       </div>
       <div class="cell">
         <p class="sans-serif-uppercase">Author</p>
-        {{ article.author }}
+        <p>{{ article.author }}</p>
       </div>
       <div v-if="article.correction" class="cell">
         <p class="sans-serif-uppercase">Text correction</p>
-        {{ article.correction }}
+        <p>{{ article.correction }}</p>
       </div>
     </div>
   </div>
