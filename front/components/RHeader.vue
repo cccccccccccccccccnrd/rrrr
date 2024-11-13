@@ -11,7 +11,7 @@
           }"
           v-for="category in c.pages.categories"
           :to="`/${category.id.replace('categories/', '')}`"
-          >{{ category.title }}</NuxtLink
+          >{{ short(category.title) }}</NuxtLink
         >
       </div>
       <div v-if="!isMobile" class="mx-2 overflow-hidden whitespace-nowrap text-ellipsis">
@@ -78,6 +78,11 @@ const { isMobile } = useDevice()
 const c = useContent()
 const overlay = ref(false)
 const over = ref(null)
+
+function short(title) {
+  const t = title.split(' ').slice(0, 3).join(' ')
+  return t.endsWith(':') ? t.replace(':', '') : t
+}
 
 onClickOutside(over, (event) => {
   console.log(event)

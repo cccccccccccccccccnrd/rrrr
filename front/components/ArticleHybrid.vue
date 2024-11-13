@@ -106,10 +106,7 @@ article {
 }
 
 :deep(article img:not(.gallery-img)) {
-  --width: calc(1100px / 1.333);
-  width: var(--width);
-  max-width: 100vw;
-  margin-left: calc(50% - calc(var(--width) / 2));
+  width: 100%;
 }
 
 :deep(article figcaption) {

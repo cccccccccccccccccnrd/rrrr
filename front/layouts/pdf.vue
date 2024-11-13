@@ -18,7 +18,8 @@ body {
 body {
   background-image: none !important;
   border: none !important;
-  background-color: #f6f6f6;
+  color: black !important;
+  background-color: #f6f6f6 !important;
   font-family: var(--serif);
   font-weight: 300;
   font-size: 16px;

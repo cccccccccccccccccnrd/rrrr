@@ -4,7 +4,7 @@
       :article="article"
       type="pdf"
     /> -->
-    <p class="meta author">{{ article.author[0].text }}</p>
+    <p class="meta author">{{ article.author }}</p>
     <p class="meta title">{{ article.title }}</p>
     <article>
       <section>
@@ -208,11 +208,11 @@ footer {
   margin: calc(0.666em * 2) 0;
 }
 
-:deep(.footnote-item) {
+:deep(li) {
   margin: calc(0.666em * 1) 0;
 }
 
-:deep(.footnotes p) {
+:deep(li p) {
   display: inline;
   margin: calc(0.666em / 2) 0;
   word-break: break-word;

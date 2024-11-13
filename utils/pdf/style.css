@@ -25,22 +25,6 @@
       text-transform: uppercase;
     }
   }
-
-  /* @page:nth(1) {
-    margin: 0;
-
-    @top-right {
-      content: '';
-    }
-
-    @top-left {
-      content: '';
-    }
-
-    @bottom-center {
-      content: '';
-    }
-  } */
 }
 
 .grid {
