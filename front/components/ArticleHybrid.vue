@@ -152,6 +152,7 @@ article {
 :deep(blockquote) {
   font-size: 1.25em;
   padding: 0 0 0 calc(4 * 0.666em);
+  line-height: 1.2;
 }
 
 .block {
