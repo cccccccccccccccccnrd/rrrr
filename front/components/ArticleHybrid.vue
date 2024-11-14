@@ -15,8 +15,8 @@
           <figure v-if="block.type === 'image'">
             <img :src="block.content.image[0].url" />
             <figcaption>
-              <span class="sans-serif-uppercase">FIG {{ getFigNo(block) }}</span>
-              {{ block.content.caption }}
+              <span class="sans-serif-uppercase mr-2">FIG {{ getFigNo(block) }} </span>
+              <span v-html="urling(block.content.caption)"></span>
             </figcaption>
           </figure>
         </div>
@@ -36,7 +36,10 @@
           <div class="left side" />
           <div class="mid">
             <p class="sans-serif-uppercase">References</p>
-            <section v-html="article.references ? article.references : article.literature" class="footnotes"></section>
+            <section
+              v-html="article.references ? urling(article.references) : article.literature"
+              class="footnotes"
+            ></section>
           </div>
           <div class="right side" />
         </div>
@@ -72,7 +75,9 @@ export default {
             .map((e) => e.innerText.match(/\d+/)[0])
             .map((n) => {
               if (this.article.references) {
-                return `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> ${literature[n - 1]}`
+                return `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn">${
+                  literature[n - 1]
+                }</a>`
               } else {
                 return `<span class="sans-serif-uppercase" id="sn${n}">${n}.</span> <a href="#fn${n}">${
                   literature[n - 1]
@@ -88,6 +93,14 @@ export default {
       const images = this.article.text.filter((b) => b.type === 'image')
       const index = images.indexOf(block)
       return index + 1
+    },
+    urling(string) {
+      return string.replace(
+        new RegExp(
+          /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))/gi
+        ),
+        "<a href='$1' target='_blank'>$1</a>"
+      )
     }
   }
 }
@@ -111,6 +124,7 @@ article {
 
 :deep(article figcaption) {
   padding: 0 calc(2 * 0.666rem);
+  line-height: 1.3;
 }
 
 .article-footer {
@@ -123,8 +137,15 @@ article {
 }
 
 :deep(li) {
-  word-break: break-word;
   margin: 0.666em 0;
+  word-break: break-word;
+  text-indent: calc(1 * 0.666em) hanging;
+  line-height: 1.3;
+}
+
+:deep(li a),
+:deep(figcaption a) {
+  border-bottom: 1px dotted;
 }
 
 .block {
@@ -165,11 +186,9 @@ article {
 
 .side-literature {
   display: -webkit-box;
-  -webkit-line-clamp: 10;
-  -webkit-box-orient: vertical;
   max-width: 66%;
   margin: 0.666em 0;
-  font-size: 0.9em;
+  font-size: 0.8em;
   word-break: break-word;
   text-overflow: ellipsis;
   opacity: 0.6;

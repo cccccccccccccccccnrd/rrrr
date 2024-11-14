@@ -6,7 +6,7 @@
           <img class="gallery-img" :src="image.url" />
           <figcaption>
             <span class="sans-serif-uppercase">FIG {{ getFigNo(image) }}</span>
-            {{ image.content.caption }}
+            <span v-html="urling(image.content.caption)"></span>
           </figcaption>
         </figure>
       </swiper-slide>
@@ -49,6 +49,14 @@ export default {
     getFigNo(image) {
       const match = image.filename.match(/\d+/)
       return Number(match[0])
+    },
+    urling(string) {
+      return string.replace(
+        new RegExp(
+          /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))/gi
+        ),
+        "<a href='$1' target='_blank'>$1</a>"
+      )
     }
   }
 }

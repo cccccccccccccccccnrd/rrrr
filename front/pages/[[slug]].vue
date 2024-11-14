@@ -30,7 +30,7 @@
   </div>
   <div class="fixed bottom-0 left-0 w-full h-full z-[10] flex items-center justify-center pointer-events-none">
     <img
-      class="w-[50vw] max-w-[800px]"
+      class="w-[50vw] max-w-[600px]"
       :src="current"
       :style="`transform: translate(${(x - xO) / oO}px, ${(y - yO) / oO}px);`"
     />
