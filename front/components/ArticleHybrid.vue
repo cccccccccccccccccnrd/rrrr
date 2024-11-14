@@ -12,6 +12,7 @@
               {{ block.content.text }}
             </h2>
           </div>
+          <blockquote v-if="block.type === 'quote'" v-html="block.content.text"></blockquote>
           <figure v-if="block.type === 'image'">
             <img :src="block.content.image[0].url" />
             <figcaption>
@@ -21,7 +22,7 @@
           </figure>
         </div>
         <div class="right side">
-          <div v-if="block.type === 'text'">
+          <div v-if="block.type === 'text' || block.type === 'quote'">
             <p
               v-for="(lit, li) in getLiterature(block)"
               :key="`side-literature-${li}`"
@@ -146,6 +147,11 @@ article {
 :deep(li a),
 :deep(figcaption a) {
   border-bottom: 1px dotted;
+}
+
+:deep(blockquote) {
+  font-size: 1.25em;
+  padding: 0 0 0 calc(4 * 0.666em);
 }
 
 .block {
