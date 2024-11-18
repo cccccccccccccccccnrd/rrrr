@@ -1,7 +1,5 @@
 title: Article
 
-num: date
-
 icon: 📖
 
 status:
@@ -57,6 +55,7 @@ columns:
             type: text
           published:
             type: date
+            time: true
             default: now
           tags:
             type: tags

@@ -1,12 +1,10 @@
 type: pages
-headline: Articles
-parent: kirby.page("articles")
+label: Articles
 layout: cards
+parent: kirby.page("articles")
 info: "{{ page.author }}<br>in {{ site.find(page.category).title }}"
-sortBy: date desc
 empty: No articles yet
+template: article
 image:
   query: page.cover.toFile()
   cover: true
-templates:
-  - article

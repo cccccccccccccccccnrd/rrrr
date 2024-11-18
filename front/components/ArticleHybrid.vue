@@ -73,6 +73,7 @@ export default {
         div.innerHTML = block.content.text
         return new Set(
           [...div.querySelectorAll('sup')]
+            .filter((e) => e.innerText.match(/\d+/))
             .map((e) => e.innerText.match(/\d+/)[0])
             .map((n) => {
               if (this.article.references) {
@@ -150,7 +151,7 @@ article {
 }
 
 :deep(blockquote) {
-  font-size: 1.25em;
+  font-size: 1.15em;
   padding: 0 0 0 calc(4 * 0.666em);
   line-height: 1.2;
 }

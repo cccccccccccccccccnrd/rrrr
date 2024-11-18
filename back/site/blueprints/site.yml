@@ -1,7 +1,21 @@
 columns:
   - width: 2/2
     sections:
-      articles: sections/articles
+      specialissue1:
+        extends: sections/articles
+        label: Volume 2 (2024)
+        query: site.find("articles").children().filterBy("category", "categories/volume-2")
+        sortBy: date desc
+      volume2:
+        extends: sections/articles
+        label: "Special Issue 1: Hidden Layers"
+        query: site.find("articles").children().filterBy("category", "categories/special-issue-1")
+        sortBy: date desc
+      volume1:
+        extends: sections/articles
+        label: Volume 1 (2023)
+        query: site.find("articles").children().filterBy("category", "categories/volume-1")
+        sortBy: date desc
 
   - width: 1/2
     sections:
