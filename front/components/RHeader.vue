@@ -20,7 +20,7 @@
       <div
         @click="overlay = !overlay"
         id="over-btn"
-        class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap"
+        class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2"
         :class="{ 'bg-white text-black': overlay }"
       >
         rrrreflect{{ overlay ? ' ●' : ' ○' }}
