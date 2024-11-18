@@ -9,6 +9,10 @@
     <article>
       <section>
         <h2 class="title">{{ article.title }}</h2>
+        <div class="abstract">
+          <p class="sans-serif-uppercase">Abstract</p>
+          <p>{{ article.abstract }}</p>
+        </div>
         <div
           v-for="(b, bi) in this.article.text"
           :key="`block-${bi}`"
@@ -20,19 +24,22 @@
           <h2 v-if="b.type === 'heading' && b.content.level === 'h2'">
             {{ b.content.text }}
           </h2>
+          <blockquote v-if="b.type === 'quote'" v-html="b.content.text"></blockquote>
           <figure v-if="b.type === 'image'">
             <img :src="b.content.image[0].url" />
             <figcaption>
               <span class="sans-serif-uppercase">FIG {{ getFigNo(b) }}</span>
-              {{ b.content.caption }}
+              <span v-html="urling(b.content.caption)"></span>
             </figcaption>
           </figure>
           <ArticleGallery v-if="b.type === 'gallery'" :images="b.content.images" :type="b.content.type" />
         </div>
       </section>
       <footer>
-        <p class="sans-serif-uppercase">References</p>
-        <div v-html="article.literature" />
+        <p class="sans-serif-uppercase">Footnotes</p>
+        <div v-html="urling(article.literature)"></div>
+        <p class="sans-serif-uppercase references">References</p>
+        <div v-html="urling(article.references)" />
       </footer>
     </article>
   </div>
@@ -117,6 +124,14 @@ export default {
       const images = this.article.text.filter((b) => b.type === 'image')
       const index = images.indexOf(block)
       return index + 1
+    },
+    urling(string) {
+      return string.replace(
+        new RegExp(
+          /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))/gi
+        ),
+        "<a href='$1' target='_blank'>$1</a>"
+      )
     }
   }
 }
@@ -157,12 +172,27 @@ figure {
   display: block;
 }
 
+.abstract {
+  margin: 0 0 calc(0.666em * 4) 0;
+}
+
+.references {
+  margin: calc(0.666em * 2) 0 0 0;
+}
+
+:deep(blockquote) {
+  font-size: 1.1em;
+  padding: 0 0 0 calc(4 * 0.666em);
+  line-height: 1.2;
+}
+
 .block {
   width: 100%;
   /* padding: calc(0.666em * 2); */
 }
 
-.block.text {
+.block.text,
+.block.quote {
   /* columns: 2; */
   margin: 0 0 calc(0.666em * 2) 0;
 }
@@ -184,6 +214,13 @@ figure {
 
 footer {
   columns: 2;
+  line-height: 1.2;
+}
+
+:deep(footer li) {
+  text-indent: calc(1 * 0.666em) hanging;
+  word-break: break-word;
+  font-size: 0.85em;
 }
 
 :deep(article img:not(.gallery-img)) {

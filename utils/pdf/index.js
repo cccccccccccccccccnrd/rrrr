@@ -2,19 +2,27 @@ const { exec } = require('child_process')
 const fetch = require('node-fetch')
 const fs = require('fs')
 
-async function save(slug) {
-  const response = await fetch(`http://localhost:4000/pdfs/${slug}`)
-  const body = await response.text()
-  fs.writeFileSync(`./htmls/${slug}.html`, body, 'utf8')
-}
-
 async function init() {
-  const slug = process.argv[2]
+  if (process.argv[2] === 'ls') {
+    const htmls = fs.readdirSync('./htmls').filter((file) => file.endsWith('.html'))
+    htmls.forEach((html) => {
+      const slug = html.replace('.html', '')
+      const url = `http://localhost:4000/pdfs/${slug}`
+      console.log(url)
+    })
+  } else if (process.argv[2] === 'all') {
+    const command = fs
+      .readdirSync('./htmls')
+      .filter((file) => file.endsWith('.html'))
+      .map((file) => file.replace('.html', ''))
+      .map((slug) => `pagedjs-cli ./htmls/${slug}.html -o ./exports/${slug}.pdf --style style.css`)
+      .join('\n')
 
-  /* await save(slug) */
-  exec(`pagedjs-cli ./htmls/${slug}.html -o ./exports/${slug}.pdf --style style.css`, (error, stdout, stderr) => {
-    console.log(error, slug)
-  })
+    console.log(command)
+    await exec(command, (error, stdout, stderr) => {
+      console.log(error, stdout)
+    })
+  }
 }
 
 init()
