@@ -20,14 +20,14 @@
       <div
         @click="overlay = !overlay"
         id="over-btn"
-        class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2"
+        class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap"
         :class="{ 'bg-white text-black': overlay }"
       >
         rrrreflect{{ overlay ? ' ●' : ' ○' }}
       </div>
     </div>
     <div class="relative">
-      <R class="my-1 mb-3 cursor-pointer" @click="navigateTo('/')" />
+      <R class="mb-2 mt-4 cursor-pointer" @click="navigateTo('/')" />
       <div
         ref="over"
         class="overlay absolute top-0 right-0 flex font-serif text-white overflow-hidden grow w-full md:w-[55%]"

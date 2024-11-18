@@ -1,18 +1,18 @@
 <template>
   <div class="flex flex-col justify-between">
     <div class="mb-4 flex flex-col gap-4">
-      <div v-for="category in categories" class="flex flex-col border border-current rounded-lg gap-4">
-        <NuxtLink class="text-4xl p-4 pb-0 leading-none" :to="`/${category.id.replace('categories/', '')}`">{{
+      <div v-for="category in categories" class="flex flex-col rounded-lg gap-4">
+        <NuxtLink class="text-4xl py-4 pb-0 leading-none" :to="`/${category.id.replace('categories/', '')}`">{{
           category.title
         }}</NuxtLink>
         <div
           v-if="categories.length === 1 && category.content.description"
-          class="font-[m] text-[12px] p-4 border-y border-current leading-normal flex flex-col gap-2 [&>p]:leading-snug"
+          class="font-[m] text-[12px] leading-normal flex flex-col gap-2 [&>p]:leading-snug"
           v-html="category.content.description"
         ></div>
         <NuxtLink
           v-for="a in category.articles"
-          class="leading-none cursor-pointer px-4 last-of-type:pb-4"
+          class="leading-none cursor-pointer last-of-type:pb-4"
           @mouseenter="handleMouseEnter($event)"
           @mouseover="current = a.content.cover[0].url"
           @mouseleave="current = ''"

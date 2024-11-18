@@ -36,6 +36,9 @@ watch(
     if (category) {
       document.body.style.background = category.content.color
       document.body.style.color = 'black'
+    } else if (route.params.id) {
+      document.body.style.background = 'white'
+      document.body.style.color = 'black'
     } else {
       document.body.style.background = 'black'
       document.body.style.color = 'white'
