@@ -3,11 +3,12 @@
     <RHeader />
     <slot />
   </div>
-  <!-- <div
-    class="top-0 right-0 bg-white cursor-pointer"
-    :style="`width: ${w}px; height: ${h}px;`"
+  <div
+    v-if="y > 100"
+    class="fixed bottom-5 right-5 cursor-pointer text-3xl origin-center w-5 h-5 rounded-full flex justify-center items-center"
+    :style="`transform: rotate(-${h}deg); background: linear-gradient(0deg, white 0%, black 100%);`"
     @click="handleClick"
-  ></div> -->
+  ></div>
 </template>
 
 <script setup>
@@ -18,12 +19,11 @@ const { y } = useWindowScroll()
 const h = computed(
   () => (y.value / (document.body.scrollHeight - window.innerHeight)) * 100 * (window.innerHeight / 100)
 )
-const w = computed(() => window.innerWidth - (1100 * y.value) / y.value)
 
 c.value.pages = content.value
 
 function handleClick() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  window.scrollTo(0, 0, { behavior: 'smooth' })
 }
 
 watch(

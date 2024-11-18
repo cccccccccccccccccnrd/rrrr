@@ -85,7 +85,6 @@ function short(title) {
 }
 
 onClickOutside(over, (event) => {
-  console.log(event)
   if (event.target.id !== 'over-btn') {
     overlay.value = false
   }
