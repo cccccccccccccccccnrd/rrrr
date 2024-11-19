@@ -2,10 +2,10 @@
   <div class="article hybrid overflow-hidden text-black bg-white rounded-tl-lg rounded-tr-lg">
     <ArticleGrid :article="article" />
     <article>
-      <div v-for="(b, bi) in article.text" :key="`block-${bi}`" :class="block.type" class="block">
+      <div v-for="(b, bi) in article.text" :key="`block-${bi}`" :class="b.type" class="block">
         <div class="left side" />
         <div class="mid">
-          <ArticleGallery v-if="block.type === 'gallery'" :images="block.content.images" :type="block.content.type" />
+          <ArticleGallery v-if="b.type === 'gallery'" :images="b.content.images" :type="b.content.type" />
           <div v-if="b.type === 'text'" v-html="b.content.text" />
           <div v-if="b.type === 'heading'">
             <h2>

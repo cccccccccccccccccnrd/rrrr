@@ -36,10 +36,10 @@
         </div>
       </section>
       <footer>
-        <p class="sans-serif-uppercase">Footnotes</p>
-        <div v-html="urling(article.literature)"></div>
+        <p class="sans-serif-uppercase footnotes">Footnotes</p>
+        <div v-html="urling(article.literature)" class="footnotes-list"></div>
         <p class="sans-serif-uppercase references">References</p>
-        <div v-html="urling(article.references)" />
+        <div v-html="urling(article.references)" class="references-list" />
       </footer>
     </article>
   </div>
