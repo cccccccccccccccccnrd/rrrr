@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="relative">
-      <R class="mb-2 mt-4 cursor-pointer" @click="navigateTo('/')" />
+      <R class="mb-4 mt-3 cursor-pointer" @click="navigateTo('/')" />
       <div
         ref="over"
         class="overlay absolute top-0 right-0 flex font-serif text-white overflow-hidden grow w-full md:w-[55%]"
