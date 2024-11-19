@@ -30,7 +30,7 @@
       <R class="mb-4 mt-3 cursor-pointer" @click="navigateTo('/')" />
       <div
         ref="over"
-        class="overlay absolute top-0 right-0 flex font-serif text-white overflow-hidden grow w-full md:w-[55%]"
+        class="overlay absolute top-0 right-0 flex font-serif text-white overflow-hidden grow w-full md:w-[55%] z-10"
         :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
       >
         <div class="group bg-white text-black p-3 justify-self-end overflow-y-auto">
