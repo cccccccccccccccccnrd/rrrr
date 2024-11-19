@@ -2,29 +2,29 @@
   <div class="article hybrid overflow-hidden text-black bg-white rounded-tl-lg rounded-tr-lg">
     <ArticleGrid :article="article" />
     <article>
-      <div v-for="(block, bi) in article.text" :key="`block-${bi}`" :class="block.type" class="block">
+      <div v-for="(b, bi) in article.text" :key="`block-${bi}`" :class="block.type" class="block">
         <div class="left side" />
         <div class="mid">
           <ArticleGallery v-if="block.type === 'gallery'" :images="block.content.images" :type="block.content.type" />
-          <div v-if="block.type === 'text'" v-html="block.content.text" />
-          <div v-if="block.type === 'heading'">
+          <div v-if="b.type === 'text'" v-html="b.content.text" />
+          <div v-if="b.type === 'heading'">
             <h2>
-              {{ block.content.text }}
+              {{ b.content.text }}
             </h2>
           </div>
-          <blockquote v-if="block.type === 'quote'" v-html="block.content.text"></blockquote>
-          <figure v-if="block.type === 'image'">
-            <img :src="block.content.image[0].url" />
+          <blockquote v-if="b.type === 'quote'" v-html="b.content.text"></blockquote>
+          <figure v-if="b.type === 'image'">
+            <img :src="b.content.image[0].url" />
             <figcaption>
-              <span class="sans-serif-uppercase mr-2">FIG {{ getFigNo(block) }} </span>
-              <span v-html="urling(block.content.caption)"></span>
+              <span class="sans-serif-uppercase mr-2">FIG {{ getFigNo(b) }} </span>
+              <span v-html="urling(b.content.caption)"></span>
             </figcaption>
           </figure>
         </div>
         <div class="right side">
-          <div v-if="block.type === 'text' || block.type === 'quote'">
+          <div v-if="b.type === 'text' || b.type === 'quote'">
             <p
-              v-for="(lit, li) in getLiterature(block)"
+              v-for="(lit, li) in getLiterature(b)"
               :key="`side-literature-${li}`"
               class="side-literature"
               v-html="lit"

@@ -80,7 +80,7 @@ h2,
 h3 {
   margin: 0;
   font-weight: 300;
-  line-height: 0.9;
+  line-height: 1.1;
 }
 
 h1 {

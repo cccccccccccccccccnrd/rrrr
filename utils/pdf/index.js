@@ -22,6 +22,14 @@ async function init() {
     await exec(command, (error, stdout, stderr) => {
       console.log(error, stdout)
     })
+  } else {
+    const slug = process.argv[2]
+    await exec(
+      `pagedjs-cli ./htmls/${slug}.html -o ./exports/${slug}.pdf --style ./style.css`,
+      (error, stdout, stderr) => {
+        console.log(error, slug)
+      }
+    )
   }
 }
 

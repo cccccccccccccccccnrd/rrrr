@@ -1,5 +1,5 @@
 <template>
-  <div class="article pdf">
+  <div class="article pdf" :class="$route.params.id">
     <!-- <ArticleGrid
       :article="article"
       type="pdf"
@@ -21,14 +21,14 @@
           :class="b.type"
         >
           <p v-if="b.type === 'text'" v-html="b.content.text" v-plain />
-          <h2 v-if="b.type === 'heading' && b.content.level === 'h2'">
+          <h2 v-if="b.type === 'heading'">
             {{ b.content.text }}
           </h2>
           <blockquote v-if="b.type === 'quote'" v-html="b.content.text"></blockquote>
           <figure v-if="b.type === 'image'">
             <img :src="b.content.image[0].url" />
             <figcaption>
-              <span class="sans-serif-uppercase">FIG {{ getFigNo(b) }}</span>
+              <span class="sans-serif-uppercase !mr-2">FIG {{ getFigNo(b) }}</span>
               <span v-html="urling(b.content.caption)"></span>
             </figcaption>
           </figure>
