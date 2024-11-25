@@ -40,7 +40,7 @@
       </div>
       <div>
         <p class="sans-serif-uppercase">Online</p>
-        <a :href="`https://${url}`">
+        <a :href="url">
           {{ url }}
         </a>
       </div>
@@ -83,9 +83,7 @@
       </div>
       <div v-if="article.download" class="cell">
         <p class="sans-serif-uppercase">Download</p>
-        <a :href="`/${article.download}`">
-          {{ `${article.download}` }}
-        </a>
+        <a :href="article.download"> {{ article.download.match(/([A-Z])\w+/g)[0] }}.pdf </a>
       </div>
     </div>
     <div class="column main">
