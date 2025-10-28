@@ -34,7 +34,7 @@ async function load(id: string) {
       return await request('pages/authors/children?select=id,title,content')
     }
     case 'categories': {
-      const response = await request('pages/categories/children?select=id,title,content')
+      const response = await request('pages/categories/children?status=all&select=id,title,status,content')
       const sorted = response.reverse()
       return sorted
     }

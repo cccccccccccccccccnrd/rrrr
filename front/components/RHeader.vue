@@ -3,14 +3,15 @@
     <div class="w-full flex justify-between items-center font-[m] text-[12px] uppercase select-none">
       <div class="flex">
         <NuxtLink
+          v-for="category in c.pages.categories.filter((cat) => cat.status !== 'draft')"
+          :key="`category-${category.content.uuid}`"
+          :to="`/${category.id.replace('categories/', '')}`"
           class="p-2 hover:bg-white hover:text-black overflow-hidden whitespace-nowrap"
           :class="{
             'bg-white text-black':
               $route.params.slug === category.id.replace('categories/', '') ||
               $route.params.category === category.id.replace('categories/', '')
           }"
-          v-for="category in c.pages.categories"
-          :to="`/${category.id.replace('categories/', '')}`"
           >{{ short(category.title) }}</NuxtLink
         >
       </div>

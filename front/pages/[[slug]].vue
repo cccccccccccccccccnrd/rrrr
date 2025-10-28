@@ -1,7 +1,10 @@
 <template>
   <div class="flex flex-col justify-between">
     <div class="mb-4 flex flex-col gap-4">
-      <div v-for="category in categories" class="flex flex-col rounded-lg gap-4 border border-current">
+      <div
+        v-for="category in categories.filter((cat) => $route.params.slug !== '' || cat.status !== 'draft')"
+        class="flex flex-col rounded-lg gap-4 border border-current"
+      >
         <NuxtLink class="text-4xl p-4 pb-0 leading-none" :to="`/${category.id.replace('categories/', '')}`">{{
           category.title
         }}</NuxtLink>
