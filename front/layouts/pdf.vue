@@ -3,6 +3,27 @@
 </template>
 
 <style>
+@font-face {
+  font-family: 'a';
+  src: url('~/assets/fonts/a.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'i';
+  src: url('~/assets/fonts/i.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'm';
+  src: url('~/assets/fonts/m.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
 }
