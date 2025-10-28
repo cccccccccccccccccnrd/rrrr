@@ -25,7 +25,7 @@ async function load(id: string) {
       return response.content
     }
     case 'articles': {
-      const response = await request('pages/articles/children?select=id,title,content')
+      const response = await request('pages/articles/children?status=all&select=id,title,status,content')
       /* @ts-ignore */
       const sorted = response.sort((a, b) => new Date(a.content.published) - new Date(b.content.published))
       return sorted
