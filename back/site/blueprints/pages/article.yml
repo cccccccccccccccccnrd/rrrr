@@ -29,7 +29,7 @@ columns:
             type: select
             options:
               type: query
-              query: site.find("categories").children()
+              query: site.find("categories").childrenAndDrafts
           abstract:
             type: textarea
           literature:
