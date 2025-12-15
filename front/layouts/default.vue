@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1200px] grow w-screen p-3">
+  <div class="max-w-[1200px] grow w-screen">
     <RHeader />
     <slot />
   </div>

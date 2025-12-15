@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-between">
+  <div class="flex flex-col justify-between p-2">
     <div class="mb-4 flex flex-col gap-4">
       <div v-for="category in categories.filter((cat) => $route.params.slug !== '' || cat.status !== 'draft')"
         class="flex flex-col rounded-lg gap-4 border border-current">
