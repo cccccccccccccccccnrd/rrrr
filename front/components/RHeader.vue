@@ -17,7 +17,7 @@
           {{ menu ? ' ●' : ' ○' }} All releases
         </div>
         <div v-if="menu" class="menu absolute top-7 right-0 bg-black w-screen h-screen text-white flex flex-col z-20">
-          <NuxtLink v-for="category in c.pages.categories.filter((cat) => cat.status !== 'draft')"
+          <NuxtLink @click="menu = false" v-for="category in c.pages.categories.filter((cat) => cat.status !== 'draft')"
             :key="`category-${category.content.uuid}`" :to="`/${category.id.replace('categories/', '')}`"
             class="p-2 hover:bg-white hover:text-black overflow-hidden whitespace-nowrap" :class="{
               'bg-white text-black':
