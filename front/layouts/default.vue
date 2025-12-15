@@ -1,14 +1,12 @@
 <template>
-  <div class="max-w-[1200px] grow w-screen">
+  <div class="max-w-[1200px] grow w-screen p-3">
     <RHeader />
     <slot />
   </div>
-  <div
-    v-if="y > 100"
+  <div v-if="y > 100"
     class="fixed bottom-5 right-5 cursor-pointer text-3xl origin-center w-8 h-8 rounded-full flex justify-center items-center"
     :style="`transform: rotate(-${h}deg); background: linear-gradient(0deg, white 0%, black 100%);`"
-    @click="handleClick"
-  ></div>
+    @click="handleClick"></div>
 </template>
 
 <script setup>
