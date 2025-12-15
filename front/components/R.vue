@@ -17,9 +17,10 @@ const max = ref(12)
 const no = ref(Math.floor(Math.random() * max.value) + min.value)
 
 const { pressed } = useMousePressed()
+const { isMobile } = useDevice()
 
 watch(pressed, () => {
-  if (pressed.value === false) return
+  if (pressed.value === false || isMobile) return
   no.value = no.value + 1
 })
 
