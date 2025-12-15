@@ -1,39 +1,45 @@
 <template>
   <header class="relative flex flex-col">
     <div class="w-full flex justify-between items-center font-[m] text-[12px] uppercase select-none">
-      <div class="flex">
-        <NuxtLink
-          v-for="category in c.pages.categories.filter((cat) => cat.status !== 'draft')"
-          :key="`category-${category.content.uuid}`"
-          :to="`/${category.id.replace('categories/', '')}`"
-          class="p-2 hover:bg-white hover:text-black overflow-hidden whitespace-nowrap"
-          :class="{
+      <div class="hidden sm:flex">
+        <NuxtLink v-for="category in c.pages.categories.filter((cat) => cat.status !== 'draft')"
+          :key="`category-${category.content.uuid}`" :to="`/${category.id.replace('categories/', '')}`"
+          class="p-2 hover:bg-white hover:text-black overflow-hidden whitespace-nowrap" :class="{
             'bg-white text-black':
               $route.params.slug === category.id.replace('categories/', '') ||
               $route.params.category === category.id.replace('categories/', '')
-          }"
-          >{{ short(category.title) }}</NuxtLink
-        >
+          }">{{ short(category.title) }}</NuxtLink>
+      </div>
+      <div class="flex sm:hidden">
+        <div @click="menu = !menu; overlay = false" id="over-btn"
+          class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2"
+          :class="{ 'bg-white text-black': menu }">
+          {{ menu ? ' ●' : ' ○' }} All releases
+        </div>
+        <div v-if="menu" class="menu absolute top-7 right-0 bg-black w-screen h-screen text-white flex flex-col z-20">
+          <NuxtLink v-for="category in c.pages.categories.filter((cat) => cat.status !== 'draft')"
+            :key="`category-${category.content.uuid}`" :to="`/${category.id.replace('categories/', '')}`"
+            class="p-2 hover:bg-white hover:text-black overflow-hidden whitespace-nowrap" :class="{
+              'bg-white text-black':
+                $route.params.slug === category.id.replace('categories/', '') ||
+                $route.params.category === category.id.replace('categories/', '')
+            }">{{ short(category.title) }}</NuxtLink>
+        </div>
       </div>
       <div v-if="!isMobile" class="mx-2 overflow-hidden whitespace-nowrap text-ellipsis">
         {{ c.current.title }}
       </div>
-      <div
-        @click="overlay = !overlay"
-        id="over-btn"
+      <div @click="overlay = !overlay; menu = false" id="over-btn"
         class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2"
-        :class="{ 'bg-white text-black': overlay }"
-      >
+        :class="{ 'bg-white text-black': overlay }">
         rrrreflect{{ overlay ? ' ●' : ' ○' }}
       </div>
     </div>
     <div class="relative">
       <R class="mb-4 mt-3 cursor-pointer" @click="navigateTo('/')" />
-      <div
-        ref="over"
+      <div ref="over"
         class="overlay absolute top-0 right-0 flex font-serif text-white overflow-hidden grow w-full md:w-[55%] z-10"
-        :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`"
-      >
+        :style="`${overlay ? 'height: auto;' : 'height: 0px; padding: 0;'}`">
         <div class="group bg-white text-black p-3 justify-self-end overflow-y-auto">
           <p class="sans-serif-uppercase">About rrrreflect</p>
           <div class="mb-4" v-html="c.pages.about.about"></div>
@@ -41,18 +47,14 @@
           <p class="sans-serif-uppercase mt-4">Publisher</p>
           <div class="mb-4 flex gap-4">
             <div v-html="c.pages.about.edition"></div>
-            <img
-              class="max-w-[120px] h-full cursor-pointer invert-0 opacity-80"
-              @click="
-                navigateTo('https://kisd.de', {
-                  open: {
-                    target: '_blank'
-                  },
-                  external: true
-                })
-              "
-              src="@/assets/kisd-th-logo.svg"
-            />
+            <img class="max-w-[120px] h-full cursor-pointer invert-0 opacity-80" @click="
+              navigateTo('https://kisd.de', {
+                open: {
+                  target: '_blank'
+                },
+                external: true
+              })
+              " src="@/assets/kisd-th-logo.svg" />
           </div>
           <div class="mb-4 text-sm">
             <p class="sans-serif-uppercase">Advisory Committee</p>
@@ -79,6 +81,7 @@ const { isMobile } = useDevice()
 const c = useContent()
 const overlay = ref(false)
 const over = ref(null)
+const menu = ref(false)
 
 function short(title) {
   const t = title.split(' ').slice(0, 3).join(' ')
