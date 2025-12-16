@@ -5,7 +5,7 @@
         <figure>
           <img class="gallery-img" :src="image.url" />
           <figcaption>
-            <span class="sans-serif-uppercase">FIG {{ getFigNo(image) }}</span>
+            <span class="sans-serif-uppercase">FIG {{ getFigNo(image) }} </span>
             <span v-html="urling(image.content.caption)"></span>
           </figcaption>
         </figure>
@@ -44,7 +44,7 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() { },
   methods: {
     getFigNo(image) {
       const match = image.filename.match(/\d+/)
@@ -63,8 +63,7 @@ export default {
 </script>
 
 <style scoped>
-.swiper {
-}
+.swiper {}
 
 img {
   max-width: initial;
