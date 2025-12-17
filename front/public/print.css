@@ -3,7 +3,7 @@
     size: A4 portrait;
     margin: 20mm 10mm;
     /* marks: crop cross; */
-  
+
     @top-right {
       content: 'rrrreflect';
       font-family: 'JetBrains Mono', monospace;
@@ -89,5 +89,5 @@ footer {
 }
 
 .black-box-experiments-making-acquaintances-with-the-machinery #block-40 {
-    margin-bottom: 9em !important;
+  margin-bottom: 9em !important;
 }

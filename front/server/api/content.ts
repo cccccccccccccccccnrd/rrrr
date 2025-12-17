@@ -1,6 +1,8 @@
+// @ts-nocheck
+
 import { request } from '../utils'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const about = await load('about')
   const articles = await load('articles')
   const authors = await load('authors')
@@ -10,9 +12,9 @@ export default defineEventHandler(async (event) => {
     about,
     articles,
     authors,
-    categories: categories.map((c) => ({
+    categories: categories.map(c => ({
       ...c,
-      articles: articles.filter((a) => a.content.category === c.id)
+      articles: articles.filter(a => a.content.category === c.id)
     }))
   }
 })
@@ -21,12 +23,10 @@ async function load(id: string) {
   switch (id) {
     case 'about': {
       const response = await request('pages/about')
-      /* @ts-ignore */
       return response.content
     }
     case 'articles': {
       const response = await request('pages/articles/children?status=all&select=id,title,status,content')
-      /* @ts-ignore */
       const sorted = response.sort((a, b) => new Date(a.content.published) - new Date(b.content.published))
       return sorted
     }

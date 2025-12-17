@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div class="">
+    <div id="pdf-content" :style="{ display: 'none' }">
       <ArticlePdf :article="article" />
     </div>
+    <div id="pdf-preview"></div>
+    <ArticleLayouter />
   </div>
 </template>
 

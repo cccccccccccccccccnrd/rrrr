@@ -13,9 +13,11 @@
     "@nuxtjs/device": "^3.1.1",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@vueuse/nuxt": "^10.4.1",
-    "nuxt": "^3.7.0"
+    "nuxt": "^3.7.0",
+    "prettier": "^3.7.4"
   },
   "dependencies": {
+    "pagedjs": "^0.4.3",
     "swiper": "^10.3.1"
   }
 }

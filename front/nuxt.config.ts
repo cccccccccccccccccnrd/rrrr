@@ -17,8 +17,7 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         {
           name: 'viewport',
-          content:
-            'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'
+          content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'
         },
         { hid: 'description', name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },
