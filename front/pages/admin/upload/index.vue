@@ -93,7 +93,6 @@ async function handleFiles(event) {
       uploadItem.status = 'success'
       uploadItem.article = response.article
     } catch (error) {
-      console.error('Upload failed', error)
       uploadItem.status = 'error'
       uploadItem.error = error.data?.message || error.message || 'Unknown error'
     }
