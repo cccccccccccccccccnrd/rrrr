@@ -1,11 +1,12 @@
-import fetch from 'node-fetch'
-
-export async function request (path: string) {
-  const response = await fetch(`${useRuntimeConfig().baseURL}/api/${path}`, {
+export async function request (path: string, options: any = {}) {
+  const config = useRuntimeConfig()
+  const response = await fetch(`${config.baseURL}/api/${path}`, {
     headers: {
-      Authorization: `${useRuntimeConfig().auth}`
-    }
+      Authorization: config.auth,
+      ...options.headers
+    },
+    ...options
   })
   const json: any = await response.json()
-  return json.data
+  return options.raw ? json : json.data
 }
