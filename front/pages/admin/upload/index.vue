@@ -40,6 +40,8 @@
 </template>
 
 <script setup>
+import { reactive, ref } from 'vue'
+
 const uploads = ref([])
 
 async function handleFiles(event) {
@@ -65,12 +67,12 @@ async function handleFiles(event) {
     }
 
     const docxFile = docxFiles[0]
-    const uploadItem = {
+    const uploadItem = reactive({
       filename: docxFile.name,
       status: 'uploading',
       article: null,
       error: null
-    }
+    })
     uploads.value.push(uploadItem)
 
     try {
@@ -87,10 +89,11 @@ async function handleFiles(event) {
         method: 'POST',
         body: formData,
       })
-
+      console.log('Upload response:', response)
       uploadItem.status = 'success'
       uploadItem.article = response.article
     } catch (error) {
+      console.error('Upload failed', error)
       uploadItem.status = 'error'
       uploadItem.error = error.data?.message || error.message || 'Unknown error'
     }
