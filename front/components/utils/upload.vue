@@ -93,6 +93,7 @@ async function handleFiles(event) {
       uploadItem.status = 'success'
       uploadItem.article = response.article
     } catch (error) {
+      console.error('Upload failed', error)
       uploadItem.status = 'error'
       uploadItem.error = error.data?.message || error.message || 'Unknown error'
     }
@@ -101,9 +102,9 @@ async function handleFiles(event) {
 
 function statusColor(status) {
   return {
-    'uploading': 'bg-blue-600',
-    'success': 'bg-green-600',
-    'error': 'bg-red-600'
+    'uploading': 'border border-blue-600',
+    'success': 'border border-green-600',
+    'error': 'border border-red-600'
   }[status]
 }
 </script>

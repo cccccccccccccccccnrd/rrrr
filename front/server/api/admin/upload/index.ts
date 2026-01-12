@@ -1,6 +1,7 @@
 import mammoth from 'mammoth'
 import FormData from 'form-data'
-import { parseArticle } from './article/article'
+import { defineEventHandler, readMultipartFormData, createError } from 'h3'
+import { parseArticle } from './article'
 
 export async function post(route: string, body: any, patch: boolean = false) {
   const isFormData = body?.constructor?.name === 'FormData'
@@ -28,9 +29,6 @@ export default defineEventHandler(async (event) => {
 
     const docxFiles = form.filter(item => item.name === 'docx')
     const associatedFiles = form.filter(item => item.name === 'files')
-
-    console.log("DOCX Files:", docxFiles.map(f => f.filename))
-    console.log("Associated Files:", associatedFiles.map(f => f.filename))
     
     if (docxFiles.length === 0 || docxFiles.length > 1) {
       throw createError({ statusCode: 400, message: 'Exactly one .docx file must be provided' })
