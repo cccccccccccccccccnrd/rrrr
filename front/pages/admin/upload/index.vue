@@ -10,8 +10,7 @@
       </label>
       <p>
       <p class="mt-1 sans-serif text-base leading-none">
-        Select a folder containing .docx files and their associated assets (images, etc.). Each .docx file will be
-        processed and uploaded as an article.
+        Select an uncompressed folder containing a .docx file and its associated assets (images, etc.). It will then be processed and uploaded to Kirby.
       </p>
       </p>
     </div>
@@ -60,40 +59,40 @@ async function handleFiles(event) {
   for (const [folderName, files] of Object.entries(filesByFolder)) {
     const docxFiles = files.filter(f => f.name.endsWith('.docx') && !f.name.includes('~$'))
 
-    for (const docxFile of docxFiles) {
-      const uploadItem = {
-        filename: docxFile.name,
-        status: 'uploading',
-        article: null,
-        error: null
-      }
-      uploads.value.push(uploadItem)
+    if (docxFiles.length !== 1) {
+      alert(`Expected exactly 1 .docx file in folder "${folderName}", found ${docxFiles.length}`)
+      return
+    }
 
-      try {
-        const formData = new FormData()
-        formData.append('docx', docxFile)
+    const docxFile = docxFiles[0]
+    const uploadItem = {
+      filename: docxFile.name,
+      status: 'uploading',
+      article: null,
+      error: null
+    }
+    uploads.value.push(uploadItem)
 
-        files.forEach(file => {
-          if (file !== docxFile) {
-            formData.append('files', file, file.name)
-          }
-        })
+    try {
+      const formData = new FormData()
+      formData.append('docx', docxFile)
 
-        // const response = await $fetch('/api/admin/upload', {
-        //   method: 'POST',
-        //   body: formData,
-        //   onUploadProgress: (progress) => {
-        //     uploadItem.progress = Math.round((progress.loaded / progress.total) * 100)
-        //   }
-        // })
+      files.forEach(file => {
+        if (file !== docxFile) {
+          formData.append('files', file, file.name)
+        }
+      })
 
-        uploadItem.status = 'completed'
-        uploadItem.progress = 100
-        uploadItem.article = response.article
-      } catch (error) {
-        uploadItem.status = 'failed'
-        uploadItem.error = error.data?.message || error.message
-      }
+      const response = await $fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      uploadItem.status = 'success'
+      uploadItem.article = response.article
+    } catch (error) {
+      uploadItem.status = 'error'
+      uploadItem.error = error.data?.message || error.message || 'Unknown error'
     }
   }
 }
@@ -101,8 +100,8 @@ async function handleFiles(event) {
 function statusColor(status) {
   return {
     'uploading': 'bg-blue-600',
-    'completed': 'bg-green-600',
-    'failed': 'bg-red-600'
+    'success': 'bg-green-600',
+    'error': 'bg-red-600'
   }[status]
 }
 </script>

@@ -1,17 +1,22 @@
 import mammoth from 'mammoth'
 import FormData from 'form-data'
-import MarkdownIt from 'markdown-it'
-// @ts-ignore
-import mdfigcaption from 'markdown-it-image-figures'
-// @ts-ignore
-import mdfootnote from 'markdown-it-footnote'
-import { request } from '../../../utils'
+import { parseArticle } from './article/article'
 
-const md = new MarkdownIt()
-  .use(mdfigcaption, { figcaption: true })
-  .use(mdfootnote)
-
-md.renderer.rules.footnote_anchor = () => ''
+export async function post(route: string, body: any, patch: boolean = false) {
+  const isFormData = body?.constructor?.name === 'FormData'
+  const method = patch ? 'PATCH' : 'POST'
+  const response = await fetch(`${process.env.BASE_URL}${process.env.UPLOAD_SUFFIX}/${route}`, {
+    method,
+    headers: {
+      Authorization: process.env.AUTH || '',
+      Accept: 'application/json',
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' })
+    },
+    body: isFormData ? body : JSON.stringify(body)
+  })
+  const json = await response.json()
+  return json
+}
 
 export default defineEventHandler(async (event) => {
   try {
@@ -21,30 +26,28 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, message: 'No files provided' })
     }
 
-    const docxFile = form.find(item => item.name === 'docx')
+    const docxFiles = form.filter(item => item.name === 'docx')
     const associatedFiles = form.filter(item => item.name === 'files')
+
+    console.log("DOCX Files:", docxFiles.map(f => f.filename))
+    console.log("Associated Files:", associatedFiles.map(f => f.filename))
     
-    if (!docxFile) {
-      throw createError({ statusCode: 400, message: 'No .docx file provided' })
+    if (docxFiles.length === 0 || docxFiles.length > 1) {
+      throw createError({ statusCode: 400, message: 'Exactly one .docx file must be provided' })
     }
+    
+    const docxFile = docxFiles[0]
 
     const result = await mammoth.convertToHtml({ buffer: docxFile.data })
     const { meta, html } = parseArticle(result.value)
 
-    const articleResponse = await request('pages/articles/children', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: meta.title,
-        template: 'article',
-        content: {
-          ...meta,
-          text: html
-        }
-      }),
-      raw: true
+    const articleResponse = await post('pages/articles/children', {
+      title: meta.title,
+      template: 'article',
+      content: {
+        ...meta,
+        text: html
+      }
     })
 
     if (articleResponse.status !== 'ok') {
@@ -71,79 +74,22 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-function parseArticle(html: string) {
-  const visuals = [...html.matchAll(/(<p>!\[).*?("\)<\/p>)/g)]
-  const literatureMatch = html.match(/(<ol>).*(<\/ol>)/g)
-  const literature = literatureMatch ? literatureMatch[0] : ''
-  
-  let processedHtml = html
-  
-  visuals.forEach((v) => {
-    processedHtml = processedHtml.replace(
-      v[0], 
-      md.render(v[0].replace(/<p>|<\/p>/g, ''))
-    )
-  })
-  
-  processedHtml = processedHtml.replace(literature, '')
-  processedHtml = processedHtml.replace(/<h2>(.*)<\/h2>/g, '')
-
-  const extractMeta = (key: string) => {
-    const regex = new RegExp(
-      `<h2>${key.charAt(0).toUpperCase() + key.slice(1)}: (.*?)<\/h2>`, 
-      'g'
-    )
-    const match = [...html.matchAll(regex)]
-    return match[0]?.[1] || ''
-  }
-
-  const title = extractMeta('title')
-  const author = extractMeta('author')
-  const abstract = extractMeta('abstract')
-  const context = extractMeta('context')
-  const tags = extractMeta('tags')
-
-  return {
-    meta: {
-      title,
-      author,
-      abstract,
-      context,
-      tags,
-      suggestion: `${author}. ${new Date().getFullYear()}. ${title}. Cologne: rrrreflect.`,
-      doi: '',
-      license: 'Creative Commons license (CC BY 4.0)',
-      literature
-    },
-    html: processedHtml
-  }
-}
-
 async function uploadImages(article: any, files: any[]) {
   const articleId = article.id.replace('/', '+')
   
-  // Filter for image files referenced in article.content.text
   const imageBlocks = article.content.text
     .filter((b: any) => b.type === 'image' && b.content.location === 'web')
     .map((b: any) => b.content.src)
 
   for (const imageName of imageBlocks) {
-    // Find matching file from uploaded files
-    const imageFile = files.find(f => f.filename === imageName)
+    const imageFile = files.find((f: any) => f.filename === imageName)
     
     if (imageFile) {
       const fd = new FormData()
       fd.append('file', imageFile.data, imageName)
       fd.append('template', 'blocks/image')
 
-      await request(`pages/${articleId}/files`, {
-        method: 'POST',
-        headers: {
-          ...fd.getHeaders()
-        },
-        body: fd,
-        raw: true
-      })
+      await post(`pages/${articleId}/files`, fd)
     }
   }
 }
@@ -170,14 +116,5 @@ async function updateArticleWithKirbyImages(article: any) {
     return block
   })
 
-  await request(`pages/${articleId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      text: updatedText
-    }),
-    raw: true
-  })
+  await post(`pages/${articleId}`, { text: updatedText }, true)
 }
