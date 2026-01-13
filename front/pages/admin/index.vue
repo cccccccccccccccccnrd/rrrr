@@ -1,5 +1,8 @@
 <template>
-  <button @click="logout">Logout</button>
+  <div class="mb-4 flex flex-row justify-end w-full"> <button
+      class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2 font-[m] text-[12px] uppercase"
+      @click="logout">Logout</button>
+  </div>
   <div class="flex flex-col gap-8">
     <Upload />
     <Pdf />
