@@ -5,7 +5,7 @@
   </div>
   <div class="flex flex-col gap-8">
     <Upload />
-    <Pdf />
+    <!-- <Pdf /> -->
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 
 
 import Upload from '../../components/utils/upload.vue';
-import Pdf from '../../components/utils/pdf.vue';
+// import Pdf from '../../components/utils/pdf.vue';
 
 async function logout() {
   await $fetch('/api/admin/auth/logout', { method: 'POST' })
