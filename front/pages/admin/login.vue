@@ -19,7 +19,6 @@ async function login() {
 <template>
   <div class="flex flex-col rounded-lg gap-4 border p-4">
     <h1 class="text-3xl">Admin Login</h1>
-
     <div class="space-y-2 max-w-sm">
       <label class="block text-sm">Password</label>
       <div class="flex flex-row items-center gap-2">
@@ -30,15 +29,10 @@ async function login() {
           Login
         </button>
       </div>
-          <p v-if="error" class="text-sm text-red-600">Error: {{ error }}</p>
-
+      <p v-if="error" class="text-sm text-red-600">Error: {{ error }}</p>
     </div>
-
-
-
     <p class="text-sm sans-serif leading-none mt-4">
       Enter the admin password to access the admin panel.
     </p>
-
   </div>
 </template>

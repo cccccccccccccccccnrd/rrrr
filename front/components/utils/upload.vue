@@ -84,12 +84,10 @@ async function handleFiles(event) {
           formData.append('files', file, file.name)
         }
       })
-
       const response = await $fetch('/api/admin/upload', {
         method: 'POST',
         body: formData,
       })
-      console.log('Upload response:', response)
       uploadItem.status = 'success'
       uploadItem.article = response.article
     } catch (error) {

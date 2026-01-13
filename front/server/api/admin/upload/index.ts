@@ -11,9 +11,9 @@ export async function post(route: string, body: any, patch: boolean = false) {
     headers: {
       Authorization: process.env.AUTH || '',
       Accept: 'application/json',
-      ...(isFormData ? {} : { 'Content-Type': 'application/json' })
+      ...(isFormData ? body.getHeaders() : { 'Content-Type': 'application/json' })
     },
-    body: isFormData ? body : JSON.stringify(body)
+    body: isFormData ? body.getBuffer() : JSON.stringify(body)
   })
   const json = await response.json()
   return json
@@ -82,12 +82,21 @@ async function uploadImages(article: any, files: any[]) {
   for (const imageName of imageBlocks) {
     const imageFile = files.find((f: any) => f.filename === imageName)
     
-    if (imageFile) {
+    if (imageFile) {      
       const fd = new FormData()
-      fd.append('file', imageFile.data, imageName)
+      fd.append('file', imageFile.data, {
+        filename: imageName,
+        contentType: imageFile.type || 'application/octet-stream'
+      })
       fd.append('template', 'blocks/image')
-
-      await post(`pages/${articleId}/files`, fd)
+      
+      const response = await post(`pages/${articleId}/files`, fd)
+      
+      if (response.status !== 'ok') {
+        console.error(`Failed to upload ${imageName}:`, response.message)
+      }
+    } else {
+      console.warn(`No file found matching: ${imageName}`)
     }
   }
 }
@@ -114,5 +123,6 @@ async function updateArticleWithKirbyImages(article: any) {
     return block
   })
 
-  await post(`pages/${articleId}`, { text: updatedText }, true)
-}
+await post(`pages/${articleId}`, {
+  text: updatedText
+}, true)}
