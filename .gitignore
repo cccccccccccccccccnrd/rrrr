@@ -11,3 +11,6 @@ vendor
 kirby
 config.php
 fonts
+archive
+
+notes.txt
