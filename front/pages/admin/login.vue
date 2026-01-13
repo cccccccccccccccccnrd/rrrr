@@ -23,7 +23,7 @@ async function login() {
       <label class="block text-sm">Password</label>
       <div class="flex flex-row items-center gap-2">
         <input
-          class="px-3 py-2 border border-gray-300 text-black focus:outline-none focus:ring-1 focus:ring-gray-500 rounded"
+          class="px-3 py-2 border  bg-black border-white focus:outline-none focus:ring-1 focus:ring-gray-500 rounded"
           type="password" v-model="password" @keyup.enter="login" />
         <button class="py-2 px-4 text-black bg-white border-none text-sm rounded" @click="login">
           Login
