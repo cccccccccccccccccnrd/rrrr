@@ -1,3 +1,8 @@
 {
-  "extends": "../.nuxt/tsconfig.server.json"
+  "extends": "../.nuxt/tsconfig.server.json",
+  // SILENCES TS DEPRECATION ERROR, REMOVE IF THIS CAUSES ISSUES
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0"
+  },
+  "exclude": ["../ecosystem.config.js"]
 }
