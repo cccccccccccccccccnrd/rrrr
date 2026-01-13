@@ -4,7 +4,8 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@nuxtjs/device'],
   runtimeConfig: {
     baseURL: process.env.BASE_URL,
-    auth: process.env.AUTH
+    auth: process.env.AUTH,
+    adminPW: process.env.ADMIN_PW
   },
   ssr: false,
   app: {
