@@ -24,29 +24,12 @@
   }
 }
 
-/* Two-column layout for paged.js */
-.two-column,
-body.two-column-layout .content {
-  column-count: 2;
-  column-gap: 2em;
-  column-fill: auto;
-}
-
-.two-column > *,
-body.two-column-layout .content > * {
-  break-inside: avoid-column;
-}
-
 .abstract {
   display: none;
 }
 
 h2.title {
   display: none;
-}
-
-.grid {
-  /* page-break-after: always; */
 }
 
 .meta.author {
@@ -69,10 +52,6 @@ figure img {
 footer {
   page-break-before: always;
 }
-
-/* #block-19 {
-  page-break-inside: avoid;
-} */
 
 .deep-dreaming-willy-wonka-ai-weird-as-the-new-kitsch #block-35 {
   margin-bottom: 4em !important;
