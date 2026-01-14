@@ -37,20 +37,12 @@
         </div>
       </div>
     </div>
-    <div v-for="article in articleIds" :key="article" class="mt-8">
-      <p>PDF preview: </p>
-      <NuxtLink target="_blank" :to="`/pdf/${article}`" class="underline">
-        "{{ article }}"
-      </NuxtLink>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
 
-const c = useContent()
-const articleIds = c.value.pages.articles.map(a => a.id.replace('articles/', ''))
 const uploads = ref([])
 
 async function handleFiles(event) {
