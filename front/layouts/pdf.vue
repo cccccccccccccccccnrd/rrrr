@@ -40,10 +40,15 @@ body {
   background-image: none !important;
   border: none !important;
   color: black !important;
-  background-color: #f6f6f6 !important;
-  font-family: var(--serif);
+  background-color: black !important;
+  font-family: 'a', serif;
   font-weight: 300;
   font-size: 16px;
+}
+
+.pagedjs_page {
+  background-color: white !important;
+  margin-bottom: 20px !important;
 }
 
 nav {

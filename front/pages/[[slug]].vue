@@ -1,26 +1,18 @@
 <template>
-  <div class="flex flex-col justify-between">
+  <div class="flex flex-col justify-between p-2">
     <div class="mb-4 flex flex-col gap-4">
-      <div
-        v-for="category in categories.filter((cat) => $route.params.slug !== '' || cat.status !== 'draft')"
-        class="flex flex-col rounded-lg gap-4 border border-current"
-      >
+      <div v-for="category in categories.filter((cat) => $route.params.slug !== '' || cat.status !== 'draft')"
+        class="flex flex-col rounded-lg gap-4 border border-current">
         <NuxtLink class="text-4xl p-4 pb-0 leading-none" :to="`/${category.id.replace('categories/', '')}`">{{
           category.title
         }}</NuxtLink>
-        <div
-          v-if="categories.length === 1 && category.content.description"
+        <div v-if="categories.length === 1 && category.content.description"
           class="font-[m] text-[12px] leading-normal flex flex-col gap-2 p-4 border-y border-current [&>p]:leading-snug"
-          v-html="category.content.description"
-        ></div>
-        <NuxtLink
-          v-for="a in category.articles"
-          class="leading-none cursor-pointer px-4 last-of-type:pb-4"
-          @mouseenter="handleMouseEnter($event)"
-          @mouseover="current = a.content.cover[0].url"
+          v-html="category.content.description"></div>
+        <NuxtLink v-for="a in category.articles" class="leading-none cursor-pointer px-4 last-of-type:pb-4"
+          @mouseenter="handleMouseEnter($event)" @mouseover="current = a.content.cover[0].url"
           @mouseleave="current = ''"
-          :to="`/${a.content.category.replace('categories/', '')}/${a.id.replace('articles/', '')}`"
-        >
+          :to="`/${a.content.category.replace('categories/', '')}/${a.id.replace('articles/', '')}`">
           <div>
             <p class="leading-none font-serif text-3xl">{{ a.title }}</p>
             <p class="mt-1 sans-serif text-base leading-none">
@@ -32,11 +24,8 @@
     </div>
   </div>
   <div class="fixed bottom-0 left-0 w-full h-full z-[10] flex items-center justify-center pointer-events-none">
-    <img
-      class="w-[50vw] max-w-[600px]"
-      :src="current"
-      :style="`transform: translate(${(x - xO) / oO}px, ${(y - yO) / oO}px);`"
-    />
+    <img class="w-[50vw] max-w-[600px]" :src="current"
+      :style="`transform: translate(${(x - xO) / oO}px, ${(y - yO) / oO}px);`" />
   </div>
 </template>
 

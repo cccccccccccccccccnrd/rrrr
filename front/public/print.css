@@ -1,30 +1,48 @@
-@media print {
-  @page {
-    size: A4 portrait;
-    margin: 20mm 10mm;
-    /* marks: crop cross; */
+@page {
+  size: A4 portrait;
+  margin: 20mm 10mm;
 
-    @top-right {
-      content: 'rrrreflect';
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-    }
-
-    @top-left {
-      content: string(author) ', ' string(title);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-    }
-
-    @bottom-center {
-      content: counter(page) ' of ' counter(pages);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-    }
+  @top-right {
+    content: 'rrrreflect';
+    font-family: 'm', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
   }
+
+  @top-left {
+    content: string(author) ', ' string(title);
+    font-family: 'm', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+
+  @bottom-center {
+    content: counter(page) ' of ' counter(pages);
+    font-family: 'm', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+}
+
+/* Two-column layout for paged.js */
+.two-column,
+body.two-column-layout .content {
+  column-count: 2;
+  column-gap: 2em;
+  column-fill: auto;
+}
+
+.two-column > *,
+body.two-column-layout .content > * {
+  break-inside: avoid-column;
+}
+
+.abstract {
+  display: none;
+}
+
+h2.title {
+  display: none;
 }
 
 .grid {
@@ -60,7 +78,8 @@ footer {
   margin-bottom: 4em !important;
 }
 
-.generative-ai-decision-making-and-collaborative-choreography-how-lstm-networks-mirror-human-creativity #block-16 {
+.generative-ai-decision-making-and-collaborative-choreography-how-lstm-networks-mirror-human-creativity
+  #block-16 {
   margin-bottom: 7em !important;
 }
 
@@ -72,11 +91,13 @@ footer {
   margin-top: 6em !important;
 }
 
-.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot .references {
+.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot
+  .references {
   margin-top: 0 !important;
 }
 
-.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot .footnotes-list {
+.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot
+  .footnotes-list {
   margin-bottom: 4em !important;
 }
 

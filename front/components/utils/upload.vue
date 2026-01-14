@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 p-2">
     <div class="flex flex-col rounded-lg gap-4 border border-current p-4">
       <h1 class="text-4xl leading-none">Upload Articles</h1>
       <label class="flex flex-row gap-4 text-3xl font-serif">
@@ -10,7 +10,8 @@
       </label>
       <p>
       <p class="mt-1 sans-serif text-base leading-none">
-        Select an uncompressed folder containing a .docx file and its associated assets (images, etc.). It will then be processed and uploaded to Kirby.
+        Select an uncompressed folder containing a .docx file and its associated assets (images, etc.). It will then be
+        processed and uploaded to Kirby.
       </p>
       </p>
     </div>
@@ -24,7 +25,7 @@
               'px-2 py-1 rounded text-sm',
               statusColor(upload.status)
             ]">
-             {{ upload.status }}
+              {{ upload.status }}
             </span>
           </div>
           <div v-if="upload.article" class="text-sm  sans-serif leading-none">
@@ -36,12 +37,20 @@
         </div>
       </div>
     </div>
+    <div v-for="article in articleIds" :key="article" class="mt-8">
+      <p>PDF preview: </p>
+      <NuxtLink target="_blank" :to="`/pdf/${article}`" class="underline">
+        "{{ article }}"
+      </NuxtLink>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
 
+const c = useContent()
+const articleIds = c.value.pages.articles.map(a => a.id.replace('articles/', ''))
 const uploads = ref([])
 
 async function handleFiles(event) {
