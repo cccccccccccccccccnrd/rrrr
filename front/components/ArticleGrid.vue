@@ -61,10 +61,8 @@
       <div class="cell">
         <p class="sans-serif-uppercase">Edition</p>
         <NuxtLink :to="`/${category.id.replace('categories/', '')}`">
-          <div
-            :style="`background: ${category.content.color}`"
-            class="hover:scale-[3] p-1 w-fit transition-all ease-out origin-left"
-          >
+          <div :style="`background: ${category.content.color}`"
+            class="hover:scale-[3] p-1 w-fit transition-all ease-out origin-left">
             {{ category.title }}
           </div>
         </NuxtLink>
@@ -77,50 +75,49 @@
         <p class="sans-serif-uppercase">Tags</p>
         <div>
           <div v-for="(tag, index) in article.tags" :key="`tag-${index}`" class="bg-black text-white p-1">
-            {{ tag }}{{ index < article.tags.length - 1 ? ',' : '' }}
+            {{ tag }}{{ index < article.tags.length - 1 ? ',' : '' }} </div>
           </div>
         </div>
+        <div v-if="article.download" class="cell">
+          <p class="sans-serif-uppercase">Download</p>
+          <a class="hover:underline" :href="article.download">{{ article.download.split('/').pop() }}</a>
+        </div>
       </div>
-      <div v-if="article.download" class="cell">
-        <p class="sans-serif-uppercase">Download</p>
-        <a :href="article.download"> {{ article.download.match(/([A-Z])\w+/g)[0] }}.pdf </a>
+      <div class="column main">
+        <div class="cell entry">
+          <p class="sans-serif-uppercase">
+            {{ article.author }}
+          </p>
+          <p class="text-4xl">{{ article.title }}</p>
+        </div>
+        <div class="cell">
+          <p class="sans-serif-uppercase">Abstract</p>
+          <p>{{ article.abstract }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div v-if="article.doi" class="cell">
+          <p class="sans-serif-uppercase">DOI</p>
+          <a :href="`https://doi.org/${article.doi}`" target="_blank">{{ article.doi }}</a>
+        </div>
+        <div class="cell">
+          <p class="sans-serif-uppercase">License</p>
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">{{ article.license }}</a>
+        </div>
+        <div class="cell">
+          <p class="sans-serif-uppercase">Citation Suggestion</p>
+          <p>{{ article.suggestion }}</p>
+        </div>
+        <div class="cell">
+          <p class="sans-serif-uppercase">Author{{ article.author.split('').includes(',') ? 's' : '' }}</p>
+          <p>{{ article.author }}</p>
+        </div>
+        <div v-if="article.correction" class="cell">
+          <p class="sans-serif-uppercase">Text correction</p>
+          <p>{{ article.correction }}</p>
+        </div>
       </div>
     </div>
-    <div class="column main">
-      <div class="cell entry">
-        <p class="sans-serif-uppercase">
-          {{ article.author }}
-        </p>
-        <p class="text-4xl">{{ article.title }}</p>
-      </div>
-      <div class="cell">
-        <p class="sans-serif-uppercase">Abstract</p>
-        <p>{{ article.abstract }}</p>
-      </div>
-    </div>
-    <div class="column">
-      <div v-if="article.doi" class="cell">
-        <p class="sans-serif-uppercase">DOI</p>
-        <a :href="`https://doi.org/${article.doi}`" target="_blank">{{ article.doi }}</a>
-      </div>
-      <div class="cell">
-        <p class="sans-serif-uppercase">License</p>
-        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">{{ article.license }}</a>
-      </div>
-      <div class="cell">
-        <p class="sans-serif-uppercase">Citation Suggestion</p>
-        <p>{{ article.suggestion }}</p>
-      </div>
-      <div class="cell">
-        <p class="sans-serif-uppercase">Author{{ article.author.split('').includes(',') ? 's' : '' }}</p>
-        <p>{{ article.author }}</p>
-      </div>
-      <div v-if="article.correction" class="cell">
-        <p class="sans-serif-uppercase">Text correction</p>
-        <p>{{ article.correction }}</p>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -141,6 +138,7 @@ const url = computed(() => {
   return `www.rrrreflect.org/articles/${String(route.params.id)}`
 })
 
+//@ts-ignore
 const category = c.value.pages.categories.find((category) => category.id === props.article.category)
 </script>
 
@@ -176,7 +174,7 @@ const category = c.value.pages.categories.find((category) => category.id === pro
   columns: 2;
 }
 
-.grid-inner > div {
+.grid-inner>div {
   margin: 0 0 calc(0.666em * 1) 0;
   page-break-inside: avoid;
 }
@@ -206,7 +204,7 @@ const category = c.value.pages.categories.find((category) => category.id === pro
   font-size: 1.25em;
 }
 
-.cell.tags > div {
+.cell.tags>div {
   display: flex;
   flex-flow: row wrap;
 }
@@ -230,6 +228,7 @@ const category = c.value.pages.categories.find((category) => category.id === pro
   .column {
     display: none;
   }
+
   .column.main {
     display: block;
   }

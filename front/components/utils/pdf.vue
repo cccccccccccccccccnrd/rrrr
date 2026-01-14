@@ -29,7 +29,7 @@
 const content = useContent()
 const articleIds = content.value.pages.articles.map(a => a.id.replace('articles/', ''))
 
-const visibleCount = ref(10)
+const visibleCount = ref(5)
 const visibleArticles = computed(() => articleIds.slice(0, visibleCount.value))
 const showMoreVisible = computed(() => visibleCount.value < articleIds.length)
 const remainingCount = computed(() => articleIds.length - visibleCount.value)
