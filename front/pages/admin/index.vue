@@ -3,7 +3,7 @@
       class="break-keep cursor-pointer hover:bg-white hover:text-black whitespace-nowrap p-2 font-[m] text-[12px] uppercase"
       @click="logout">Logout</button>
   </div>
-  <div class="flex flex-col gap-8 mb-8">
+  <div class="flex flex-col">
     <Upload />
     <Pdf />
   </div>

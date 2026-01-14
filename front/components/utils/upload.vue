@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col gap-4 p-2">
     <div class="flex flex-col rounded-lg gap-4 border border-current p-4">
-      <h1 class="text-4xl leading-none">Upload Articles</h1>
       <label class="flex flex-row gap-4 text-3xl font-serif">
         <input type="file" @change="handleFiles" webkitdirectory directory multiple class="hidden" />
         <p class="border-b border-dotted w-fit hover:bg-white hover:text-black cursor-pointer">Upload folder</p>
@@ -15,7 +14,6 @@
       </p>
       </p>
     </div>
-
     <div v-if="uploads.length" class="flex flex-col rounded-lg gap-4 border border-current p-4">
       <div class="space-y-4">
         <div v-for="upload in uploads" :key="upload.filename">
