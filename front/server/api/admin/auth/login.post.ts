@@ -6,9 +6,9 @@ export default defineEventHandler(async (event) => {
     setCookie(event, 'admin-auth', 'true', {
       httpOnly: true,
       sameSite: 'strict',
-      secure: true,
+      secure: false,
       path: '/',
-      maxAge: 60 * 60, 
+      maxAge: 60 * 60,
     })
 
     return { success: true }

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 p-2">
     <div class="flex flex-col rounded-lg gap-4 border border-current p-4">
       <h1 class="text-4xl leading-none">Upload Articles</h1>
       <label class="flex flex-row gap-4 text-3xl font-serif">
@@ -8,11 +8,10 @@
         <p v-if="!uploads.length">-</p>
         <p v-if="!uploads.length">no folder selected</p>
       </label>
-      <p>
       <p class="mt-1 sans-serif text-base leading-none">
-        Select an uncompressed folder containing a .docx file and its associated assets (images, etc.). It will then be processed and uploaded to Kirby.
-      </p>
-      </p>
+        Select an uncompressed folder containing a .docx file and its associated assets (images, etc.). It will then be
+        processed and uploaded to Kirby.
+      </p>  
     </div>
 
     <div v-if="uploads.length" class="flex flex-col rounded-lg gap-4 border border-current p-4">
@@ -24,7 +23,7 @@
               'px-2 py-1 rounded text-sm',
               statusColor(upload.status)
             ]">
-             {{ upload.status }}
+              {{ upload.status }}
             </span>
           </div>
           <div v-if="upload.article" class="text-sm  sans-serif leading-none">

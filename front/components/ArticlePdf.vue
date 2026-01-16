@@ -163,6 +163,7 @@ article {
 
 section {
   columns: 2;
+  column-fill: auto;
 }
 
 figure {
@@ -214,6 +215,7 @@ figure {
 
 footer {
   columns: 2;
+  column-fill: auto;
   line-height: 1.2;
 }
 
@@ -264,6 +266,7 @@ footer {
   /* max-width: calc(600px + calc(0.666em * 2)); */
   /* flex: 1; */
   columns: 2;
+  column-fill: auto;
   gap: calc(0.666em * 2);
 }
 
