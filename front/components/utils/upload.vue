@@ -11,7 +11,7 @@
       <p class="mt-1 sans-serif text-base leading-none">
         Select an uncompressed folder containing a .docx file and its associated assets (images, etc.). It will then be
         processed and uploaded to Kirby.
-      </p>
+      </p>  
     </div>
 
     <div v-if="uploads.length" class="flex flex-col rounded-lg gap-4 border border-current p-4">
