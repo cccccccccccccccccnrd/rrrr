@@ -8,11 +8,9 @@
         <p v-if="!uploads.length">-</p>
         <p v-if="!uploads.length">no folder selected</p>
       </label>
-      <p>
       <p class="mt-1 sans-serif text-base leading-none">
         Select an uncompressed folder containing a .docx file and its associated assets (images, etc.). It will then be
         processed and uploaded to Kirby.
-      </p>
       </p>
     </div>
 
