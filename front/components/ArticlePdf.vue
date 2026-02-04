@@ -4,8 +4,7 @@
       :article="article"
       type="pdf"
     /> -->
-    <p class="meta author">{{ article.author }}</p>
-    <p class="meta title">{{ article.title }}</p>
+    <p class="meta header">{{ article.author }}, {{ article.title }}</p>
     <article>
       <section>
         <h2 class="title">{{ article.title }}</h2>
@@ -13,13 +12,8 @@
           <p class="sans-serif-uppercase">Abstract</p>
           <p>{{ article.abstract }}</p>
         </div>
-        <div
-          v-for="(b, bi) in this.article.text"
-          :key="`block-${bi}`"
-          :id="`block-${bi}`"
-          class="block"
-          :class="b.type"
-        >
+        <div v-for="(b, bi) in this.article.text" :key="`block-${bi}`" :id="`block-${bi}`" class="block"
+          :class="b.type">
           <p v-if="b.type === 'text'" v-html="b.content.text" v-plain />
           <h2 v-if="b.type === 'heading'">
             {{ b.content.text }}
@@ -32,7 +26,14 @@
               <span v-html="urling(b.content.caption)"></span>
             </figcaption>
           </figure>
-          <ArticleGallery v-if="b.type === 'gallery'" :images="b.content.images" :type="b.content.type" />
+          <!-- <ArticleGallery v-if="b.type === 'gallery'" :images="b.content.images" :type="b.content.type" /> -->
+          <figure v-if="b.type === 'gallery' && b.content.images?.length">
+            <img :src="b.content.images[0].url" />
+            <figcaption>
+              <span class="sans-serif-uppercase !mr-2">FIG {{ getGalleryFigNo(b) }}</span>
+              <span v-html="urling(b.content.images[0].content?.caption || '')"></span>
+            </figcaption>
+          </figure>
         </div>
       </section>
       <footer>
@@ -124,6 +125,10 @@ export default {
       const images = this.article.text.filter((b) => b.type === 'image')
       const index = images.indexOf(block)
       return index + 1
+    },
+    getGalleryFigNo(block) {
+      const match = block.content.images[0]?.filename?.match(/\d+/)
+      return match ? Number(match[0]) : '?'
     },
     urling(string) {
       return string.replace(
@@ -275,11 +280,11 @@ footer {
   justify-content: center;
 }
 
-.block .side > * {
+.block .side>* {
   max-width: 400px;
 }
 
-.block > div {
+.block>div {
   /* flex: 0.5; */
   padding: calc(0.666em * 0);
 }

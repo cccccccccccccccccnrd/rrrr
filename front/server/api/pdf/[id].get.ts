@@ -1,22 +1,9 @@
-import puppeteer, { Browser } from 'puppeteer'
-// @ts-ignore
-import report from 'puppeteer-report'
+import { exec } from 'child_process'
+import { promisify } from 'util'
+import { readFile, unlink } from 'fs/promises'
+import { join } from 'path'
 
-let browser: Browser | null = null
-
-async function getBrowser() {
-  if (!browser || !browser.connected) {
-    browser = await puppeteer.launch({
-      headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-      ],
-    })
-  }
-  return browser
-}
+const execAsync = promisify(exec)
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
@@ -25,44 +12,32 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Missing article ID' })
   }
 
-  const margin = '10mm'
   const baseUrl = process.env.NUXT_URL || 'http://localhost:4000'
   const url = `${baseUrl}/html/${id}`
-  const printCssUrl = `${baseUrl}/print.css`
+  const styleUrl = `${baseUrl}/print.css`
+  const outputPath = join(process.cwd(), `.tmp-${id}-${Date.now()}.pdf`)
 
   try {
-    const browser = await getBrowser()
-    const page = await browser.newPage()
+    // Use pagedjs-cli to generate PDF
+    await execAsync(
+      `npx pagedjs-cli "${url}" -o "${outputPath}" --style "${styleUrl}"`,
+      { timeout: 60000 }
+    )
 
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 })
+    // Read the generated PDF
+    const pdfBuffer = await readFile(outputPath)
 
-    // Add print styles from public folder
-    await page.addStyleTag({ url: printCssUrl })
-
-    // Wait for fonts to load (runs in browser context)
-    await page.evaluate(`(async () => {
-      await document.fonts.ready
-      await new Promise((resolve) => setTimeout(resolve, 500))
-    })()`)
-
-    // Use puppeteer-report for @page header/footer support
-    const pdfBuffer = await report.pdfPage(page, {
-      format: 'A4',
-      margin: {
-        top: margin,
-        bottom: margin,
-        left: margin,
-        right: margin,
-      },
-    })
-
-    await page.close()
+    // Clean up temp file
+    await unlink(outputPath).catch(() => {})
 
     setHeader(event, 'Content-Type', 'application/pdf')
     setHeader(event, 'Content-Disposition', `inline; filename="${id}.pdf"`)
 
     return pdfBuffer
   } catch (error: any) {
+    // Clean up temp file on error
+    await unlink(outputPath).catch(() => {})
+
     console.error('PDF generation error:', error)
     throw createError({
       statusCode: 500,

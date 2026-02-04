@@ -10,7 +10,7 @@
   }
 
   @top-left {
-    content: string(author) ', ' string(title);
+    content: string(header);
     font-family: 'm', monospace;
     font-size: 10px;
     text-transform: uppercase;
@@ -32,12 +32,8 @@ h2.title {
   display: none;
 }
 
-.meta.author {
-  string-set: author content(text);
-}
-
-.meta.title {
-  string-set: title content(text);
+.meta.header {
+  string-set: header content(text);
 }
 
 .block.image {
@@ -51,6 +47,10 @@ figure img {
 
 footer {
   page-break-before: always;
+}
+
+.references {
+  display: none;
 }
 
 .deep-dreaming-willy-wonka-ai-weird-as-the-new-kitsch #block-35 {
@@ -84,10 +84,18 @@ footer {
   display: none !important;
 }
 
-.black-box-experiments-making-acquaintances-with-the-machinery .references {
-  display: none !important;
+.epidemic-geographies #page-3 > p:nth-of-type(1) {
+  page-break-inside: avoid !important;
 }
 
-.black-box-experiments-making-acquaintances-with-the-machinery #block-40 {
-  margin-bottom: 9em !important;
+.epidemic-geographies #block-9 {
+  margin-bottom: 20em !important;
 }
+
+.epidemic-geographies #block-16 {
+  margin-bottom: 5em !important;
+}
+.black-box-experiments-making-acquaintances-with-the-machinery #block-37 {
+  margin-bottom: 3em !important;
+}
+
