@@ -5,10 +5,21 @@
     </div>
     <div id="pdf-preview"></div>
     <ArticleLayouter />
+    <div class="w-full h-16 fixed bottom-0 left-0 flex flex-row justify-center items-center gap-4 z-50">
+      <div class="bg-black/60 backdrop-blur p-3 rounded-full border flex flex-row gap-4">
+        <CssEditor :article-id="route.params.id" />
+        <ElementInspector />
+        <PdfDownload />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: 'admin'
+})
+
 useHead({
   bodyAttrs: {
     class: 'article'
@@ -21,28 +32,3 @@ const { data: article } = await useFetch(`/api/article/${route.params.id}`)
 const c = useContent()
 c.value.current = article
 </script>
-
-<style scoped>
-body {
-  border: 0 !important;
-}
-
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 1em;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  gap: 1em;
-  color: #f6f6f6;
-  background: black;
-  text-transform: uppercase;
-  font-weight: bold;
-  z-index: 100;
-}
-</style>

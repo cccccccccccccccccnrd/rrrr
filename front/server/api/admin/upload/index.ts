@@ -4,12 +4,17 @@ import { defineEventHandler, readMultipartFormData, createError } from 'h3'
 import { parseArticle } from './article'
 
 export async function post(route: string, body: any, patch: boolean = false) {
+  const config = useRuntimeConfig()
   const isFormData = body?.constructor?.name === 'FormData'
   const method = patch ? 'PATCH' : 'POST'
-  const response = await fetch(`${process.env.BASE_URL}${process.env.UPLOAD_SUFFIX}/${route}`, {
+  const url = `${config.baseURL}/api/${route}`
+  
+  console.log('POST to:', url)
+  
+  const response = await fetch(url, {
     method,
     headers: {
-      Authorization: process.env.AUTH || '',
+      Authorization: config.auth,
       Accept: 'application/json',
       ...(isFormData ? body.getHeaders() : { 'Content-Type': 'application/json' })
     },
@@ -37,9 +42,23 @@ export default defineEventHandler(async (event) => {
     const docxFile = docxFiles[0]
 
     const result = await mammoth.convertToHtml({ buffer: docxFile.data })
+    
+    console.log('Mammoth HTML output (first 2000 chars):', result.value.substring(0, 2000))
+    
     const { meta, html } = parseArticle(result.value)
 
+    // Generate URL-safe slug from title
+    const slug = meta.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+
+    console.log('Creating article with title:', meta.title)
+    console.log('Generated slug:', slug)
+    console.log('POST URL:', `${process.env.BASE_URL}${process.env.UPLOAD_SUFFIX}/pages/articles/children`)
+    
     const articleResponse = await post('pages/articles/children', {
+      slug,
       title: meta.title,
       template: 'article',
       content: {
@@ -47,6 +66,8 @@ export default defineEventHandler(async (event) => {
         text: html
       }
     })
+
+    console.log('Kirby response:', JSON.stringify(articleResponse, null, 2))
 
     if (articleResponse.status !== 'ok') {
       throw createError({ 

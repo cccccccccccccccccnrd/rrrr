@@ -1,42 +1,54 @@
-@media print {
-  @page {
-    size: A4 portrait;
-    margin: 20mm 10mm;
-    /* marks: crop cross; */
+@page {
+  size: A4 portrait;
+  margin: 20mm 10mm;
 
-    @top-right {
-      content: 'rrrreflect';
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-    }
+  @top-right {
+    content: 'rrrreflect';
+    font-family: 'm', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
 
-    @top-left {
-      content: string(author) ', ' string(title);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-    }
+  @top-left {
+    content: string(header);
+    font-family: 'm', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
 
-    @bottom-center {
-      content: counter(page) ' of ' counter(pages);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      text-transform: uppercase;
-    }
+  @bottom-center {
+    content: counter(page) ' of ' counter(pages);
+    font-family: 'm', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
   }
 }
 
-.grid {
-  /* page-break-after: always; */
+.abstract {
+  margin-bottom: 2em;
 }
 
-.meta.author {
-  string-set: author content(text);
+/* Article title - large */
+h1.title {
+  font-size: 1.8em;
+  margin-bottom: 1em;
 }
 
-.meta.title {
-  string-set: title content(text);
+/* h1 in text body - medium size like previous h2 */
+article h1 {
+  font-size: 1.4em;
+}
+
+/* h2 in text body - like abstract label */
+article h2 {
+  font-size: 1em;
+  font-family: sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.meta.header {
+  string-set: header content(text);
 }
 
 .block.image {
@@ -52,15 +64,16 @@ footer {
   page-break-before: always;
 }
 
-/* #block-19 {
-  page-break-inside: avoid;
-} */
+.references {
+  display: none;
+}
 
 .deep-dreaming-willy-wonka-ai-weird-as-the-new-kitsch #block-35 {
   margin-bottom: 4em !important;
 }
 
-.generative-ai-decision-making-and-collaborative-choreography-how-lstm-networks-mirror-human-creativity #block-16 {
+.generative-ai-decision-making-and-collaborative-choreography-how-lstm-networks-mirror-human-creativity
+  #block-16 {
   margin-bottom: 7em !important;
 }
 
@@ -72,22 +85,59 @@ footer {
   margin-top: 6em !important;
 }
 
-.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot .references {
+.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot
+  .references {
   margin-top: 0 !important;
 }
 
-.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot .footnotes-list {
+.artificial-intelligence-and-the-arts-the-ai-robot-as-a-creative-co-bot
+  .footnotes-list {
   margin-bottom: 4em !important;
+}
+
+.epidemic-geographies #page-3 > p:nth-of-type(1) {
+  page-break-inside: avoid !important;
+}
+
+.epidemic-geographies #block-9 {
+  margin-bottom: 20em !important;
+}
+
+.epidemic-geographies #block-16 {
+  margin-bottom: 5em !important;
 }
 
 .from-post-truth-to-higher-truth .references {
   display: none !important;
 }
 
-.black-box-experiments-making-acquaintances-with-the-machinery .references {
-  display: none !important;
+.from-post-truth-to-higher-truth #block-12 {
+  page-break-before: always !important;
 }
 
-.black-box-experiments-making-acquaintances-with-the-machinery #block-40 {
-  margin-bottom: 9em !important;
+.human-driven-condition .footnotes-list li:nth-child(17) {
+  margin-top: 2em !important;
+}
+
+
+
+.meta-test #block-0 {
+  margin-top: 1em !important;
+}
+
+.meta-test #block-0 {
+  page-break-before: always !important;
+}
+
+.meta-test #block-1 {
+  page-break-after: always !important;
+}
+
+
+
+
+
+
+.the-glorious-stupidity-of-computers #block-3 {
+  page-break-before: always !important;
 }

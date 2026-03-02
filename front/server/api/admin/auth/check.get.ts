@@ -1,7 +1,10 @@
-export default defineEventHandler((event) => {
-  const auth = getCookie(event, 'admin-auth')
+import { verifyToken } from './login.post'
 
-  if (auth !== 'true') {
+export default defineEventHandler((event) => {
+  const token = getCookie(event, 'admin-auth')
+  const config = useRuntimeConfig()
+
+  if (!token || !verifyToken(token, config.adminPW)) {
     throw createError({ statusCode: 401 })
   }
 

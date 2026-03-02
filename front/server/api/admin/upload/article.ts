@@ -25,11 +25,12 @@ export function parseArticle(html: string) {
   })
   
   processedHtml = processedHtml.replace(literature, '')
-  processedHtml = processedHtml.replace(/<h2>(.*)<\/h2>/g, '')
+  // Remove h6 meta tags from processed HTML
+  processedHtml = processedHtml.replace(/<h6>.*?<\/h6>/g, '')
 
   const extractMeta = (key: string) => {
     const regex = new RegExp(
-      `<h2>${key.charAt(0).toUpperCase() + key.slice(1)}: (.*?)<\/h2>`, 
+      `<h6>${key.charAt(0).toUpperCase() + key.slice(1)}: (.*?)<\/h6>`, 
       'g'
     )
     const match = [...html.matchAll(regex)]
