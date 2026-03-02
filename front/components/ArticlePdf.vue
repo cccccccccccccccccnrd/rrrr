@@ -7,7 +7,7 @@
     <p class="meta header">{{ article.author }}, {{ article.title }}</p>
     <article>
       <section>
-        <h2 class="title">{{ article.title }}</h2>
+        <h1 class="title">{{ article.title }}</h1>
         <div v-if="article.abstract" class="abstract">
           <p class="sans-serif-uppercase">Abstract</p>
           <p>{{ article.abstract }}</p>
@@ -15,9 +15,9 @@
         <div v-for="(b, bi) in this.article.text" :key="`block-${bi}`" :id="`block-${bi}`" class="block"
           :class="b.type">
           <p v-if="b.type === 'text'" v-html="b.content.text" v-plain />
-          <h2 v-if="b.type === 'heading'">
+          <component :is="b.content.level || 'h2'" v-if="b.type === 'heading'">
             {{ b.content.text }}
-          </h2>
+          </component>
           <blockquote v-if="b.type === 'quote'" v-html="b.content.text"></blockquote>
           <figure v-if="b.type === 'image'">
             <img :src="b.content.image[0].url" />
