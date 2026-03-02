@@ -50,5 +50,14 @@ export default defineNuxtConfig({
   },
   devServer: {
     port: 4000
+  },
+  nitro: {
+    routeRules: {
+      '/api/**': {
+        body: {
+          maxSize: '200mb'
+        }
+      }
+    }
   }
 })
