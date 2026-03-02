@@ -28,13 +28,23 @@
   margin-bottom: 2em;
 }
 
-h1 {
+/* Article title - large */
+h1.title {
   font-size: 1.8em;
   margin-bottom: 1em;
 }
 
-h2 {
+/* h1 in text body - medium size like previous h2 */
+article h1 {
   font-size: 1.4em;
+}
+
+/* h2 in text body - like abstract label */
+article h2 {
+  font-size: 1em;
+  font-family: sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
 .meta.header {
