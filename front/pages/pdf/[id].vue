@@ -16,6 +16,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: 'admin'
+})
+
 useHead({
   bodyAttrs: {
     class: 'article'

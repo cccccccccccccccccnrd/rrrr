@@ -8,7 +8,7 @@
     <article>
       <section>
         <h2 class="title">{{ article.title }}</h2>
-        <div class="abstract">
+        <div v-if="article.abstract" class="abstract">
           <p class="sans-serif-uppercase">Abstract</p>
           <p>{{ article.abstract }}</p>
         </div>

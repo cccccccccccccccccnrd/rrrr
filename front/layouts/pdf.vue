@@ -43,7 +43,7 @@ body {
   background-color: black !important;
   font-family: 'a', serif;
   font-weight: 300;
-  font-size: 15.5px;
+  font-size: 16px;
 }
 
 .pagedjs_page {

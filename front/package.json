@@ -24,8 +24,6 @@
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-image-figures": "^2.1.1",
     "pagedjs": "^0.4.3",
-    "puppeteer": "^24.35.0",
-    "puppeteer-report": "^3.2.0",
     "swiper": "^10.3.1"
   }
 }

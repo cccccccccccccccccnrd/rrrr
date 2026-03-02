@@ -105,6 +105,9 @@ export function usePdfPreview() {
     if (isRefreshing.value) return
     isRefreshing.value = true
 
+    // Save scroll position before refresh
+    const scrollY = window.scrollY
+
     document.head
       .querySelectorAll('[data-pagedjs-inserted-styles]')
       .forEach((e) => e.parentNode?.removeChild(e))
@@ -123,9 +126,13 @@ export function usePdfPreview() {
         [styleURL],
         previewEl || undefined,
       )
-      console.log('preview refreshed, total pages', flow.total)
 
       await addPageBreakIndicators()
+
+      // Restore scroll position after render
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollY)
+      })
     } catch (e) {
       console.error('Failed to refresh preview:', e)
     } finally {

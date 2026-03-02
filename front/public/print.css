@@ -25,11 +25,11 @@
 }
 
 .abstract {
-  display: none;
+  margin-bottom: 2em;
 }
 
 h2.title {
-  display: none;
+  margin-bottom: 1em;
 }
 
 .meta.header {
@@ -80,10 +80,6 @@ footer {
   margin-bottom: 4em !important;
 }
 
-.from-post-truth-to-higher-truth .references {
-  display: none !important;
-}
-
 .epidemic-geographies #page-3 > p:nth-of-type(1) {
   page-break-inside: avoid !important;
 }
@@ -95,7 +91,29 @@ footer {
 .epidemic-geographies #block-16 {
   margin-bottom: 5em !important;
 }
-.black-box-experiments-making-acquaintances-with-the-machinery #block-37 {
-  margin-bottom: 3em !important;
+
+.from-post-truth-to-higher-truth .references {
+  display: none !important;
 }
 
+.from-post-truth-to-higher-truth #block-12 {
+  page-break-before: always !important;
+}
+
+.human-driven-condition .footnotes-list li:nth-child(17) {
+  margin-top: 2em !important;
+}
+
+
+
+.meta-test #block-0 {
+  margin-top: 1em !important;
+}
+
+.meta-test #block-0 {
+  page-break-before: always !important;
+}
+
+.meta-test #block-1 {
+  page-break-after: always !important;
+}

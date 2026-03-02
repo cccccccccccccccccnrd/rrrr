@@ -1,3 +1,38 @@
+const MENU_ACTIONS: Record<string, { property: string; value: string }> = {
+  'break-before': { property: 'page-break-before', value: 'always' },
+  'break-after': { property: 'page-break-after', value: 'always' },
+  'margin-1': { property: 'margin-top', value: '1em' },
+  'margin-2': { property: 'margin-top', value: '2em' },
+  'margin-3': { property: 'margin-top', value: '3em' },
+  'margin-4': { property: 'margin-top', value: '4em' },
+  'margin-5': { property: 'margin-top', value: '5em' },
+  'margin-6': { property: 'margin-top', value: '6em' },
+}
+
+type MenuItem = 
+  | { action: string; label: string; danger?: boolean }
+  | { divider: true }
+
+const MENU_ITEMS: MenuItem[] = [
+  { action: 'break-before', label: 'Page break before' },
+  { action: 'break-after', label: 'Page break after' },
+  { divider: true },
+  { action: 'margin-1', label: '1em top margin' },
+  { action: 'margin-2', label: '2em top margin' },
+  { action: 'margin-3', label: '3em top margin' },
+  { action: 'margin-4', label: '4em top margin' },
+  { action: 'margin-5', label: '5em top margin' },
+  { action: 'margin-6', label: '6em top margin' },
+  { action: 'remove-margin', label: 'Remove margin rule', danger: true },
+]
+
+const BASE_STYLES = `
+  position: fixed;
+  font-family: 'm', monospace;
+  font-size: 12px;
+  color: #fff;
+`
+
 export function useElementInspector() {
   const isActive = ref(false)
   const { refresh: refreshPreview } = usePdfPreview()
@@ -10,13 +45,10 @@ export function useElementInspector() {
     tooltip = document.createElement('div')
     tooltip.id = 'element-inspector-tooltip'
     tooltip.style.cssText = `
-      position: fixed;
+      ${BASE_STYLES}
       background: rgba(0, 0, 0, 0.85);
-      color: #fff;
       padding: 6px 10px;
       border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
       z-index: 99999;
       pointer-events: none;
       max-width: 400px;
@@ -30,24 +62,63 @@ export function useElementInspector() {
     menu = document.createElement('div')
     menu.id = 'element-inspector-menu'
     menu.style.cssText = `
-      position: fixed;
+      ${BASE_STYLES}
       background: rgba(0, 0, 0, 0.95);
-      color: #fff;
       padding: 8px 0;
       border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
       z-index: 100000;
       min-width: 200px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.4);
       display: none;
     `
+    // Event delegation - single listener for all menu items
+    menu.addEventListener('click', (e) => {
+      const item = (e.target as HTMLElement).closest(
+        '[data-action]',
+      ) as HTMLElement
+      if (item?.dataset.action) handleMenuClick(item.dataset.action)
+    })
+    menu.addEventListener('mouseover', (e) => {
+      const item = (e.target as HTMLElement).closest(
+        '.menu-item',
+      ) as HTMLElement
+      if (item) item.style.background = '#333'
+    })
+    menu.addEventListener('mouseout', (e) => {
+      const item = (e.target as HTMLElement).closest(
+        '.menu-item',
+      ) as HTMLElement
+      if (item) item.style.background = 'transparent'
+    })
     document.body.appendChild(menu)
+  }
+
+  const findElementIndex = (
+    element: HTMLElement,
+    siblings: NodeListOf<Element>,
+  ): number => {
+    return Array.from(siblings).findIndex((el) => el === element) + 1
   }
 
   const generateSelector = (element: HTMLElement): string => {
     const articleEl = element.closest('.article')
     const slug = articleEl?.classList[2] || ''
+    const tag = element.tagName.toLowerCase()
+
+    // Check for footnote list items
+    const footnotesList = element.closest('.footnotes-list')
+    if (footnotesList && tag === 'li') {
+      const items = footnotesList.querySelectorAll('li')
+      const index = findElementIndex(element, items)
+      const base = slug ? `.${slug} .footnotes-list` : `.footnotes-list`
+      return `${base} li:nth-child(${index})`
+    }
+
+    // Check for original block ID or split block data-id
+    const blockId = element.id || element.dataset.id
+    if (blockId?.startsWith('block-')) {
+      return slug ? `.${slug} #${blockId}` : `#${blockId}`
+    }
 
     if (element.id) {
       return slug ? `.${slug} #${element.id}` : `#${element.id}`
@@ -56,30 +127,16 @@ export function useElementInspector() {
     const parentWithId = element.parentElement?.closest(
       '[id]',
     ) as HTMLElement | null
-    const tag = element.tagName.toLowerCase()
 
     if (parentWithId?.id) {
       const siblings = parentWithId.querySelectorAll(`:scope > ${tag}`)
-      let index = 1
-      for (let i = 0; i < siblings.length; i++) {
-        if (siblings[i] === element) {
-          index = i + 1
-          break
-        }
-      }
+      const index = findElementIndex(element, siblings)
       const base = slug ? `.${slug} #${parentWithId.id}` : `#${parentWithId.id}`
       return `${base} > ${tag}:nth-of-type(${index})`
     }
 
     if (slug && articleEl) {
-      const allTags = articleEl.querySelectorAll(tag)
-      let index = 1
-      for (let i = 0; i < allTags.length; i++) {
-        if (allTags[i] === element) {
-          index = i + 1
-          break
-        }
-      }
+      const index = findElementIndex(element, articleEl.querySelectorAll(tag))
       return `.${slug} ${tag}:nth-of-type(${index})`
     }
 
@@ -91,52 +148,19 @@ export function useElementInspector() {
     selectedElement = element
 
     const selector = generateSelector(element)
+    const itemStyle =
+      'padding: 8px 12px; cursor: pointer; transition: background 0.15s;'
 
     menu!.innerHTML = `
       <div style="padding: 6px 12px; color: #888; font-size: 10px; text-transform: uppercase;">
         ${selector || 'No selector'}
       </div>
-      <div class="menu-item" data-action="break-after" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s;">
-        Page break after
-      </div>
-      <div class="menu-item" data-action="break-before" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s;">
-        Page break before
-      </div>
-      <div class="menu-item" data-action="avoid-break" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s;">
-        Avoid page break
-      </div>
-      <div class="menu-item" data-action="remove-break" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s; color: #f87171;">
-        Remove page break
-      </div>
-      <div style="border-top: 1px solid #333; margin: 4px 0;"></div>
-      <div class="menu-item" data-action="margin-1" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s;">
-        + margin-bottom: 1em
-      </div>
-      <div class="menu-item" data-action="margin-3" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s;">
-        + margin-bottom: 3em
-      </div>
-      <div class="menu-item" data-action="margin-5" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s;">
-        + margin-bottom: 5em
-      </div>
-      <div class="menu-item" data-action="margin-20" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s;">
-        + margin-bottom: 20em
-      </div>
-      <div class="menu-item" data-action="remove-margin" style="padding: 8px 12px; cursor: pointer; transition: background 0.15s; color: #f87171;">
-        Remove margin
-      </div>
+      ${MENU_ITEMS.map((item) =>
+        'divider' in item
+          ? '<div style="border-top: 1px solid #333; margin: 4px 0;"></div>'
+          : `<div class="menu-item" data-action="${item.action}" style="${itemStyle}${item.danger ? ' color: #f87171;' : ''}">${item.label}</div>`,
+      ).join('')}
     `
-
-    menu!.querySelectorAll('.menu-item').forEach((item) => {
-      item.addEventListener('mouseenter', () => {
-        ;(item as HTMLElement).style.background = '#333'
-      })
-      item.addEventListener('mouseleave', () => {
-        ;(item as HTMLElement).style.background = 'transparent'
-      })
-      item.addEventListener('click', () =>
-        handleMenuClick((item as HTMLElement).dataset.action || ''),
-      )
-    })
 
     menu!.style.display = 'block'
     menu!.style.left = `${Math.min(x, window.innerWidth - 220)}px`
@@ -148,11 +172,24 @@ export function useElementInspector() {
     selectedElement = null
   }
 
+  const removeRule = async (
+    content: string,
+    selector: string,
+    property: string,
+  ): Promise<string | null> => {
+    const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(
+      `\\n?${escapedSelector}\\s*\\{[^}]*${property}[^}]*\\}\\n?`,
+      'g',
+    )
+    const newContent = content.replace(regex, '\n')
+    return newContent !== content ? newContent : null
+  }
+
   const handleMenuClick = async (action: string) => {
     if (!selectedElement) return
 
     const selector = generateSelector(selectedElement)
-
     if (!selector) {
       alert('Could not generate selector for this element')
       hideMenu()
@@ -161,18 +198,14 @@ export function useElementInspector() {
 
     try {
       const { content } = await $fetch<{ content: string }>('/api/print-css')
-      let newContent = content
 
-      if (action === 'remove-break') {
-        const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-        const regex = new RegExp(
-          `\\n?${escapedSelector}\\s*\\{[^}]*page-break[^}]*\\}\\n?`,
-          'g',
-        )
-        newContent = content.replace(regex, '\n')
+      // Handle remove actions
+      if (action === 'remove-break' || action === 'remove-margin') {
+        const property = action === 'remove-break' ? 'page-break' : 'margin'
+        const newContent = await removeRule(content, selector, property)
 
-        if (newContent === content) {
-          alert('No page break rule found for this element')
+        if (!newContent) {
+          alert(`No ${property} rule found for this element`)
           hideMenu()
           return
         }
@@ -182,58 +215,24 @@ export function useElementInspector() {
           body: { content: newContent },
         })
         await refreshPreview()
-      } else if (action === 'remove-margin') {
-        const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-        const regex = new RegExp(
-          `\\n?${escapedSelector}\\s*\\{[^}]*margin[^}]*\\}\\n?`,
-          'g',
-        )
-        newContent = content.replace(regex, '\n')
+      }
+      // Handle add actions
+      else if (action in MENU_ACTIONS) {
+        const { property, value } = MENU_ACTIONS[action]
+        let newContent = content
 
-        if (newContent === content) {
-          alert('No margin rule found for this element')
-          hideMenu()
-          return
+        // For margin actions, remove existing margin rule first
+        if (action.startsWith('margin-')) {
+          const removed = await removeRule(content, selector, 'margin')
+          if (removed) newContent = removed
         }
 
+        const css = `\n${selector} {\n  ${property}: ${value} !important;\n}\n`
         await $fetch('/api/print-css', {
           method: 'POST',
-          body: { content: newContent },
+          body: { content: newContent + css },
         })
         await refreshPreview()
-      } else {
-        let css = ''
-        switch (action) {
-          case 'break-after':
-            css = `\n${selector} {\n  page-break-after: always !important;\n}\n`
-            break
-          case 'break-before':
-            css = `\n${selector} {\n  page-break-before: always !important;\n}\n`
-            break
-          case 'avoid-break':
-            css = `\n${selector} {\n  page-break-inside: avoid !important;\n}\n`
-            break
-          case 'margin-1':
-            css = `\n${selector} {\n  margin-bottom: 1em !important;\n}\n`
-            break
-          case 'margin-3':
-            css = `\n${selector} {\n  margin-bottom: 3em !important;\n}\n`
-            break
-          case 'margin-5':
-            css = `\n${selector} {\n  margin-bottom: 5em !important;\n}\n`
-            break
-          case 'margin-20':
-            css = `\n${selector} {\n  margin-bottom: 20em !important;\n}\n`
-            break
-        }
-
-        if (css) {
-          await $fetch('/api/print-css', {
-            method: 'POST',
-            body: { content: content + css },
-          })
-          await refreshPreview()
-        }
       }
     } catch (e) {
       console.error('Failed to save CSS:', e)
@@ -268,11 +267,8 @@ export function useElementInspector() {
     if (target === tooltip || target.id === 'element-inspector-tooltip') return
     if (target.closest('#element-inspector-menu')) return
 
-    const blockElement = target.closest('[id^="block-"]') as HTMLElement | null
-    const pElement = !blockElement
-      ? (target.closest('p') as HTMLElement | null)
-      : null
-    const inspectedElement = blockElement || pElement
+    // Match blocks, split blocks, and footnote items
+    const inspectedElement = target.closest('[id^="block-"], [data-id^="block-"], .footnotes-list li') as HTMLElement | null
 
     if (currentElement && currentElement !== inspectedElement) {
       currentElement.style.outline = ''
@@ -316,12 +312,10 @@ export function useElementInspector() {
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    // toggle with ctrl+i
     if (e.ctrlKey && e.key === 'i') {
       e.preventDefault()
       toggle()
     }
-    // escape to disable
     if (e.key === 'Escape') {
       if (menu?.style.display === 'block') {
         hideMenu()
