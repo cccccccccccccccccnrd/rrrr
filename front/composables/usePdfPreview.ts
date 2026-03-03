@@ -7,12 +7,33 @@ const parsePageBreakRules = (
   css: string,
 ): { selector: string; type: string }[] => {
   const rules: { selector: string; type: string }[] = []
+  // Match CSS rules containing page-break properties
+  // This regex captures: selector { ... page-break-X: value ... }
   const regex =
-    /([^{]+)\{[^}]*(page-break-(?:after|before|inside))\s*:\s*([^;!}]+)/g
+    /(?:^|})[\s\n]*([^{}]+?)\s*\{[^}]*(page-break-(?:after|before|inside))\s*:\s*([^;!}]+)/g
   let match
 
   while ((match = regex.exec(css)) !== null) {
-    const selector = match[1].trim()
+    // Clean selector: remove any leading/trailing whitespace and newlines
+    const selector = match[1].replace(/[\n\r]+/g, ' ').trim()
+    
+    // Skip empty selectors
+    if (!selector) {
+      continue
+    }
+    
+    // Skip if selector looks like CSS property values (invalid capture)
+    // Valid colons in selectors: pseudo-classes/elements (::, :nth, :first, :last, :hover, :focus, :not, :where, :is, :has, :root, :empty, :checked, :disabled, :enabled, :target, :lang, :dir, :any-link, :link, :visited, :active, :only-child, :only-of-type)
+    const hasSuspiciousColon = selector.includes(':') && 
+      !/:[:a-z-]/i.test(selector) // Valid pseudo-selectors start with : followed by : or letter
+    
+    // Skip if contains typical CSS value patterns
+    const looksLikeCssValue = /^\s*[a-z-]+\s*$|;\s*$|^\s*\d|!important/i.test(selector)
+    
+    if (hasSuspiciousColon || looksLikeCssValue) {
+      continue
+    }
+    
     const property = match[2]
     const value = match[3].trim()
 
@@ -118,7 +139,7 @@ export function usePdfPreview() {
     }
 
     const previewer = new Previewer()
-    const styleURL = `/print.css?t=${Date.now()}`
+    const styleURL = `/api/print-css.css?t=${Date.now()}`
 
     try {
       const flow = await previewer.preview(

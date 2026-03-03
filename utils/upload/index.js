@@ -9,6 +9,15 @@ import mdfootnote from 'markdown-it-footnote'
 import FormData from 'form-data'
 import mammoth from 'mammoth'
 
+const mammothOptions = {
+  styleMap: [
+    "p[style-name='Quote'] => blockquote:fresh",
+    "p[style-name='Block Quote'] => blockquote:fresh",
+    "p[style-name='Intense Quote'] => blockquote:fresh",
+    "p[style-name='Zitat'] => blockquote:fresh"
+  ]
+}
+
 if (process.argv.length === 2) {
   console.error('please provide folder name')
   process.exit(1)
@@ -92,7 +101,7 @@ function parse(article) {
 
 async function upload(file) {
   const p = path.join(__dirname, `articles/${folder}/${file}`)
-  const article = await mammoth.convertToHtml({ path: p })
+  const article = await mammoth.convertToHtml({ path: p }, mammothOptions)
   const { meta, html } = parse(article.value)
 
   const body = {

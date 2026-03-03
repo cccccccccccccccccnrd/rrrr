@@ -3,6 +3,15 @@ import FormData from 'form-data'
 import { defineEventHandler, readMultipartFormData, createError } from 'h3'
 import { parseArticle } from './article'
 
+const mammothOptions = {
+  styleMap: [
+    "p[style-name='Quote'] => blockquote:fresh",
+    "p[style-name='Block Quote'] => blockquote:fresh",
+    "p[style-name='Intense Quote'] => blockquote:fresh",
+    "p[style-name='Zitat'] => blockquote:fresh"
+  ]
+}
+
 export async function post(route: string, body: any, patch: boolean = false) {
   const config = useRuntimeConfig()
   const isFormData = body?.constructor?.name === 'FormData'
@@ -41,7 +50,7 @@ export default defineEventHandler(async (event) => {
     
     const docxFile = docxFiles[0]
 
-    const result = await mammoth.convertToHtml({ buffer: docxFile.data })
+    const result = await mammoth.convertToHtml({ buffer: docxFile.data }, mammothOptions)
     
     console.log('Mammoth HTML output (first 2000 chars):', result.value.substring(0, 2000))
     
