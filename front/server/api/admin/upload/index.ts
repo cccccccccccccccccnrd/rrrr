@@ -50,17 +50,47 @@ export default defineEventHandler(async (event) => {
     
     const docxFile = docxFiles[0]
 
-    const result = await mammoth.convertToHtml({ buffer: docxFile.data }, mammothOptions)
+    let result
+    try {
+      result = await mammoth.convertToHtml({ buffer: docxFile.data }, mammothOptions)
+    } catch (e: any) {
+      throw createError({ 
+        statusCode: 400, 
+        message: `Failed to parse DOCX file: ${e.message}` 
+      })
+    }
+    
+    if (!result.value || result.value.trim() === '') {
+      throw createError({ 
+        statusCode: 400, 
+        message: 'DOCX file appears to be empty or could not be read' 
+      })
+    }
     
     console.log('Mammoth HTML output (first 2000 chars):', result.value.substring(0, 2000))
     
     const { meta, html } = parseArticle(result.value)
+
+    // Validate required metadata
+    if (!meta.title || meta.title.trim() === '') {
+      throw createError({ 
+        statusCode: 400, 
+        message: 'Missing required metadata: Title. Make sure your document has "Title: Your Title" in an H6 heading.' 
+      })
+    }
 
     // Generate URL-safe slug from title
     const slug = meta.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '')
+
+    if (!slug) {
+      throw createError({ 
+        statusCode: 400, 
+        message: 'Could not generate a valid URL slug from the title' 
+      })
+    }
 
     console.log('Creating article with title:', meta.title)
     console.log('Generated slug:', slug)
@@ -103,10 +133,15 @@ export default defineEventHandler(async (event) => {
 })
 
 async function uploadImages(article: any, files: any[]) {
+  if (!article?.id || !article?.content?.text) {
+    console.error('Invalid article structure for image upload')
+    return
+  }
+
   const articleId = article.id.replace('/', '+')
   
   const imageBlocks = article.content.text
-    .filter((b: any) => b.type === 'image' && b.content.location === 'web')
+    .filter((b: any) => b?.type === 'image' && b?.content?.location === 'web' && b?.content?.src)
     .map((b: any) => b.content.src)
 
   for (const imageName of imageBlocks) {
@@ -120,10 +155,14 @@ async function uploadImages(article: any, files: any[]) {
       })
       fd.append('template', 'blocks/image')
       
-      const response = await post(`pages/${articleId}/files`, fd)
-      
-      if (response.status !== 'ok') {
-        console.error(`Failed to upload ${imageName}:`, response.message)
+      try {
+        const response = await post(`pages/${articleId}/files`, fd)
+        
+        if (response.status !== 'ok') {
+          console.error(`Failed to upload ${imageName}:`, response.message)
+        }
+      } catch (e: any) {
+        console.error(`Error uploading ${imageName}:`, e.message)
       }
     } else {
       console.warn(`No file found matching: ${imageName}`)
@@ -132,10 +171,15 @@ async function uploadImages(article: any, files: any[]) {
 }
 
 async function updateArticleWithKirbyImages(article: any) {
+  if (!article?.id || !article?.content?.text) {
+    console.error('Invalid article structure for image update')
+    return
+  }
+
   const articleId = article.id.replace('/', '+')
 
   const updatedText = article.content.text.map((block: any) => {
-    if (block.type === 'image' && block.content.location === 'web') {
+    if (block?.type === 'image' && block?.content?.location === 'web' && block?.content?.src) {
       return {
         ...block,
         content: {
@@ -145,14 +189,19 @@ async function updateArticleWithKirbyImages(article: any) {
               id: `${article.id}/${block.content.src}`
             }
           ],
-          alt: block.content.alt,
-          caption: block.content.caption
+          alt: block.content.alt || '',
+          caption: block.content.caption || ''
         }
       }
     }
     return block
   })
 
-await post(`pages/${articleId}`, {
-  text: updatedText
-}, true)}
+  try {
+    await post(`pages/${articleId}`, {
+      text: updatedText
+    }, true)
+  } catch (e: any) {
+    console.error('Failed to update article with Kirby images:', e.message)
+  }
+}

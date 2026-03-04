@@ -12,10 +12,10 @@
           <p class="sans-serif-uppercase">Abstract</p>
           <p>{{ article.abstract }}</p>
         </div>
-        <div v-for="(b, bi) in this.article.text" :key="`block-${bi}`" :id="`block-${bi}`" class="block"
+        <div v-for="(b, bi) in this.article.text" :key="`block-${bi}`" class="block"
           :class="b.type">
-          <p v-if="b.type === 'text'" v-html="b.content.text" v-plain />
-          <component :is="b.content.level || 'h2'" v-if="b.type === 'heading'">
+          <p v-if="b.type === 'text'" v-html="addParagraphIds(b.content.text, bi)" v-plain />
+          <component :is="b.content.level || 'h2'" v-if="b.type === 'heading'" :id="`block-${bi}-h`">
             {{ b.content.text }}
           </component>
           <blockquote v-if="b.type === 'quote'" v-html="b.content.text"></blockquote>
@@ -137,6 +137,17 @@ export default {
         ),
         "<a href='$1' target='_blank'>$1</a>"
       )
+    },
+    addParagraphIds(html, blockIndex) {
+      let pIndex = 0
+      return html.replace(/<p([^>]*)>/gi, (match, attrs) => {
+        const id = `block-${blockIndex}-p-${pIndex++}`
+        // Check if there's already an id attribute
+        if (/id\s*=/i.test(attrs)) {
+          return match
+        }
+        return `<p id="${id}"${attrs}>`
+      })
     }
   }
 }
