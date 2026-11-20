@@ -12,7 +12,8 @@ md.renderer.rules.footnote_anchor = () => ''
 
 export function parseArticle(html: string) {
   const visuals = [...html.matchAll(/(<p>!\[).*?("\)<\/p>)/g)]
-  const literatureMatch = html.match(/(<ol>).*(<\/ol>)/g)
+  // mammoth appends Word foot/endnotes as one <ol> of li#footnote-N; non-greedy so body lists stay put
+  const literatureMatch = html.match(/<ol><li id="(?:foot|end)note-.*?<\/ol>/)
   const literature = literatureMatch ? literatureMatch[0] : ''
   
   let processedHtml = html
