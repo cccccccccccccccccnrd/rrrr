@@ -1,11 +1,3 @@
-import { readFile } from 'fs/promises'
-import { join } from 'path'
+import { getPrintCss } from '../utils'
 
-// Persistent data folder - not affected by builds
-const DATA_DIR = join(process.cwd(), 'data')
-const CSS_PATH = join(DATA_DIR, 'print.css')
-
-export default defineEventHandler(async () => {
-  const content = await readFile(CSS_PATH, 'utf-8')
-  return { content }
-})
+export default defineEventHandler(async () => ({ content: await getPrintCss() }))
