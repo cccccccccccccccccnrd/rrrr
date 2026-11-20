@@ -1,6 +1,8 @@
 columns:
   - width: 2/2
     sections:
+      import:
+        type: docximport
       specialissue1:
         extends: sections/articles
         label: Volume 2 (2024)
