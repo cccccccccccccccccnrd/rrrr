@@ -12,6 +12,9 @@ columns:
     # In the first column, we reuse the `notes` section
     # (defined in `/site/blueprints/sections/notes.yml` twice with different page status and headline
     sections:
+      import:
+        type: docximport
+
       drafts:
         extends: sections/articles
         headline: Drafts
