@@ -24,5 +24,5 @@ export async function getPrintCss () {
 
 export function isAdmin (event: H3Event) {
   const token = getCookie(event, 'admin-auth')
-  return !!token && verifyToken(token, useRuntimeConfig().adminPW)
+  return token ? verifyToken(token, useRuntimeConfig().adminPW) : ''
 }

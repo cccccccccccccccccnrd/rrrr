@@ -15,9 +15,14 @@ status:
 
 columns:
   - width: 2/3
-    fields:
-      text:
-        type: blocks
+    sections:
+      content:
+        type: fields
+        fields:
+          text:
+            type: blocks
+      history:
+        type: history
 
   - width: 1/3
     sections:

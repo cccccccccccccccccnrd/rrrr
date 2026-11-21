@@ -1,28 +1,29 @@
 import crypto from 'crypto'
 
-const generateToken = (secret: string): string => {
+const generateToken = (secret: string, user: string): string => {
   const timestamp = Date.now()
-  const data = `admin:${timestamp}`
+  const data = `${user}:${timestamp}`
   const signature = crypto.createHmac('sha256', secret).update(data).digest('hex')
   return `${data}:${signature}`
 }
 
-export const verifyToken = (token: string, secret: string, maxAge = 3600000): boolean => {
+// returns the logged-in email ('' if invalid), so callers can use it as a boolean too
+export const verifyToken = (token: string, secret: string, maxAge = 3600000): string => {
   const parts = token.split(':')
-  if (parts.length !== 3) return false
+  if (parts.length !== 3) return ''
 
   const [prefix, timestamp, signature] = parts
   const data = `${prefix}:${timestamp}`
 
   // Verify signature
   const expected = crypto.createHmac('sha256', secret).update(data).digest('hex')
-  if (signature !== expected) return false
+  if (signature !== expected) return ''
 
   // Check expiry
   const tokenTime = parseInt(timestamp, 10)
-  if (Date.now() - tokenTime > maxAge) return false
+  if (Date.now() - tokenTime > maxAge) return ''
 
-  return true
+  return prefix
 }
 
 export default defineEventHandler(async (event) => {
@@ -35,7 +36,7 @@ export default defineEventHandler(async (event) => {
   })
 
   if (kirby.ok) {
-    const token = generateToken(config.adminPW)
+    const token = generateToken(config.adminPW, body.email)
 
     setCookie(event, 'admin-auth', token, {
       httpOnly: true,

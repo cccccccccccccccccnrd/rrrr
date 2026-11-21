@@ -1,0 +1,8 @@
+.k-history-entry { background: var(--item-color-back); border-radius: var(--rounded); margin-bottom: 2px; }
+.k-history-entry > button { display: flex; gap: var(--spacing-3); width: 100%; padding: var(--spacing-2) var(--spacing-3); text-align: left; font-size: var(--text-sm); }
+.k-history-fields { color: var(--color-text-dimmed); margin-left: auto; }
+.k-history-field { font-weight: 600; font-size: var(--text-xs); padding: var(--spacing-2) var(--spacing-3) 0; }
+.k-history-entry pre { font-family: var(--font-mono); font-size: var(--text-xs); padding: var(--spacing-2) var(--spacing-3); white-space: pre-wrap; word-break: break-word; max-height: 30rem; overflow: auto; }
+.k-history-add { background: var(--color-green-200); color: var(--color-green-900); }
+.k-history-del { background: var(--color-red-200); color: var(--color-red-900); }
+.k-history-ctx { color: var(--color-text-dimmed); }

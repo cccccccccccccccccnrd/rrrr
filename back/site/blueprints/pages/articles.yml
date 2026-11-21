@@ -44,10 +44,15 @@ tabs:
   print:
     label: Print CSS
     icon: code
-    fields:
-      printcss:
-        label: PDF print CSS
-        type: textarea
-        font: monospace
-        buttons: false
-        help: Shared stylesheet for all article PDFs. Usually edited from the PDF layout editor; empty falls back to front/data/print.css.
+    sections:
+      css:
+        type: fields
+        fields:
+          printcss:
+            label: PDF print CSS
+            type: textarea
+            font: monospace
+            buttons: false
+            help: Shared stylesheet for all article PDFs. Usually edited from the PDF layout editor; empty falls back to front/data/print.css.
+      history:
+        type: history
