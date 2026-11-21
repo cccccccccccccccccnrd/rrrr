@@ -118,7 +118,9 @@ const save = async () => {
   saving.value = true
   message.value = ''
   try {
-    const mergedCss = mergeCss(fullCss.value, cssContent.value, props.articleId)
+    // merge into the latest saved CSS, not the copy loaded on open, so other editors' changes survive
+    const { content: latest } = await $fetch('/api/print-css')
+    const mergedCss = mergeCss(latest, cssContent.value, props.articleId)
     await $fetch('/api/print-css', {
       method: 'POST',
       body: { content: mergedCss }

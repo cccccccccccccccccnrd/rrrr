@@ -1,0 +1,8 @@
+# Article editors: Panel + PDF editor, but no user management or system settings
+title: Editor
+extends: users/default
+permissions:
+  access:
+    system: false
+    users: false
+  users: false

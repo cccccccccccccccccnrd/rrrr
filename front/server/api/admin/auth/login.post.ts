@@ -29,7 +29,12 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const config = useRuntimeConfig()
 
-  if (body.password === config.adminPW) {
+  // Same accounts as the Kirby Panel (needs api.basicAuth); ADMIN_PW is only the cookie signing secret now
+  const kirby = await fetch(`${config.baseURL}/api/auth`, {
+    headers: { Authorization: 'Basic ' + Buffer.from(`${body.email}:${body.password}`).toString('base64') }
+  })
+
+  if (kirby.ok) {
     const token = generateToken(config.adminPW)
 
     setCookie(event, 'admin-auth', token, {
@@ -43,5 +48,5 @@ export default defineEventHandler(async (event) => {
     return { success: true }
   }
 
-  throw createError({ statusCode: 401, statusMessage: 'Invalid password' })
+  throw createError({ statusCode: 401, statusMessage: 'Invalid login' })
 })

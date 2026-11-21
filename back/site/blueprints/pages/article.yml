@@ -24,7 +24,7 @@ columns:
       pdf:
         type: info
         label: PDF
-        text: "(link: https://rrrreflect.org/pdf/{{ page.slug }} text: Open PDF layout editor ↗ target: _blank)"
+        text: "(link: {{ kirby.option('frontUrl', 'https://rrrreflect.org') }}/pdf/{{ page.slug }} text: Open PDF layout editor ↗ target: _blank)"
       meta:
         type: fields
         fields:
