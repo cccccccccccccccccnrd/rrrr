@@ -1,5 +1,7 @@
 import { readFile } from 'fs/promises'
 import { join } from 'path'
+import type { H3Event } from 'h3'
+import { verifyToken } from './api/admin/auth/login.post'
 
 export async function request (path: string, options: any = {}) {
   const config = useRuntimeConfig()
@@ -18,4 +20,9 @@ export async function request (path: string, options: any = {}) {
 export async function getPrintCss () {
   const articles = await request('pages/articles?select=content')
   return articles?.content?.printcss || await readFile(join(process.cwd(), 'data', 'print.css'), 'utf-8')
+}
+
+export function isAdmin (event: H3Event) {
+  const token = getCookie(event, 'admin-auth')
+  return !!token && verifyToken(token, useRuntimeConfig().adminPW)
 }

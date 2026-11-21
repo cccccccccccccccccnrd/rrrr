@@ -1,9 +1,12 @@
-import { request } from '../../utils'
+import { request, isAdmin } from '../../utils'
 
 export default defineEventHandler(async event => {
   const id = event.context.params?.id
 
   const article = await request(`pages/articles+${id}`)
+  if (!article || (article.status === 'draft' && !isAdmin(event))) {
+    throw createError({ statusCode: 404 })
+  }
   const files = await request(`pages/articles+${id}/files`)
 
   return {

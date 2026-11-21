@@ -1,4 +1,4 @@
-import { verifyToken } from '../api/admin/auth/login.post'
+import { isAdmin } from '../utils'
 
 // The page middleware in /middleware only runs client-side; this guards the API itself.
 export default defineEventHandler((event) => {
@@ -8,8 +8,7 @@ export default defineEventHandler((event) => {
 
   if (!isAdminApi && !isCssWrite) return
 
-  const token = getCookie(event, 'admin-auth')
-  if (!token || !verifyToken(token, useRuntimeConfig().adminPW)) {
+  if (!isAdmin(event)) {
     throw createError({ statusCode: 401 })
   }
 })

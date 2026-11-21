@@ -1,10 +1,11 @@
 // @ts-nocheck
 
-import { request } from '../utils'
+import { request, isAdmin } from '../utils'
 
 export default defineEventHandler(async event => {
   const about = await load('about')
-  const articles = await load('articles')
+  // drafts only for logged-in admins (pdf editor); the public gets listed + unlisted
+  const articles = await load(isAdmin(event) ? 'articlesAndDrafts' : 'articles')
   const authors = await load('authors')
   const categories = await load('categories')
 
@@ -25,8 +26,10 @@ async function load(id: string) {
       const response = await request('pages/about')
       return response.content
     }
-    case 'articles': {
-      const response = await request('pages/articles/children?status=all&select=id,title,status,content')
+    case 'articles':
+    case 'articlesAndDrafts': {
+      const status = id === 'articles' ? 'published' : 'all'
+      const response = await request(`pages/articles/children?status=${status}&select=id,title,status,content`)
       const sorted = response.sort((a, b) => new Date(a.content.published) - new Date(b.content.published))
       return sorted
     }
