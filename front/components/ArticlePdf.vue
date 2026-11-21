@@ -52,14 +52,6 @@ export default {
   props: {
     article: Object
   },
-  data() {
-    return {
-      literature: []
-    }
-  },
-  mounted() {
-    console.log(this.article)
-  },
   directives: {
     plain: (el) => {
       if (!el) {
@@ -78,49 +70,7 @@ export default {
       }
     }
   },
-  computed: {
-    blocks() {
-      const wow = this.article.text.reduce((acc, curr) => {
-        if (acc.length === 0) {
-          acc.push([curr])
-          return acc
-        }
-
-        const last = acc[acc.length - 1]
-        if (
-          (curr.type === 'text' || curr.type === 'heading') &&
-          (last[last.length - 1].type === 'text' || last[last.length - 1].type === 'heading')
-        ) {
-          last.push(curr)
-        } else {
-          acc.push([curr])
-        }
-
-        return acc
-      }, [])
-
-      console.log(wow)
-      return wow
-    }
-  },
   methods: {
-    parseLiterature(string) {
-      const div = document.createElement('DIV')
-      div.innerHTML = string
-      return [...div.querySelectorAll('li')].map((e) => e.innerText)
-    },
-    getLiterature(block) {
-      if (process.client) {
-        const literature = this.parseLiterature(this.article.literature)
-        const div = document.createElement('DIV')
-        div.innerHTML = block.content.text
-        return [...div.querySelectorAll('sup')]
-          .map((e) => e.innerText.match(/\d+/)[0])
-          .map((n) => `<span class="sans-serif-uppercase">${n}.</span> ${literature[n - 1]}`)
-      } else {
-        return []
-      }
-    },
     getFigNo(block) {
       const images = this.article.text.filter((b) => b.type === 'image')
       const index = images.indexOf(block)

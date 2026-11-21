@@ -10,7 +10,8 @@ const generateToken = (secret: string, user: string): string => {
 // returns the logged-in email ('' if invalid), so callers can use it as a boolean too
 export const verifyToken = (token: string, secret: string, maxAge = 3600000): string => {
   const parts = token.split(':')
-  if (parts.length !== 3) return ''
+  // an empty secret would make tokens forgeable by anyone
+  if (!secret || parts.length !== 3) return ''
 
   const [prefix, timestamp, signature] = parts
   const data = `${prefix}:${timestamp}`
@@ -34,6 +35,10 @@ export default defineEventHandler(async (event) => {
   const kirby = await fetch(`${config.baseURL}/api/auth`, {
     headers: { Authorization: 'Basic ' + Buffer.from(`${body.email}:${body.password}`).toString('base64') }
   })
+
+  if (!config.adminPW) {
+    throw createError({ statusCode: 500, statusMessage: 'ADMIN_PW (cookie secret) is not set' })
+  }
 
   if (kirby.ok) {
     const token = generateToken(config.adminPW, body.email)

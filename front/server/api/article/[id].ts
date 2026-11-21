@@ -13,7 +13,6 @@ export default defineEventHandler(async event => {
     ...article.content,
     text: article.content.text.map(b => {
       if (b.type === 'gallery') {
-        console.log(b.content.images)
         return {
           ...b,
           content: {
