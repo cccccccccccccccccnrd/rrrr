@@ -185,6 +185,7 @@ section {
 figure {
   width: 100%;
   columns: 1;
+  break-inside: avoid;
   /* margin: 2em 0; */
   display: block;
 }
@@ -201,6 +202,7 @@ figure {
   font-size: 1.1em;
   padding: 0 0 0 calc(4 * 0.666em);
   line-height: 1.2;
+  break-inside: avoid;
 }
 
 .block {
@@ -216,6 +218,9 @@ figure {
 
 :deep(.block.text p) {
   margin: 0 0 calc(0.666em * 1) 0;
+  orphans: 3;
+  widows: 3;
+  text-wrap: pretty;
 }
 
 .block.heading h1,
@@ -227,6 +232,14 @@ figure {
 .block.image {
   margin: 0 0 calc(0.666em * 2) 0;
   columns: 1;
+}
+
+/* Paged.js strips break-before/after from CSS, so "keep heading with next" = an unbreakable
+   heading with ~3 lines of invisible room below it (the negative margin cancels it visually) */
+.block.heading {
+  break-inside: avoid;
+  padding-bottom: 4em;
+  margin-bottom: -4em;
 }
 
 footer {
