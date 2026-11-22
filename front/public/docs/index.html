@@ -7,61 +7,83 @@
 <meta name="description" content="How to import, edit, lay out and publish an article in rrrreflect.">
 <link rel="icon" href="/favicon.png">
 <style>
-  :root {
-    --bg: #fafaf8; --text: #1a1a1a; --muted: #666; --line: #e3e1dc; --accent: #0a66c2;
-    --note: #fbf3d5; --note-line: #e0b000; --code: #f0eee9;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #121212; --text: #ececec; --muted: #9a9a9a; --line: #2c2c2c; --accent: #6cb4ff; --note: #2b2615; --note-line: #b48c00; --code: #1f1f1f; }
-  }
+  /* matches the site: black page, mono top bar, sans logo, white article card with serif text.
+     Fonts are gitignored (copied to the server by hand); without /fonts the system fallbacks apply */
+  @font-face { font-family: 'a'; src: url('/fonts/a.woff2') format('woff2'); }
+  @font-face { font-family: 'i'; src: url('/fonts/i.ttf') format('truetype'); }
+  @font-face { font-family: 'm'; src: url('/fonts/m.woff2') format('woff2'); }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; }
-  main { max-width: 780px; margin: 0 auto; padding: 48px 16px 96px; }
-  header p { color: var(--muted); margin-top: 0; }
-  h1 { font-size: 2.2rem; line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.01em; }
-  h2 { font-size: 1.5rem; margin: 64px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
-  h3 { font-size: 1.1rem; margin: 32px 0 8px; }
-  a { color: var(--accent); }
-  code, kbd { font: 0.85em ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--code); padding: 0.1em 0.35em; border-radius: 4px; }
-  figure { margin: 20px 0 28px; }
-  figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: black; color: #f6f6f6; font: 1.15em/1 'i', 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  ::selection { background: black; color: #f6f6f6; }
+  a { color: inherit; }
+  .page { max-width: 1200px; margin: 0 auto; }
+
+  .bar { display: flex; justify-content: space-between; align-items: center; font: 12px 'm', ui-monospace, monospace; text-transform: uppercase; }
+  .bar a, .bar span { padding: 8px; text-decoration: none; white-space: nowrap; }
+  .bar .active, .bar a:hover { background: white; color: black; }
+  .logo { display: block; margin: 12px 0 16px; padding: 8px; font-size: 3em; line-height: 1; text-decoration: none; white-space: nowrap; }
+  .logo span:nth-child(1) { opacity: 0; filter: blur(6.4px); }
+  .logo span:nth-child(2) { opacity: .25; filter: blur(4.8px); }
+  .logo span:nth-child(3) { opacity: .5; filter: blur(3.2px); }
+  .logo span:nth-child(4) { opacity: .75; filter: blur(1.6px); }
+  .logo { overflow: hidden; }
+  @media (max-width: 700px) { .logo { font-size: 1.45em; } }
+
+  .card { background: white; color: black; border-radius: 8px 8px 0 0; padding: 12px; display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 0 48px; }
+  @media (max-width: 860px) { .card { grid-template-columns: 1fr; padding: 16px; } }
+  aside { position: sticky; top: 12px; align-self: start; max-height: calc(100vh - 24px); overflow: auto; padding-bottom: 24px; }
+  @media (max-width: 860px) { aside { position: static; max-height: none; } }
+  .label { font: 1em 'i', 'Inter', system-ui, sans-serif; text-transform: uppercase; margin: 0 0 4px; }
+  .serif { font-family: 'a', Georgia, serif; font-size: 1.05em; line-height: 1.35; }
+  aside ol { list-style: none; margin: 0 0 24px; padding: 0; counter-reset: toc; }
+  aside li { counter-increment: toc; margin: 0; }
+  aside li::before { content: counter(toc) '. '; }
+  aside a { text-decoration: none; }
+  aside a:hover { text-decoration: underline; }
+  .chips { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 24px; }
+  .chip, kbd { background: black; color: white; font: 0.75em 'm', ui-monospace, monospace; text-transform: uppercase; padding: 3px 6px; display: inline-block; }
+
+  article { font-family: 'a', Georgia, serif; font-size: 1.05em; line-height: 1.35; max-width: 720px; padding-bottom: 96px; counter-reset: fig; }
+  article > header h1 { font: 2.2em/1.05 'i', 'Inter', system-ui, sans-serif; margin: 0 0 12px; }
+  article > header p { font-size: 1.15em; margin: 0; }
+  h2 { font: normal 1.9em/1.15 'a', Georgia, serif; margin: 72px 0 16px; scroll-margin-top: 16px; }
+  h3 { font: 1em/1.2 'i', 'Inter', system-ui, sans-serif; text-transform: uppercase; margin: 32px 0 6px; }
+  p { margin: 0 0 12px; }
+  ul, ol.steps { margin: 0 0 16px; padding-left: 1.2em; }
+  li { margin-bottom: 6px; }
+  ol.steps ::marker { font-family: 'i', 'Inter', system-ui, sans-serif; }
+  strong { font-weight: normal; font-family: 'i', 'Inter', system-ui, sans-serif; font-size: 0.92em; }
+  code { font: 0.78em 'm', ui-monospace, monospace; background: #eee; padding: 2px 4px; word-break: break-word; }
+  kbd { padding: 2px 5px; }
+
+  figure { margin: 20px 0 32px; counter-increment: fig; }
+  figure img { display: block; width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; }
   figure.narrow img { max-width: 420px; }
-  figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
-  .note { background: var(--note); border-left: 4px solid var(--note-line); padding: 12px 16px; border-radius: 4px; margin: 20px 0; }
-  .note p { margin: 0; }
-  ol.steps { padding-left: 1.3em; }
-  ol.steps li { margin-bottom: 6px; }
-  nav.toc { border: 1px solid var(--line); border-radius: 8px; padding: 12px 20px; margin: 32px 0; }
-  nav.toc ol { margin: 6px 0; padding-left: 1.3em; columns: 2; column-gap: 32px; }
-  @media (max-width: 600px) { nav.toc ol { columns: 1; } }
-  .flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 16px 0; font-size: 0.9rem; }
-  .flow span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
-  .flow b { color: var(--muted); font-weight: normal; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 16px 0; }
-  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  th { font-weight: 600; }
-  .table-wrap { overflow-x: auto; }
-  .button { display: inline-block; background: var(--text); color: var(--bg); text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; margin: 8px 0; }
+  figcaption { font-size: 0.8em; margin-top: 8px; line-height: 1.3; }
+  figcaption::before { content: 'FIG ' counter(fig); font-family: 'i', 'Inter', system-ui, sans-serif; margin-right: 8px; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 12px 8px 0; border-bottom: 1px dotted; }
+  th { font: normal 0.85em 'i', 'Inter', system-ui, sans-serif; text-transform: uppercase; }
+  .button { display: inline-block; background: black; color: white; font: 12px 'm', ui-monospace, monospace; text-transform: uppercase; text-decoration: none; padding: 10px 16px; border-radius: 999px; margin: 4px 0 16px; }
+  .button:hover { background: #333; }
 </style>
 </head>
 <body>
-<main>
-<header>
-  <h1>Editor guide</h1>
-  <p>How articles get from a Word file to a published page and PDF on rrrreflect.</p>
-</header>
-
-<div class="flow">
-  <span>Author writes in the template</span><b>→</b>
-  <span>Import in Kirby</span><b>→</b>
-  <span>Edit</span><b>→</b>
-  <span>PDF layout</span><b>→</b>
-  <span>Publish</span>
+<div class="page">
+<div class="bar">
+  <span class="active">Editor guide</span>
+  <a href="/">rrrreflect ○</a>
 </div>
-
-<nav class="toc">
-  <strong>Contents</strong>
-  <ol>
+<a class="logo" href="/"><span>r</span><span>r</span><span>r</span><span>r</span>rrrreflect Journal of<br>Integrated Design Research</a>
+<div class="card">
+<aside>
+  <p class="label">Workflow</p>
+  <div class="chips"><span class="chip">Template</span><span class="chip">Import</span><span class="chip">Edit</span><span class="chip">PDF</span><span class="chip">Publish</span></div>
+  <p class="label">Contents</p>
+  <ol class="serif">
     <li><a href="#authors">For authors</a></li>
     <li><a href="#login">Logging in</a></li>
     <li><a href="#import">Import an article</a></li>
@@ -73,7 +95,18 @@
     <li><a href="#admins">Adding editors (admins)</a></li>
     <li><a href="#help">Troubleshooting</a></li>
   </ol>
-</nav>
+  <p class="label">Template</p>
+  <p class="serif"><a href="rrrreflect-article-template.docx" download>rrrreflect-article-template.docx</a></p>
+</aside>
+<article>
+<header>
+  <h1>Editor guide</h1>
+  <p>How articles get from a Word file to a published page and PDF on rrrreflect.</p>
+</header>
+
+
+
+
 
 <h2 id="authors">1. For authors</h2>
 <p>Send this template to every author. It explains each rule right where it applies, on a yellow background.</p>
@@ -231,6 +264,8 @@
 <p>In the article, open the image block and choose or upload the file there.</p>
 <h3>Still stuck?</h3>
 <p>Contact the rrrreflect team with the article’s name and a screenshot.</p>
-</main>
+</article>
+</div>
+</div>
 </body>
 </html>
