@@ -5,7 +5,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     baseURL: process.env.BASE_URL,
     auth: process.env.AUTH,
-    adminPW: process.env.ADMIN_PW
+    adminPW: process.env.ADMIN_PW,
+    public: {
+      cmsURL: process.env.BASE_URL // for the "continue with Kirby" link on the login page
+    }
   },
   ssr: false,
   app: {

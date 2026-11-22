@@ -2,14 +2,27 @@
 import { Previewer } from 'pagedjs'
 
 const isRefreshing = ref(false)
-
-
+let queued = false
 
 export function usePdfPreview() {
+  // A refresh requested while one is rendering runs right after it, so saved changes always show up
   const refresh = async () => {
-    if (isRefreshing.value) return
+    if (isRefreshing.value) {
+      queued = true
+      return
+    }
     isRefreshing.value = true
+    try {
+      do {
+        queued = false
+        await render()
+      } while (queued)
+    } finally {
+      isRefreshing.value = false
+    }
+  }
 
+  const render = async () => {
     // Save scroll position before refresh
     const scrollY = window.scrollY
 
@@ -26,7 +39,7 @@ export function usePdfPreview() {
     const styleURL = `/api/print-css.css?t=${Date.now()}`
 
     try {
-      const flow = await previewer.preview(
+      await previewer.preview(
         document.querySelector('#pdf-content')?.innerHTML || '',
         [styleURL],
         previewEl || undefined,
@@ -38,8 +51,6 @@ export function usePdfPreview() {
       })
     } catch (e) {
       console.error('Failed to refresh preview:', e)
-    } finally {
-      isRefreshing.value = false
     }
   }
 

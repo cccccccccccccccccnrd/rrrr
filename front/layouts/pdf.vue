@@ -58,13 +58,12 @@ body {
   bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
-  background: #333;
-  color: #888;
-  padding: 2px 12px;
+  background: black;
+  color: white;
+  padding: 2px 8px;
   font-family: 'm', monospace;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
-  border-radius: 4px;
   z-index: 10;
 }
 
@@ -95,27 +94,6 @@ a:visited {
 
 a.nuxt-link-exact-active {
   font-weight: 800;
-}
-
-button,
-input,
-select {
-  width: 100%;
-  font-family: 'm', monospace;
-  font-size: 2em;
-  cursor: pointer;
-  color: white;
-  background: transparent;
-  border: 2px solid white;
-  border-radius: 100px;
-  padding: 0.4em 1em;
-  transition: all 150ms;
-}
-
-button:hover,
-input[type='text']:hover,
-input[type='text']:focus {
-  outline: 0;
 }
 
 h1,
@@ -203,6 +181,10 @@ header {
   font-family: sans-serif;
   font-weight: 400;
   text-transform: uppercase;
+}
+
+#pdf-preview {
+  padding-top: 33px; /* room for the editor bar */
 }
 
 /* Print styles - hide UI elements */

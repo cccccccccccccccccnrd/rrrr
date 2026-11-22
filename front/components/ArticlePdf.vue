@@ -1,5 +1,5 @@
 <template>
-  <div class="article pdf" :class="$route.params.id">
+  <div class="article pdf" :class="$route.params.id" :data-slug="$route.params.id">
     <!-- <ArticleGrid
       :article="article"
       type="pdf"

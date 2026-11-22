@@ -123,7 +123,7 @@
 </ul>
 
 <h2 id="login">2. Logging in</h2>
-<p>Everything happens in the Kirby Panel at <a href="https://cms.rrrreflect.org/panel">cms.rrrreflect.org/panel</a>. An admin creates your account (see <a href="#admins">Adding editors</a>). The same email and password also work for the PDF editor.</p>
+<p>Everything happens in the Kirby Panel at <a href="https://cms.rrrreflect.org/panel">cms.rrrreflect.org/panel</a>. An admin creates your account (see <a href="#admins">Adding editors</a>). The PDF editor uses the same account, and you don’t have to log in there again (see <a href="#pdf">PDF layout</a>).</p>
 
 <h2 id="import">3. Import an article</h2>
 <p>The import box is at the top of the Panel dashboard. The <strong>Article template (.docx)</strong> button on the right downloads the template.</p>
@@ -187,28 +187,30 @@
 
 <h2 id="pdf">7. PDF layout</h2>
 <p>Every article gets a two-column PDF layout automatically. Usually a few small fixes are enough, for example pushing a heading or image to the next column.</p>
+<p><strong>Finish the text first.</strong> Layout fixes are attached to paragraph positions (“the first paragraph of block 3”). If paragraphs are added or removed later, the fixes move to the wrong place and have to be redone.</p>
 <ol class="steps">
   <li>On the article page, click <strong>Open PDF layout editor ↗</strong> in the right column.</li>
-  <li>Log in with your Kirby email and password.</li>
+  <li>The editor opens in a new tab, already logged in with your Panel account.</li>
 </ol>
 <figure>
-  <img src="img/09-pdf-login.jpg" alt="Login form of the PDF editor with email and password fields" loading="lazy">
-  <figcaption>Same account as the Panel. The login lasts one hour.</figcaption>
+  <img src="img/10-pdf-editor.jpg" alt="PDF preview of the article with the editor bar at the top: PDF editor, article title, Inspect, CSS, Save PDF" loading="lazy">
+  <figcaption>The preview shows the real PDF pages. The tools are in the bar at the top, which also shows messages like “Saved”.</figcaption>
 </figure>
+<p>If you open the editor some other way, for example from a bookmark, it asks you to log in. <strong>Continue with Kirby</strong> works if you are logged into the Panel; otherwise use your Kirby email and password.</p>
 <figure>
-  <img src="img/10-pdf-editor.jpg" alt="PDF preview of the article with the CSS, Inspect and Save PDF buttons at the bottom" loading="lazy">
-  <figcaption>The preview shows the real PDF pages. The tools are at the bottom.</figcaption>
+  <img src="img/09-pdf-login.jpg" alt="PDF editor login with a 'Continue with Kirby' button and an email and password form" loading="lazy">
+  <figcaption>The PDF editor login lasts one hour.</figcaption>
 </figure>
 
 <h3>Inspect: fix things by clicking</h3>
 <ol class="steps">
-  <li>Click <strong>Inspect</strong>. It turns blue (“Inspector on”).</li>
-  <li>Hover over the page. The element under the mouse gets a blue outline.</li>
+  <li>Click <strong>Inspect</strong>. It turns white (“Inspect ●”).</li>
+  <li>Hover over the page. The element under the mouse gets a thin black outline.</li>
   <li>Click it and choose an option. The preview updates and the change is saved right away.</li>
 </ol>
 <figure>
-  <img src="img/11-pdf-inspector.jpg" alt="A paragraph outlined in blue with a menu: page break before/after, 1em to 6em top margin, remove margin rule" loading="lazy">
-  <figcaption>The options: start a new page before or after the element, add space above it, or remove space you added.</figcaption>
+  <img src="img/11-pdf-inspector.jpg" alt="A paragraph outlined with a menu: page break before/after, remove page break, 1em to 6em top margin, remove top margin" loading="lazy">
+  <figcaption>The options: start a new page before or after the element, add space above it, or remove a page break or space you added. Other settings of the element are kept.</figcaption>
 </figure>
 <ul>
   <li><strong>A heading is stuck at the bottom of a column?</strong> Usually it moves automatically. If not, give it a top margin until it jumps to the next column.</li>
@@ -217,10 +219,10 @@
 </ul>
 
 <h3>CSS: fine-tuning</h3>
-<p><strong>CSS</strong> opens the layout rules for this article, including everything you added with Inspect. Edit the values (for example <code>2em</code> → <code>1.5em</code>) and click <strong>Save</strong>, or press <kbd>⌘ S</kbd> / <kbd>Ctrl S</kbd>.</p>
+<p><strong>CSS</strong> opens a panel with the layout rules for this article, including everything you added with Inspect. Edit the values (for example <code>2em</code> → <code>1.5em</code>) and click <strong>Save</strong>, or press <kbd>⌘ S</kbd> / <kbd>Ctrl S</kbd>. If a rule is unfinished (a missing <code>}</code>) or doesn’t start with the article’s name, nothing is saved and the bar tells you why.</p>
 <figure>
   <img src="img/12-pdf-css.jpg" alt="CSS panel showing one rule: margin-top 2em for a paragraph" loading="lazy">
-  <figcaption>Each rule starts with the article’s name, so it can’t affect other articles.</figcaption>
+  <figcaption>Each rule starts with the article’s name, so it can’t affect other articles. Rules shared by all articles are in Kirby, in the <em>Print CSS</em> tab of the Articles page.</figcaption>
 </figure>
 
 <h3>Save the PDF</h3>
@@ -254,10 +256,10 @@
 <p>To remove access, delete the user. Their edits stay in the history.</p>
 
 <h2 id="help">10. Troubleshooting</h2>
-<h3>The PDF editor says “Wrong email or password”</h3>
-<p>Use exactly the same login as for the Panel. After 10 wrong attempts, login is blocked for an hour.</p>
-<h3>“Failed to save” in the CSS panel</h3>
-<p>Your PDF editor login has expired (after one hour). <strong>Copy your CSS first</strong>, then reload the page, log in again, paste and save.</p>
+<h3>The PDF editor asks me to log in</h3>
+<p>Open it from the article page in the Panel, or click <em>Continue with Kirby</em>. If you type your password: it’s the same as for the Panel, and after 10 wrong attempts login is blocked for an hour.</p>
+<h3>“Login expired, reload the page”</h3>
+<p>Your PDF editor login has expired (after one hour). If you were editing in the CSS panel, <strong>copy your CSS first</strong>. Then open the editor again from the article in the Panel, paste and save.</p>
 <h3>Someone else changed the layout at the same time</h3>
 <p>Saves only replace the rules of the article you are editing. If two people edit the <em>same</em> article at once, the last save wins. Check the Print CSS history.</p>
 <h3>An image is missing after the import</h3>

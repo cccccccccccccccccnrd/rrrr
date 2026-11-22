@@ -1,7 +1,7 @@
-export default defineNuxtRouteMiddleware(async () => {
-  const { data, error } = await useFetch('/api/admin/auth/check')
+export default defineNuxtRouteMiddleware(async (to) => {
+  const { error } = await useFetch('/api/admin/auth/check')
 
   if (error.value) {
-    return navigateTo('/admin/login')
+    return navigateTo({ path: '/admin/login', query: { to: to.fullPath } })
   }
 })

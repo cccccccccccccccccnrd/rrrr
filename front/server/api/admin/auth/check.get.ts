@@ -1,12 +1,6 @@
-import { verifyToken } from './login.post'
+import { isAdmin } from '../../../utils'
 
 export default defineEventHandler((event) => {
-  const token = getCookie(event, 'admin-auth')
-  const config = useRuntimeConfig()
-
-  if (!token || !verifyToken(token, config.adminPW)) {
-    throw createError({ statusCode: 401 })
-  }
-
+  if (!isAdmin(event)) throw createError({ statusCode: 401 })
   return { ok: true }
 })
