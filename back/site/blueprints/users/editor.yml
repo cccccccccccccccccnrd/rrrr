@@ -1,5 +1,6 @@
 # Article editors: Panel + PDF editor, but no user management or system settings
 title: Editor
+description: Imports and edits articles and uses the PDF editor. Cannot manage users or system settings.
 extends: users/default
 permissions:
   access:

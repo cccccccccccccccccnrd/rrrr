@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Editor Guide · rrrreflect</title>
+<meta name="description" content="How to import, edit, lay out and publish an article in rrrreflect.">
+<link rel="icon" href="/favicon.png">
+<style>
+  :root {
+    --bg: #fafaf8; --text: #1a1a1a; --muted: #666; --line: #e3e1dc; --accent: #0a66c2;
+    --note: #fbf3d5; --note-line: #e0b000; --code: #f0eee9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121212; --text: #ececec; --muted: #9a9a9a; --line: #2c2c2c; --accent: #6cb4ff; --note: #2b2615; --note-line: #b48c00; --code: #1f1f1f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; }
+  main { max-width: 780px; margin: 0 auto; padding: 48px 16px 96px; }
+  header p { color: var(--muted); margin-top: 0; }
+  h1 { font-size: 2.2rem; line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.01em; }
+  h2 { font-size: 1.5rem; margin: 64px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+  h3 { font-size: 1.1rem; margin: 32px 0 8px; }
+  a { color: var(--accent); }
+  code, kbd { font: 0.85em ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--code); padding: 0.1em 0.35em; border-radius: 4px; }
+  figure { margin: 20px 0 28px; }
+  figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+  figure.narrow img { max-width: 420px; }
+  figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+  .note { background: var(--note); border-left: 4px solid var(--note-line); padding: 12px 16px; border-radius: 4px; margin: 20px 0; }
+  .note p { margin: 0; }
+  ol.steps { padding-left: 1.3em; }
+  ol.steps li { margin-bottom: 6px; }
+  nav.toc { border: 1px solid var(--line); border-radius: 8px; padding: 12px 20px; margin: 32px 0; }
+  nav.toc ol { margin: 6px 0; padding-left: 1.3em; columns: 2; column-gap: 32px; }
+  @media (max-width: 600px) { nav.toc ol { columns: 1; } }
+  .flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 16px 0; font-size: 0.9rem; }
+  .flow span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+  .flow b { color: var(--muted); font-weight: normal; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 16px 0; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+  .button { display: inline-block; background: var(--text); color: var(--bg); text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; margin: 8px 0; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Editor guide</h1>
+  <p>How articles get from a Word file to a published page and PDF on rrrreflect.</p>
+</header>
+
+<div class="flow">
+  <span>Author writes in the template</span><b>→</b>
+  <span>Import in Kirby</span><b>→</b>
+  <span>Edit</span><b>→</b>
+  <span>PDF layout</span><b>→</b>
+  <span>Publish</span>
+</div>
+
+<nav class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#authors">For authors</a></li>
+    <li><a href="#login">Logging in</a></li>
+    <li><a href="#import">Import an article</a></li>
+    <li><a href="#errors">Fixing import errors</a></li>
+    <li><a href="#edit">Edit the article</a></li>
+    <li><a href="#history">Edit history</a></li>
+    <li><a href="#pdf">PDF layout</a></li>
+    <li><a href="#publish">Review and publish</a></li>
+    <li><a href="#admins">Adding editors (admins)</a></li>
+    <li><a href="#help">Troubleshooting</a></li>
+  </ol>
+</nav>
+
+<h2 id="authors">1. For authors</h2>
+<p>Send this template to every author. It explains each rule right where it applies, on a yellow background.</p>
+<a class="button" href="rrrreflect-article-template.docx" download>Download the article template (.docx)</a>
+<p>The short version:</p>
+<ul>
+  <li><strong>Info lines at the top</strong>, each formatted as <em>Heading 2</em>: <code>Title:</code>, <code>Author:</code>, <code>Abstract:</code> (required), <code>Context:</code>, <code>Tags:</code> (optional).</li>
+  <li><strong>Sections</strong> use <em>Heading 1</em>, sub-sections <em>Heading 3</em>. Nothing else.</li>
+  <li><strong>Long quotes</strong> use the style <em>Quote</em>.</li>
+  <li><strong>Notes</strong> are real Word footnotes (References → Insert Footnote), in Chicago Notes and Bibliography style.</li>
+  <li><strong>Images</strong> are not pasted in. Instead, put a line like <code>![Description](fig-01.jpg "Caption. © Source")</code> where the image goes, and send the image files separately.</li>
+  <li><strong>Not supported yet:</strong> tables, bullet or numbered lists, Heading 4–6.</li>
+  <li><strong>Delete all yellow notes</strong>, save as <code>LastnameFirstname.docx</code>, and send it with the images.</li>
+</ul>
+
+<h2 id="login">2. Logging in</h2>
+<p>Everything happens in the Kirby Panel at <a href="https://cms.rrrreflect.org/panel">cms.rrrreflect.org/panel</a>. An admin creates your account (see <a href="#admins">Adding editors</a>). The same email and password also work for the PDF editor.</p>
+
+<h2 id="import">3. Import an article</h2>
+<p>The import box is at the top of the Panel dashboard. The <strong>Article template (.docx)</strong> button on the right downloads the template.</p>
+<figure>
+  <img src="img/02-dashboard.jpg" alt="Kirby Panel dashboard with the 'Import article from DOCX' box at the top" loading="lazy">
+  <figcaption>The dashboard. Click “Select one .docx plus its images”.</figcaption>
+</figure>
+<ol class="steps">
+  <li>Click <strong>Select one .docx plus its images</strong>.</li>
+  <li>Select the Word file <em>and all its images at the same time</em> (hold <kbd>⌘</kbd> on Mac or <kbd>Ctrl</kbd> on Windows while clicking).</li>
+  <li>The document is checked first. If something is wrong, nothing is created and you get a list of problems (see the next section).</li>
+  <li>If everything is fine, a draft is created. Click the green box to open it.</li>
+</ol>
+<figure>
+  <img src="img/04-import-success.png" alt="Green message: Created draft 'Soft Machines: Designing for Care'" loading="lazy">
+  <figcaption>A successful import creates a <em>draft</em>, which isn’t visible on the website yet.</figcaption>
+</figure>
+
+<h2 id="errors">4. Fixing import errors</h2>
+<p>When the document doesn’t follow the template, the import stops and lists everything that needs fixing, all at once. Fix the Word file (or ask the author to), then import again.</p>
+<figure>
+  <img src="img/03-import-errors.png" alt="Red box listing three problems with the document" loading="lazy">
+  <figcaption>Nothing was imported. Each line says what is wrong and how to fix it.</figcaption>
+</figure>
+<div class="table-wrap">
+<table>
+  <tr><th>Message</th><th>What to do in Word</th></tr>
+  <tr><td>Missing “Title: …” line</td><td>Add the line at the top and give it the style <em>Heading 2</em>. Same for Author and Abstract.</td></tr>
+  <tr><td>“Author: …” is normal text</td><td>Select the info lines and apply <em>Heading 2</em>.</td></tr>
+  <tr><td>“…” is Heading 2, which is only for the info fields</td><td>Change that heading to <em>Heading 1</em>.</td></tr>
+  <tr><td>“…” is Heading 4 (or 5)</td><td>Use <em>Heading 3</em> instead.</td></tr>
+  <tr><td>Image “fig-02.jpg” … was not selected</td><td>Select that image file too when importing. If the name differs only in capitals (<code>FIG-02.JPG</code>), rename the file or fix the line in the document.</td></tr>
+  <tr><td>Image line not recognized</td><td>The line must be exactly <code>![description](file.jpg "caption")</code>, on its own line.</td></tr>
+  <tr><td>Tables / lists are not supported</td><td>Turn tables into an image; write lists as normal paragraphs.</td></tr>
+  <tr><td>Images are pasted into the document</td><td>Delete the pasted image and use an image line instead.</td></tr>
+  <tr><td>Placeholder text / template instructions</td><td>Replace the example text and delete all yellow notes.</td></tr>
+</table>
+</div>
+<p>Yellow <em>warnings</em> (for example an unused image, or bold text that looks like a heading) don’t stop the import. Read them and fix things in the Panel if needed.</p>
+
+<h2 id="edit">5. Edit the article</h2>
+<p>The article page has the text on the left and the details (category, abstract, notes, tags, …) on the right.</p>
+<figure>
+  <img src="img/05-article.jpg" alt="Article page in the Panel with text blocks on the left and fields on the right" loading="lazy">
+  <figcaption>Click any block to edit it. “Add” inserts a new heading, paragraph, quote or image.</figcaption>
+</figure>
+<ul>
+  <li><strong>Text</strong> is made of blocks. Click a block to edit it, drag blocks to reorder them, and use <em>Add</em> for new ones.</li>
+  <li><strong>Images</strong> are image blocks. To replace one, click it and choose a different file.</li>
+  <li><strong>Category</strong> decides which issue the article belongs to. Set it before publishing.</li>
+  <li><strong>Save</strong>: as soon as you change something, <em>Save</em> and <em>Discard</em> appear at the top right. Only saved changes appear on the website and in the PDF.</li>
+</ul>
+
+<h2 id="history">6. Edit history</h2>
+<p>Below the text, <strong>Edit history</strong> lists the last 50 saves: when, who, and which fields changed. Click an entry to see exactly what changed: removed text in red, added text in green.</p>
+<figure>
+  <img src="img/06-history.png" alt="Edit history with one entry expanded, showing removed and added lines" loading="lazy">
+  <figcaption>The history also records PDF layout changes, marked “(PDF editor)”, in the <em>Print CSS</em> tab of the Articles page.</figcaption>
+</figure>
+<p>There is no undo button. To go back, copy the old text from the red lines and save it again.</p>
+
+<h2 id="pdf">7. PDF layout</h2>
+<p>Every article gets a two-column PDF layout automatically. Usually a few small fixes are enough, for example pushing a heading or image to the next column.</p>
+<ol class="steps">
+  <li>On the article page, click <strong>Open PDF layout editor ↗</strong> in the right column.</li>
+  <li>Log in with your Kirby email and password.</li>
+</ol>
+<figure>
+  <img src="img/09-pdf-login.jpg" alt="Login form of the PDF editor with email and password fields" loading="lazy">
+  <figcaption>Same account as the Panel. The login lasts one hour.</figcaption>
+</figure>
+<figure>
+  <img src="img/10-pdf-editor.jpg" alt="PDF preview of the article with the CSS, Inspect and Save PDF buttons at the bottom" loading="lazy">
+  <figcaption>The preview shows the real PDF pages. The tools are at the bottom.</figcaption>
+</figure>
+
+<h3>Inspect: fix things by clicking</h3>
+<ol class="steps">
+  <li>Click <strong>Inspect</strong>. It turns blue (“Inspector on”).</li>
+  <li>Hover over the page. The element under the mouse gets a blue outline.</li>
+  <li>Click it and choose an option. The preview updates and the change is saved right away.</li>
+</ol>
+<figure>
+  <img src="img/11-pdf-inspector.jpg" alt="A paragraph outlined in blue with a menu: page break before/after, 1em to 6em top margin, remove margin rule" loading="lazy">
+  <figcaption>The options: start a new page before or after the element, add space above it, or remove space you added.</figcaption>
+</figure>
+<ul>
+  <li><strong>A heading is stuck at the bottom of a column?</strong> Usually it moves automatically. If not, give it a top margin until it jumps to the next column.</li>
+  <li><strong>An image doesn’t fit?</strong> Add a top margin to the paragraph before it, or a page break before the image.</li>
+  <li>Changes only affect this article.</li>
+</ul>
+
+<h3>CSS: fine-tuning</h3>
+<p><strong>CSS</strong> opens the layout rules for this article, including everything you added with Inspect. Edit the values (for example <code>2em</code> → <code>1.5em</code>) and click <strong>Save</strong>, or press <kbd>⌘ S</kbd> / <kbd>Ctrl S</kbd>.</p>
+<figure>
+  <img src="img/12-pdf-css.jpg" alt="CSS panel showing one rule: margin-top 2em for a paragraph" loading="lazy">
+  <figcaption>Each rule starts with the article’s name, so it can’t affect other articles.</figcaption>
+</figure>
+
+<h3>Save the PDF</h3>
+<p>Click <strong>Save PDF</strong>. In the print dialog, choose <em>Save as PDF</em> as the destination. Chrome gives the most reliable result.</p>
+
+<h2 id="publish">8. Review and publish</h2>
+<p>The status button at the top right of the article page (it says <em>Draft</em> after an import) controls who can see the article.</p>
+<figure class="narrow">
+  <img src="img/07-status.jpg" alt="Status dialog with Draft, In Review and Published" loading="lazy">
+</figure>
+<div class="table-wrap">
+<table>
+  <tr><th>Status</th><th>Who can see it</th></tr>
+  <tr><td>Draft</td><td>Only editors (Panel and PDF editor).</td></tr>
+  <tr><td>In Review</td><td>Anyone with the direct link. Not listed on the website. Use it to send the article to authors or reviewers.</td></tr>
+  <tr><td>Published</td><td>Everyone. Listed on the website.</td></tr>
+</table>
+</div>
+<p><strong>Before publishing</strong>, check the category, abstract, tags and the PDF.</p>
+
+<h2 id="admins">9. Adding editors (admins only)</h2>
+<ol class="steps">
+  <li>In the Panel, go to <strong>Users</strong> → <strong>Add a new user</strong>.</li>
+  <li>Enter their name, email and a password.</li>
+  <li><strong>Select the role “Editor”.</strong> The form selects “Admin” by default, and admins can delete users and change system settings.</li>
+  <li>Click <em>Create</em> and send them the login details and this guide.</li>
+</ol>
+<figure class="narrow">
+  <img src="img/08-add-user.jpg" alt="Add user form with the role options Admin and Editor" loading="lazy">
+</figure>
+<p>To remove access, delete the user. Their edits stay in the history.</p>
+
+<h2 id="help">10. Troubleshooting</h2>
+<h3>The PDF editor says “Wrong email or password”</h3>
+<p>Use exactly the same login as for the Panel. After 10 wrong attempts, login is blocked for an hour.</p>
+<h3>“Failed to save” in the CSS panel</h3>
+<p>Your PDF editor login has expired (after one hour). <strong>Copy your CSS first</strong>, then reload the page, log in again, paste and save.</p>
+<h3>Someone else changed the layout at the same time</h3>
+<p>Saves only replace the rules of the article you are editing. If two people edit the <em>same</em> article at once, the last save wins. Check the Print CSS history.</p>
+<h3>An image is missing after the import</h3>
+<p>In the article, open the image block and choose or upload the file there.</p>
+<h3>Still stuck?</h3>
+<p>Contact the rrrreflect team with the article’s name and a screenshot.</p>
+</main>
+</body>
+</html>

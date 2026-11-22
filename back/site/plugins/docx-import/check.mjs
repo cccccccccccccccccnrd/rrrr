@@ -19,6 +19,7 @@ const errs = (html, images = ['fig-01.jpg']) => check(html, images).errors.join(
 assert.match(errs(good.replace('<h2>Title: A &amp; B</h2>', '')), /Missing "Title/)
 assert.match(errs(good.replace('Title:', 'Titel:')), /Unknown info field "Titel:"/)
 assert.match(errs(good.replace('<h2>Author: Ada</h2>', '<p>Author: Ada</p>')), /"Author: …" is normal text/)
+assert.match(errs(good.replace('<h2>Author: Ada</h2>', '<p><strong>Author:</strong> Ada</p>')), /"Author: …" is normal text/)
 assert.match(errs(good + '<h4>Deep</h4>'), /Heading 4/)
 assert.match(errs(good + '<h2>Section</h2>'), /only for the info fields/)
 assert.match(errs(good + '<ul><li>a</li></ul>'), /lists/)

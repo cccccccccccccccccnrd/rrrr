@@ -86,7 +86,7 @@ function checkArticle({ info, unknown, duplicate, html }, messages, imageNames) 
   const warnings = []
   const short = (s) => (s.length > 70 ? s.slice(0, 70) + '…' : s)
 
-  const asNormalText = INFO_FIELDS.filter((k) => !info[k] && new RegExp(`<p>${k}:`, 'i').test(html))
+  const asNormalText = INFO_FIELDS.filter((k) => !info[k] && new RegExp(`<p>(?:<[^>]+>)*${k}:`, 'i').test(html))
   for (const key of asNormalText) errors.push(`"${key}: …" is normal text. Format the info lines at the top as Heading 2.`)
   for (const key of REQUIRED) {
     if (!info[key] && !asNormalText.includes(key)) errors.push(`Missing "${key}: …" line. Put it at the top, formatted as Heading 2.`)
