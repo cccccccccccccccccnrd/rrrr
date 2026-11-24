@@ -8,9 +8,7 @@
           <ArticleGallery v-if="b.type === 'gallery'" :images="b.content.images" :type="b.content.type" />
           <div v-if="b.type === 'text'" v-html="b.content.text" />
           <div v-if="b.type === 'heading'">
-            <h2>
-              {{ b.content.text }}
-            </h2>
+            <h2 v-html="b.content.text" />
           </div>
           <blockquote v-if="b.type === 'quote'" v-html="b.content.text"></blockquote>
           <figure v-if="b.type === 'image'">

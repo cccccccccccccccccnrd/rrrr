@@ -15,9 +15,7 @@
         <div v-for="(b, bi) in this.article.text" :key="`block-${bi}`" class="block"
           :class="b.type">
           <p v-if="b.type === 'text'" v-html="addParagraphIds(b.content.text, bi)" v-plain />
-          <component :is="b.content.level || 'h2'" v-if="b.type === 'heading'" :id="`block-${bi}-h`">
-            {{ b.content.text }}
-          </component>
+          <component :is="b.content.level || 'h2'" v-if="b.type === 'heading'" :id="`block-${bi}-h`" v-html="b.content.text" />
           <blockquote v-if="b.type === 'quote'" v-html="b.content.text"></blockquote>
           <figure v-if="b.type === 'image'">
             <img :src="b.content.image[0].url" />
