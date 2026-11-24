@@ -52,19 +52,17 @@ body {
   position: relative;
 }
 
+/* page number in the dark margin left of each page */
 .pagedjs_page::after {
-  content: 'PAGE ' attr(data-page-number);
+  content: attr(data-page-number);
   position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: black;
+  top: 0;
+  right: 100%;
+  margin-right: 24px;
   color: white;
-  padding: 2px 8px;
-  font-family: 'm', monospace;
-  font-size: 12px;
-  text-transform: uppercase;
-  z-index: 10;
+  font-family: 'a', serif;
+  font-size: 64px;
+  line-height: 0.8;
 }
 
 nav {
